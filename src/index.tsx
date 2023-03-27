@@ -7,23 +7,32 @@ import {
 
 import './index.css';
 import App from './App';
+import ErrorPage from './pages/ErrorPage';
+import AddWorkout from './pages/addWorkout/AddWorkout';
+
+
 import reportWebVitals from './reportWebVitals'; //Note: not sure what this does
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <App />,
-//   },
-// ])
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "addworkout",
+    element: <AddWorkout />
+  }
+])
 
 
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router= {router} />
   </React.StrictMode>
 );
 

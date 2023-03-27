@@ -1,5 +1,6 @@
 import React from 'react'
 import { UADIProps } from  './interfaces'
+import "../../App.css"
 
 
 export default function UploadAndDisplayImage(props: UADIProps){

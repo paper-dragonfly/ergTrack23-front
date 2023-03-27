@@ -1,5 +1,5 @@
 import React from 'react'
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 export default function NavHeader () {
     return (
@@ -7,16 +7,15 @@ export default function NavHeader () {
             <nav>
                 <ul>
                     <li>
-                        {/* <Link to='/home'>Home</Link> */}
-                        <a href='#'>Home</a>
+                        <Link to='/'>Home</Link>
                     </li>
                     <li>
                         {/* <Link to='/home'>Home</Link> */}
                         <a href='#'>Log</a>
                     </li>
                     <li>
-                        {/* <Link to='/home'>Home</Link> */}
-                        <a href='#'>Add Workout</a>
+                        <Link to='addworkout'>Add Workout</Link>
+                        {/* <a href='http://localhost:3000/addworkout'>Add Workout</a> */}
                     </li>
                     <li>
                         {/* <Link to='/home'>Home</Link> */}

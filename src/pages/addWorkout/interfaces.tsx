@@ -10,7 +10,7 @@ export interface FormData {
 }
 
 // LengthOptions
-export interface LengthOptions {
+export interface LengthOptionsTypes {
     singleTime: string[];
     singleDist: string[];
     intervalDist: string[];
