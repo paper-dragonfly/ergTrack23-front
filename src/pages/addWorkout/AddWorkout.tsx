@@ -1,4 +1,3 @@
-// CODE from ergTrack scrim - full form 
 
 import React, {useState} from 'react'
 
@@ -38,8 +37,23 @@ export default function AddWorkout(){
     }
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
-        e.preventDefault()
+        e.preventDefault() //prevent immediate submittion 
         console.log(formData)
+        if(formData.entryMethod === "fmImg"  && formData.selectedImage){
+            console.log('first check')
+            // get image binary data
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(formData.selectedImage)
+            reader.onload = () => {
+                const result = reader.result 
+                if(result instanceof ArrayBuffer){
+                    const bytes: Uint8Array = new Uint8Array(result)
+                    console.log(bytes)
+                }
+            }
+            // post data to API
+        }
+        console.log('outside if')
     }
     
     return(
