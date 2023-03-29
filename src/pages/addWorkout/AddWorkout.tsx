@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
 import { FormData } from './interfaces'
+import { API_URL } from '../../config'
 
 import NavHeader from '../../components/NavHeader'
 
@@ -15,7 +16,7 @@ export default function AddWorkout(){
             workoutLength:"2000",
             customLength:"",
             subWorkouts:"",
-            selectedImage: null, 
+            ergImg: null, 
         }
     )
     
@@ -39,22 +40,20 @@ export default function AddWorkout(){
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault() //prevent immediate submittion 
         console.log(formData)
-        if(formData.entryMethod === "fmImg"  && formData.selectedImage){
-            console.log('first check')
-            // get image binary data
-            const reader = new FileReader();
-            reader.readAsArrayBuffer(formData.selectedImage)
-            reader.onload = () => {
-                const result = reader.result 
-                if(result instanceof ArrayBuffer){
-                    const bytes: Uint8Array = new Uint8Array(result)
-                    console.log(bytes)
-                }
+        console.log(typeof(formData))
+        // post data to API
+        const url = API_URL+"/workout"
+
+        const postInfo = {
+            method: "POST",
+            body: formData
             }
-            // post data to API
+        console.log(postInfo.body)
+        debugger
+        fetch(url, postInfo)
+            .then((response) => response.json()) 
+            .then((data) => console.log(data))
         }
-        console.log('outside if')
-    }
     
     return(
         <div className='add-workout-div'>

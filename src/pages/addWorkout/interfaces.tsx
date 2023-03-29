@@ -6,7 +6,7 @@ export interface FormData {
     workoutLength:string;
     customLength: string;
     subWorkouts: string;
-    selectedImage: File | null; 
+    ergImg: File | null; 
 }
 
 // LengthOptions
