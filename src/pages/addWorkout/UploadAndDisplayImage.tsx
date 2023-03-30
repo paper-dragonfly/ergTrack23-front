@@ -4,8 +4,8 @@ import "../../App.css"
 
 
 export default function UploadAndDisplayImage(props: UADIProps){
-    if (props.formData.ergImg){ 
-        console.log(URL.createObjectURL(props.formData.ergImg))
+    if (props.workoutInfo.ergImg){ 
+        console.log(URL.createObjectURL(props.workoutInfo.ergImg))
         }
     return(
         <div className= 'visible-on-from-img'>
@@ -14,12 +14,12 @@ export default function UploadAndDisplayImage(props: UADIProps){
                 name = 'ergImg'
                 onChange = {props.handleChange}
             />
-            {props.formData.ergImg && (
+            {props.workoutInfo.ergImg && (
                 <div>
                     <img 
                         className='uploaded-img'
                         alt='erg photo' 
-                        src={URL.createObjectURL(props.formData.ergImg)}
+                        src={URL.createObjectURL(props.workoutInfo.ergImg)}
                     />
                 </div> 
             )}

@@ -3,17 +3,17 @@ import React, {useState} from 'react'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
-import { FormData } from './interfaces'
+import { WorkoutInfoType } from './interfaces'
 import { API_URL } from '../../config'
 
 import NavHeader from '../../components/NavHeader'
 
 export default function AddWorkout(){
-    const [formData, setFormData] = useState<FormData>(
+    const [workoutInfo, setWorkoutInfo] = useState<WorkoutInfoType>(
         {
             entryMethod: "manual",
             workoutType:"singleDist",
-            workoutLength:"2000",
+            workoutLength:"2000m",
             customLength:"",
             subWorkouts:"",
             ergImg: null, 
@@ -22,16 +22,15 @@ export default function AddWorkout(){
     
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
-        setFormData(oldFormData => {
+        setWorkoutInfo(oldWorkoutInfo => {
             if(type === 'file' && files){
                 return{
-                    ...oldFormData,
+                    ...oldWorkoutInfo,
                     [name]:files[0]
                 }
             }
-            
             return{
-                ...oldFormData,
+                ...oldWorkoutInfo,
                 [name]:value
             }
         })
@@ -39,8 +38,20 @@ export default function AddWorkout(){
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault() //prevent immediate submittion 
-        console.log(formData)
-        console.log(typeof(formData))
+        console.log(workoutInfo)
+
+        // define a new form
+        const formData = new FormData()
+        
+        // add data to form
+        formData.append("entryMethod", workoutInfo.entryMethod )
+        formData.append("workoutType", workoutInfo.workoutType )
+        formData.append("workoutLength", workoutInfo.workoutLength )
+        formData.append("customLength", workoutInfo.customLength )
+        formData.append("subWorkouts", workoutInfo.subWorkouts )
+        if(workoutInfo.ergImg){
+            formData.append('ergImg', workoutInfo.ergImg)
+        }
         // post data to API
         const url = API_URL+"/workout"
 
@@ -48,8 +59,7 @@ export default function AddWorkout(){
             method: "POST",
             body: formData
             }
-        console.log(postInfo.body)
-        debugger
+        
         fetch(url, postInfo)
             .then((response) => response.json()) 
             .then((data) => console.log(data))
@@ -68,7 +78,7 @@ export default function AddWorkout(){
                             id='manual'
                             name= 'entryMethod'
                             value ='manual'
-                            checked={formData.entryMethod === 'manual'}
+                            checked={workoutInfo.entryMethod === 'manual'}
                             onChange={handleChange}
                         />
                     </label>
@@ -79,7 +89,7 @@ export default function AddWorkout(){
                             id='fmImg'
                             name= 'entryMethod'
                             value ='fmImg'
-                            checked={formData.entryMethod === 'fmImg'}
+                            checked={workoutInfo.entryMethod === 'fmImg'}
                             onChange={handleChange}
                         />
                     </label> 
@@ -93,7 +103,7 @@ export default function AddWorkout(){
                             id='singleDist'
                             name='workoutType'
                             value = 'singleDist'
-                            checked = {formData.workoutType === 'singleDist'}
+                            checked = {workoutInfo.workoutType === 'singleDist'}
                             onChange = {handleChange}
                         />
                     </label>
@@ -104,7 +114,7 @@ export default function AddWorkout(){
                             id='singleTime'
                             name='workoutType'
                             value = 'singleTime'
-                            checked = {formData.workoutType === 'singleTime'}
+                            checked = {workoutInfo.workoutType === 'singleTime'}
                             onChange = {handleChange}
                         />
                     </label>
@@ -115,7 +125,7 @@ export default function AddWorkout(){
                             id='intervalDist'
                             name='workoutType'
                             value = 'intervalDist'
-                            checked = {formData.workoutType === 'intervalDist'}
+                            checked = {workoutInfo.workoutType === 'intervalDist'}
                             onChange = {handleChange}
                         />
                     </label>
@@ -126,22 +136,22 @@ export default function AddWorkout(){
                             id='intervalTime'
                             name='workoutType'
                             value = 'intervalTime'
-                            checked = {formData.workoutType === 'intervalTime'}
+                            checked = {workoutInfo.workoutType === 'intervalTime'}
                             onChange = {handleChange}
                         />
                     </label>
                 </fieldset>
                 {
-                    formData.entryMethod === "manual"?
+                    workoutInfo.entryMethod === "manual"?
                     <div className='visible-on-manual'>
-                    <LengthOptions className="visible-on-manual" formData={formData} handleChange={handleChange}/> 
+                    <LengthOptions className="visible-on-manual" workoutInfo={workoutInfo} handleChange={handleChange}/> 
                     <fieldset className="visible-on-manual">
                         <label>
                             Number of Sub-Workouts
                             <input
                                 type='text'
                                 name='subWorkouts'
-                                value={formData.subWorkouts}
+                                value={workoutInfo.subWorkouts}
                                 onChange= {handleChange}
                             />
                         </label>
@@ -149,7 +159,7 @@ export default function AddWorkout(){
                     <br /> 
                     </div>
                     :
-                    <UploadAndDisplayImage formData={formData} handleChange={handleChange}/>
+                    <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
                }
                <br />
                <button>Submit</button>

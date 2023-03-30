@@ -1,6 +1,6 @@
 
 // Shared
-export interface FormData {
+export interface WorkoutInfoType {
     entryMethod: string;
     workoutType: string;
     workoutLength:string;
@@ -20,13 +20,13 @@ export interface LengthOptionsTypes {
 
 export interface LOProps {
     className: string;
-    formData: FormData;
+    workoutInfo: WorkoutInfoType;
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // UploadAndDisplayImage
 export interface UADIProps {
-    formData: FormData;
+    workoutInfo: WorkoutInfoType;
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

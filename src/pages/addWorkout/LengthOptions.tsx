@@ -1,5 +1,5 @@
 import React from 'react'
-import {FormData, LengthOptionsTypes, LOProps } from './interfaces' 
+import {WorkoutInfoType, LengthOptionsTypes, LOProps } from './interfaces' 
 
 
 export default function LengthOptions(props: LOProps){
@@ -11,19 +11,19 @@ export default function LengthOptions(props: LOProps){
     }
     
     let displayedType:string[] = new Array
-    if(props.formData.workoutType === 'singleDist'){
+    if(props.workoutInfo.workoutType === 'singleDist'){
         displayedType = workoutLengthOptions.singleDist
-    }else if(props.formData.workoutType === 'singleTime'){
+    }else if(props.workoutInfo.workoutType === 'singleTime'){
         displayedType = workoutLengthOptions.singleTime
-    }else if(props.formData.workoutType === 'intervalDist'){
+    }else if(props.workoutInfo.workoutType === 'intervalDist'){
         displayedType = workoutLengthOptions.intervalDist
-    }else if(props.formData.workoutType === 'intervalTime'){
+    }else if(props.workoutInfo.workoutType === 'intervalTime'){
         displayedType = workoutLengthOptions.intervalTime
     }
     
     return(
         <fieldset>
-            <legend>{props.formData.workoutType}</legend>
+            <legend>{props.workoutInfo.workoutType}</legend>
             <label>
                 {displayedType[0]}
                 <input 
@@ -31,7 +31,7 @@ export default function LengthOptions(props: LOProps){
                     id='lengthOption1'
                     name='workoutLength'
                     value = {displayedType[0]}
-                    checked = {props.formData.workoutLength === displayedType[0]}
+                    checked = {props.workoutInfo.workoutLength === displayedType[0]}
                     onChange = {props.handleChange}
                 />
             </label>
@@ -42,7 +42,7 @@ export default function LengthOptions(props: LOProps){
                     id='lengthOption2'
                     name='workoutLength'
                     value = {displayedType[1]}
-                    checked = {props.formData.workoutLength === displayedType[1]}
+                    checked = {props.workoutInfo.workoutLength === displayedType[1]}
                     onChange = {props.handleChange}
                 />
             </label>
@@ -53,7 +53,7 @@ export default function LengthOptions(props: LOProps){
                     id='lengthOption3'
                     name='workoutLength'
                     value = {displayedType[2]}
-                    checked = {props.formData.workoutLength === displayedType[2]}
+                    checked = {props.workoutInfo.workoutLength === displayedType[2]}
                     onChange = {props.handleChange}
                 />
             </label>
@@ -64,14 +64,14 @@ export default function LengthOptions(props: LOProps){
                     id='lengthOption4'
                     name='workoutLength'
                     value = 'other'
-                    checked = {props.formData.workoutLength === 'other'}
+                    checked = {props.workoutInfo.workoutLength === 'other'}
                     onChange = {props.handleChange}
                 />
             </label>
             <input 
                 type='text' 
                 name = 'customLength'
-                style={{'display':props.formData.workoutLength === 'other'? 'block':'none'}}
+                style={{'display':props.workoutInfo.workoutLength === 'other'? 'block':'none'}}
                 onChange={props.handleChange} 
                 placeholder = 'custom'
             />

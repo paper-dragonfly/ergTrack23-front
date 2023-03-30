@@ -9,6 +9,7 @@ import './index.css';
 import App from './App';
 import ErrorPage from './pages/ErrorPage';
 import AddWorkout from './pages/addWorkout/AddWorkout';
+import Sandbox from './pages/Sandbox'
 
 
 import reportWebVitals from './reportWebVitals'; //Note: not sure what this does
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "addworkout",
     element: <AddWorkout />
+  },
+  {
+    path: "sandbox",
+    element: <Sandbox />
   }
 ])
 

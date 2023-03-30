@@ -10,6 +10,9 @@ export default function NavHeader () {
                         <Link to='/'>Home</Link>
                     </li>
                     <li>
+                        <Link to='/sandbox'>Sandbox</Link>
+                    </li>
+                    <li>
                         {/* <Link to='/home'>Home</Link> */}
                         <a href='#'>Log</a>
                     </li>
