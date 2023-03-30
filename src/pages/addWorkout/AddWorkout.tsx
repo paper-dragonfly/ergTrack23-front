@@ -28,6 +28,12 @@ export default function AddWorkout(){
                     ...oldWorkoutInfo,
                     [name]:files[0]
                 }
+            }else if(name === 'entryMethod' && value ===  'manual'){
+                return {
+                    ...oldWorkoutInfo,
+                    entryMethod: 'manual',
+                    ergImg: null
+                }
             }
             return{
                 ...oldWorkoutInfo,
