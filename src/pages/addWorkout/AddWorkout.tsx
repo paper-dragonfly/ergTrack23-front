@@ -3,14 +3,14 @@ import React, {useState} from 'react'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
-import { WorkoutInfoType } from './interfaces'
+import { TypesWorkoutInfo } from './interfaces'
 import { API_URL } from '../../config'
 
 import NavHeader from '../../components/NavHeader'
-import EditableTable from './WorkoutTable'
+import WorkoutResults from './WorkoutResults'
 
 export default function AddWorkout(){
-    const [workoutInfo, setWorkoutInfo] = useState<WorkoutInfoType>(
+    const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
         {
             entryMethod: "manual",
             workoutType:"singleDist",
@@ -18,6 +18,21 @@ export default function AddWorkout(){
             customLength:"",
             subWorkouts:"",
             ergImg: null, 
+        }
+    )
+
+    const [apiResponse, setApiResponse] = useState(
+        {
+            status_code: 0,
+            error_message: "",
+            body: {
+                workout_info: "",
+                ocr_data: {
+                    workout_meta: {
+                        wo_name: "",
+                    }
+                }
+            }
         }
     )
     
@@ -171,7 +186,7 @@ export default function AddWorkout(){
                <br />
                <button>Submit</button>
             </form>
-            <EditableTable  />
+            <WorkoutResults  />
         </div>
     )
 }

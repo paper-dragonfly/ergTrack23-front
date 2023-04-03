@@ -1,9 +1,9 @@
 import React from 'react'
-import {WorkoutInfoType, LengthOptionsTypes, LOProps } from './interfaces' 
+import {TypesWorkoutInfo, TypesLengthOptions, LOProps } from './interfaces' 
 
 
 export default function LengthOptions(props: LOProps){
-    const workoutLengthOptions: LengthOptionsTypes= {
+    const workoutLengthOptions: TypesLengthOptions= {
         singleDist: ['2000m', '5000m', '10000m', 'other'],
         singleTime: ['15 min','30 min','45 min', 'other'],
         intervalDist:['500m','1000m','2000m','other'],

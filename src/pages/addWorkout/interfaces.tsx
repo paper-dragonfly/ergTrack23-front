@@ -1,6 +1,6 @@
 
 // Shared
-export interface WorkoutInfoType {
+export interface TypesWorkoutInfo {
     entryMethod: string;
     workoutType: string;
     workoutLength:string;
@@ -10,7 +10,7 @@ export interface WorkoutInfoType {
 }
 
 // LengthOptions
-export interface LengthOptionsTypes {
+export interface TypesLengthOptions {
     singleTime: string[];
     singleDist: string[];
     intervalDist: string[];
@@ -20,13 +20,29 @@ export interface LengthOptionsTypes {
 
 export interface LOProps {
     className: string;
-    workoutInfo: WorkoutInfoType;
+    workoutInfo: TypesWorkoutInfo;
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // UploadAndDisplayImage
 export interface UADIProps {
-    workoutInfo: WorkoutInfoType;
+    workoutInfo: TypesWorkoutInfo;
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+// WorkoutTable
+export interface TypesNameDateTotals{
+    workoutName: string;
+    workoutDate: string;
+    totalType: string | null;
+    totalValue: string | number | null;
+}
+
+export interface TypesWorkoutMetrics{
+    id: string;
+    time: string;
+    distance: number;
+    split: string;
+    strokeRate: number;
+    heartRate: number |  null;
+}
