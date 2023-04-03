@@ -7,6 +7,7 @@ import { WorkoutInfoType } from './interfaces'
 import { API_URL } from '../../config'
 
 import NavHeader from '../../components/NavHeader'
+import EditableTable from './WorkoutTable'
 
 export default function AddWorkout(){
     const [workoutInfo, setWorkoutInfo] = useState<WorkoutInfoType>(
@@ -170,6 +171,7 @@ export default function AddWorkout(){
                <br />
                <button>Submit</button>
             </form>
+            <EditableTable  />
         </div>
     )
 }
