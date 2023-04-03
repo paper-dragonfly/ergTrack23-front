@@ -35,6 +35,8 @@ export default function AddWorkout(){
             }
         }
     )
+
+    const [showWorkoutResults,  setShowWorkoutResults] = useState<boolean>(false)
     
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
@@ -61,6 +63,12 @@ export default function AddWorkout(){
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault() //prevent immediate submittion 
         console.log(workoutInfo)
+
+        // if entryMethod === 'manual' -> send WorkoutInfo to WorkoutResults as props
+        if(workoutInfo.entryMethod === 'manual'){
+             
+        }
+        //if entryMethod == 'fm img' -> create form, add image file, POST to API 
 
         // define a new form
         const formData = new FormData()
@@ -186,7 +194,7 @@ export default function AddWorkout(){
                <br />
                <button>Submit</button>
             </form>
-            <WorkoutResults  />
+            <WorkoutResults />
         </div>
     )
 }
