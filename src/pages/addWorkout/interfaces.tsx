@@ -9,6 +9,16 @@ export interface TypesWorkoutInfo {
     ergImg: File | null; 
 }
 
+export interface TypesWorkoutMetrics {
+    workoutName: string;
+    workoutDate: string;
+    time:string[];
+    meter: string[],
+    split:  string[],
+    sr: string[],
+    hr: string[]
+}
+
 // LengthOptions
 export interface TypesLengthOptions {
     singleTime: string[];
@@ -31,18 +41,20 @@ export interface UADIProps {
 }
 
 // WorkoutTable
-export interface TypesNameDateTotals{
+export interface TypesNameAndDate{
     workoutName: string;
     workoutDate: string;
-    totalType: string | null;
-    totalValue: string | number | null;
 }
 
-export interface TypesWorkoutMetrics{
+export interface TypesWorkoutTableMetrics{
     id: string;
     time: string;
     distance: number;
     split: string;
     strokeRate: number;
     heartRate: number |  null;
+}
+
+export interface ERProps {
+    workoutMetrics: TypesWorkoutMetrics;
 }

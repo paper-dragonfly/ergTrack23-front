@@ -1,23 +1,52 @@
-import React, { useState } from 'react';
-import { TypesNameDateTotals, TypesWorkoutMetrics } from './interfaces';
+import React, { useEffect, useState } from 'react';
+import { TypesNameAndDate, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from './interfaces';
 import { nanoid } from 'nanoid'
 
-export default function WorkoutResults() {
-  const [nameDateTotals, setNameDateTotals] = useState<TypesNameDateTotals>({
-    workoutName: "",
-    workoutDate: "",
-    totalType: "TotalTime",
-    totalValue: '34:00',
+export default function EditableResults(props: ERProps) {
+
+  //TODO: how do I get the Results Workrout Name to change when workoutMetrics changes?
+  // TODO: generate empty table of correct dimensions 
+
+  const [metrics, setMetrics]  =  useState<TypesWorkoutMetrics>(props.workoutMetrics)
+  // const metrics = props.workoutMetrics
+  
+  const [nameAndDate, setNameAndDate] = useState<TypesNameAndDate>({
+    workoutName: metrics.workoutName,
+    workoutDate: metrics.workoutDate,
   });
-  const [workoutMetrics, setWorkoutMetrics] = useState<TypesWorkoutMetrics[]>([
-    { id: nanoid(), time: '30:00.0', distance: 6653, split: '2:15.2', strokeRate: 20, heartRate:null },
-    { id: nanoid(), time: '15:00.0', distance: 3341, split: '2:24.6', strokeRate: 21, heartRate:null },
-    { id: nanoid(), time: '15:00.0', distance: 3311, split: '2:15.9', strokeRate: 19, heartRate:null },
-  ]);
+
+  useEffect(()=>{
+    console.log('hit', nameAndDate)
+    setMetrics(props.workoutMetrics)
+    setNameAndDate({
+      workoutName: metrics.workoutName,
+      workoutDate: metrics.workoutDate
+    })
+    },[props.workoutMetrics]);
+  
+  // useEffect(() => {
+  //   setNameAndDate({
+  //     workoutName: metrics.workoutName,
+  //     workoutDate: metrics.workoutDate
+  //   })
+  // },[metrics])
+
+  const [workoutTableMetrics, setWorkoutMetrics] = useState<TypesWorkoutTableMetrics[]>(() => {
+    const ergTable = []
+    console.log('number of cols', metrics.time.length)
+    for(let i = 0 ; i < metrics.time.length; i++ ){
+      const rowData = { id: nanoid(), time: metrics.time[i], distance: parseInt(metrics.meter[i]), split: metrics.split[i], strokeRate: parseInt(metrics.sr[i]), heartRate: parseInt(metrics.hr[i]) }
+      ergTable.push(rowData) 
+    }
+    return ergTable
+
+    // { id: nanoid(), time: '15:00.0', distance: 3341, split: '2:24.6', strokeRate: 21, heartRate:null },
+  });
+
 
   const handleNDTChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
     const {name, value} = e.target 
-    setNameDateTotals(oldData => {
+    setNameAndDate(oldData => {
         return{
             ...oldData,
             [name]: value
@@ -26,7 +55,7 @@ export default function WorkoutResults() {
   }
 
   const handleMetricsChange = (e: React.ChangeEvent<HTMLInputElement>, id: string, field:string) => {
-    const newData = workoutMetrics.map((row) => {
+    const newData = workoutTableMetrics.map((row) => {
       if (row.id === id) {
         return {
           ...row,
@@ -40,7 +69,7 @@ export default function WorkoutResults() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Data:', workoutMetrics);
+    console.log('Data:', workoutTableMetrics);
   };
 
   return (
@@ -52,7 +81,7 @@ export default function WorkoutResults() {
                 <input 
                     type="text"
                     name = 'workoutName'
-                    value={nameDateTotals.workoutName}
+                    value={nameAndDate.workoutName}
                     onChange = {handleNDTChange}
                     />
             </label>
@@ -62,22 +91,11 @@ export default function WorkoutResults() {
                 <input 
                     type="text"
                     name = 'workoutDate'
-                    value={nameDateTotals.workoutDate}
+                    value={nameAndDate.workoutDate}
                     onChange = {handleNDTChange}
                     />
             </label>
             <br />
-            {nameDateTotals.totalValue?
-                <label>
-                    {nameDateTotals.totalType}
-                    <input 
-                        type="text"
-                        name = 'totalValue'
-                        value={nameDateTotals.totalValue}
-                        onChange = {handleNDTChange}
-                        />
-                </label> : null
-            }
             <table>
                 <thead>
                 <tr>
@@ -88,7 +106,7 @@ export default function WorkoutResults() {
                 </tr>
                 </thead>
                 <tbody>
-                {workoutMetrics.map((row) => (
+                {workoutTableMetrics.map((row) => (
                     <tr key={row.id}>
                     <td>
                     <input

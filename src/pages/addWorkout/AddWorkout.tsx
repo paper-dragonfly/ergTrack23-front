@@ -1,13 +1,15 @@
 
 import React, {useState} from 'react'
+import {nanoid} from 'nanoid'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
-import { TypesWorkoutInfo } from './interfaces'
+import { TypesWorkoutInfo, TypesWorkoutMetrics } from './interfaces'
 import { API_URL } from '../../config'
+import { generateWorkoutName } from './helperFunctions'
 
 import NavHeader from '../../components/NavHeader'
-import WorkoutResults from './WorkoutResults'
+import EditableResults from './EditableResults'
 
 export default function AddWorkout(){
     const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
@@ -16,28 +18,25 @@ export default function AddWorkout(){
             workoutType:"singleDist",
             workoutLength:"2000m",
             customLength:"",
-            subWorkouts:"",
+            subWorkouts: "",
             ergImg: null, 
         }
     )
 
-    const [apiResponse, setApiResponse] = useState(
+    const [workoutMetrics, setWorkoutMetrics] = useState<TypesWorkoutMetrics>(
         {
-            status_code: 0,
-            error_message: "",
-            body: {
-                workout_info: "",
-                ocr_data: {
-                    workout_meta: {
-                        wo_name: "",
-                    }
-                }
-            }
+            workoutName: "",
+            workoutDate: "",
+            time: [],
+            meter: [],
+            split:  [],
+            sr: [],
+            hr: [], 
         }
     )
 
-    const [showWorkoutResults,  setShowWorkoutResults] = useState<boolean>(false)
-    
+    const [showWorkoukResults,  setShowEditableResults] = useState<boolean>(false)
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
         setWorkoutInfo(oldWorkoutInfo => {
@@ -62,38 +61,63 @@ export default function AddWorkout(){
     
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault() //prevent immediate submittion 
-        console.log(workoutInfo)
-
-        // if entryMethod === 'manual' -> send WorkoutInfo to WorkoutResults as props
-        if(workoutInfo.entryMethod === 'manual'){
-             
-        }
-        //if entryMethod == 'fm img' -> create form, add image file, POST to API 
-
-        // define a new form
-        const formData = new FormData()
         
-        // add data to form
-        formData.append("entryMethod", workoutInfo.entryMethod )
-        formData.append("workoutType", workoutInfo.workoutType )
-        formData.append("workoutLength", workoutInfo.workoutLength )
-        formData.append("customLength", workoutInfo.customLength )
-        formData.append("subWorkouts", workoutInfo.subWorkouts )
-        if(workoutInfo.ergImg){
+        //if entryMethod === 'fmImg' & img selected -> create form, add image file, POST to API -> process resp 
+        if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg){
+            console.log('running submit for fmImg')
+            const formData = new FormData()
             formData.append('ergImg', workoutInfo.ergImg)
-        }
-        // post data to API
-        const url = API_URL+"/workout"
-
-        const postInfo = {
-            method: "POST",
-            body: formData
-            }
         
-        fetch(url, postInfo)
-            .then((response) => response.json()) 
-            .then((data) => console.log(data))
-        }
+            // post data to API
+            const url = API_URL+"/ergImage"
+            const postInfo = {
+                method: "POST",
+                body: formData
+                }
+            
+            fetch(url, postInfo)
+                .then((response) => response.json()) 
+                .then((data) => {
+                    console.log(data)
+                    if(data.status_code === 200){
+                        setWorkoutMetrics(
+                            {
+                                workoutName: data.body.workout_meta.workout_name,
+                                workoutDate: data.body.workout_meta.workout_date,
+                                time: data.body.workout_data.time,
+                                meter: data.body.workout_data.meter,
+                                split:  data.body.workout_data.split,
+                                sr: data.body.workout_data.sr,
+                                hr: [], //hr not considered at this point
+                            }
+                        )
+                        setShowEditableResults(true) 
+                    } 
+                })
+            }else if(workoutInfo.entryMethod === 'manual'){
+                console.log('running submit for manual')
+                // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
+                const emptyCol: string[] = [""]
+                for(let i=0; i < parseInt(workoutInfo.subWorkouts); i++){
+                    emptyCol.push("")
+                }
+                setWorkoutMetrics(
+                    {
+                        workoutName: generateWorkoutName(workoutInfo),
+                        workoutDate: "",
+                        time: emptyCol,
+                        meter: emptyCol,
+                        split:  emptyCol,
+                        sr: emptyCol,
+                        hr: [],
+                    }
+                )
+                console.log('workoutInfo', workoutInfo)
+                console.log('manualInputWorkoutMetrics', workoutMetrics)
+                setShowEditableResults(true)
+
+            }  
+    }       
     
     return(
         <div className='add-workout-div'>
@@ -179,7 +203,7 @@ export default function AddWorkout(){
                         <label>
                             Number of Sub-Workouts
                             <input
-                                type='text'
+                                type='number'
                                 name='subWorkouts'
                                 value={workoutInfo.subWorkouts}
                                 onChange= {handleChange}
@@ -192,9 +216,9 @@ export default function AddWorkout(){
                     <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
                }
                <br />
-               <button>Submit</button>
+               <button type="submit">Submit</button>
             </form>
-            <WorkoutResults />
+            {showWorkoukResults? <EditableResults workoutMetrics = {workoutMetrics}/> : null}
         </div>
     )
 }
