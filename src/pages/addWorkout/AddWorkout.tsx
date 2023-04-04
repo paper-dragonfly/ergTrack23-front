@@ -18,7 +18,7 @@ export default function AddWorkout(){
             workoutType:"singleDist",
             workoutLength:"2000m",
             customLength:"",
-            subWorkouts: "",
+            subWorkouts: "4",
             ergImg: null, 
         }
     )
@@ -35,7 +35,7 @@ export default function AddWorkout(){
         }
     )
 
-    const [showWorkoukResults,  setShowEditableResults] = useState<boolean>(false)
+    const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
@@ -80,17 +80,15 @@ export default function AddWorkout(){
                 .then((data) => {
                     console.log(data)
                     if(data.status_code === 200){
-                        setWorkoutMetrics(
-                            {
-                                workoutName: data.body.workout_meta.workout_name,
-                                workoutDate: data.body.workout_meta.workout_date,
-                                time: data.body.workout_data.time,
-                                meter: data.body.workout_data.meter,
-                                split:  data.body.workout_data.split,
-                                sr: data.body.workout_data.sr,
-                                hr: [], //hr not considered at this point
-                            }
-                        )
+                        setWorkoutMetrics({
+                            workoutName: data.body.workout_meta.workout_name,
+                            workoutDate: data.body.workout_meta.workout_date,
+                            time: data.body.workout_data.time,
+                            meter: data.body.workout_data.meter,
+                            split:  data.body.workout_data.split,
+                            sr: data.body.workout_data.sr,
+                            hr: [], //hr not considered at this point
+                        })
                         setShowEditableResults(true) 
                     } 
                 })
@@ -101,17 +99,17 @@ export default function AddWorkout(){
                 for(let i=0; i < parseInt(workoutInfo.subWorkouts); i++){
                     emptyCol.push("")
                 }
-                setWorkoutMetrics(
-                    {
-                        workoutName: generateWorkoutName(workoutInfo),
-                        workoutDate: "",
-                        time: emptyCol,
-                        meter: emptyCol,
-                        split:  emptyCol,
-                        sr: emptyCol,
-                        hr: [],
-                    }
-                )
+                
+                const woName = generateWorkoutName(workoutInfo)
+                setWorkoutMetrics({
+                    workoutName: woName,
+                    workoutDate: "",
+                    time: emptyCol,
+                    meter: emptyCol,
+                    split:  emptyCol,
+                    sr: emptyCol,
+                    hr: [],
+                })
                 console.log('workoutInfo', workoutInfo)
                 console.log('manualInputWorkoutMetrics', workoutMetrics)
                 setShowEditableResults(true)
@@ -218,7 +216,7 @@ export default function AddWorkout(){
                <br />
                <button type="submit">Submit</button>
             </form>
-            {showWorkoukResults? <EditableResults workoutMetrics = {workoutMetrics}/> : null}
+            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics}/> : null}
         </div>
     )
 }

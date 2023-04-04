@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { TypesNameAndDate, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from './interfaces';
 import { nanoid } from 'nanoid'
+import { API_URL } from '../../config';
 
 export default function EditableResults(props: ERProps) {
 
   //TODO: how do I get the Results Workrout Name to change when workoutMetrics changes?
   // TODO: generate empty table of correct dimensions 
 
-  const [metrics, setMetrics]  =  useState<TypesWorkoutMetrics>(props.workoutMetrics)
-  // const metrics = props.workoutMetrics
+  // const [metrics, setMetrics]  =  useState<TypesWorkoutMetrics>(props.workoutMetrics)
+  const metrics = props.workoutMetrics
   
   const [nameAndDate, setNameAndDate] = useState<TypesNameAndDate>({
     workoutName: metrics.workoutName,
@@ -17,21 +18,17 @@ export default function EditableResults(props: ERProps) {
 
   useEffect(()=>{
     console.log('hit', nameAndDate)
-    setMetrics(props.workoutMetrics)
+    // setMetrics(props.workoutMetrics)
     setNameAndDate({
       workoutName: metrics.workoutName,
       workoutDate: metrics.workoutDate
     })
+    console.log('useEffect metrics', metrics)
+    console.log('useEffect nameAndDate', nameAndDate)
     },[props.workoutMetrics]);
-  
-  // useEffect(() => {
-  //   setNameAndDate({
-  //     workoutName: metrics.workoutName,
-  //     workoutDate: metrics.workoutDate
-  //   })
-  // },[metrics])
 
-  const [workoutTableMetrics, setWorkoutMetrics] = useState<TypesWorkoutTableMetrics[]>(() => {
+
+  const [workoutTableMetrics, setWorkoutTableMetrics] = useState<TypesWorkoutTableMetrics[]>(() => {
     const ergTable = []
     console.log('number of cols', metrics.time.length)
     for(let i = 0 ; i < metrics.time.length; i++ ){
@@ -64,13 +61,24 @@ export default function EditableResults(props: ERProps) {
       }
       return row;
     });
-    setWorkoutMetrics(newData);
+    setWorkoutTableMetrics(newData);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Data:', workoutTableMetrics);
-  };
+
+    //post data to API
+    const url =  API_URL+'/workout'
+    const postInfo = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({nameAndDate: nameAndDate, tableMetrics: workoutTableMetrics})
+      }
+    fetch(url, postInfo)
+      .then((response) => response.json())
+      .then((data)=> console.log(data))
+    };
 
   return (
     <form onSubmit={handleSubmit}>
