@@ -17,7 +17,7 @@ export default function NavHeader () {
                         <a href='#'>Log</a>
                     </li>
                     <li>
-                        <Link to='addworkout'>Add Workout</Link>
+                        <Link to='/addworkout'>Add Workout</Link>
                         {/* <a href='http://localhost:3000/addworkout'>Add Workout</a> */}
                     </li>
                     <li>
