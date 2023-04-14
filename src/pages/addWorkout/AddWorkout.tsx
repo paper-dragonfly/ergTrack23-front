@@ -79,10 +79,10 @@ export default function AddWorkout(){
                 .then((response) => response.json()) 
                 .then((data) => {
                     console.log(data)
-                    if(data.status_code === 200){
+                    if(data.status_code === 200){ 
                         setWorkoutMetrics({
-                            workoutName: data.body.workout_meta.workout_name,
-                            workoutDate: data.body.workout_meta.workout_date,
+                            workoutName: data.body.workout_meta.wo_name,
+                            workoutDate: data.body.workout_meta.wo_date,
                             time: data.body.workout_data.time,
                             meter: data.body.workout_data.meter,
                             split:  data.body.workout_data.split,
@@ -92,6 +92,7 @@ export default function AddWorkout(){
                         setShowEditableResults(true) 
                     } 
                 })
+            // if entryMethod = 'manual'
             }else if(workoutInfo.entryMethod === 'manual'){
                 console.log('running submit for manual')
                 // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
