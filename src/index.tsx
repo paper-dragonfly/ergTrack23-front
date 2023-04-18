@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
@@ -10,6 +10,7 @@ import App from './App';
 import ErrorPage from './pages/ErrorPage';
 import AddWorkout from './pages/addWorkout/AddWorkout';
 import Sandbox from './pages/Sandbox'
+import Login from './pages/Login'
 
 
 import reportWebVitals from './reportWebVitals'; //Note: not sure what this does
@@ -17,6 +18,8 @@ import reportWebVitals from './reportWebVitals'; //Note: not sure what this does
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+// const [user, setUser] = useState('')
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "sandbox",
     element: <Sandbox />
+  },
+  {
+    path: "login",
+    element: <Login />
   }
 ])
 
