@@ -4,38 +4,12 @@ import { Link } from "react-router-dom"
 export default function NavHeader () {
     return (
         <header>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to='/'>Home</Link>
-                    </li>
-                    <li>
-                        <Link to='/login'>Login</Link>
-                    </li>
-                    <li>
-                        <Link to='/sandbox'>Sandbox</Link>
-                    </li>
-                    <li>
-                        {/* <Link to='/home'>Home</Link> */}
-                        <a href='#'>Log</a>
-                    </li>
-                    <li>
-                        <Link to='/addworkout'>Add Workout</Link>
-                        {/* <a href='http://localhost:3000/addworkout'>Add Workout</a> */}
-                    </li>
-                    <li>
-                        {/* <Link to='/home'>Home</Link> */}
-                        <a href='#'>Summary Stats</a>
-                    </li>
-                    <li>
-                        {/* <Link to='/home'>Home</Link> */}
-                        <a href='#'>Profile</a>
-                    </li>
-                    <li>
-                        {/* <Link to='/home'>Home</Link> */}
-                        <a href='#'>Logout</a>
-                    </li>
-                </ul>
+            <nav className='nav-header'>
+                <Link to='/'>Home</Link>
+                <Link to='/helloworld'>helloworld</Link>
+                <Link to='/login'>Login</Link>
+                <Link to='/sandbox'>Sandbox</Link>
+                <Link to='/addworkout'>Add Workout</Link>
             </nav>
         </header>
     )
