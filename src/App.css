@@ -1,3 +1,4 @@
+/* Came with create react app */
 .App {
   text-align: center;
 }
@@ -37,14 +38,28 @@
   }
 }
 
-/* AddWorkout */
-.uploaded-img {
-  width:30%;
+/* General */
+* {
+  box-sizing: border-box;
 }
 
-.visible-on-from-img {
-  background: yellow;
+html, body {
+  margin: 10px;
+  padding: 0;
+  background-color: #FFF7ED;
+  font-family: "Inter", sans-serif;
 }
+
+body::-webkit-scrollbar {
+display: none;
+}
+
+body {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+
+
  /* Login */
 .login-with-google-btn {
   transition: background-color .3s, box-shadow .3s;
@@ -101,6 +116,28 @@
 /* NavHeader */
 
 .nav-header {
+  margin: 10px;
   display: flex;
   justify-content: space-around;
+}
+
+header a {
+  text-decoration: none;
+  color: #4D4D4D;
+  font-weight: 600;
+  padding: 5px 20px;
+}
+
+header a:hover {
+  color: #161616;
+  text-decoration: underline;
+}
+
+/* AddWorkout */
+.uploaded-img {
+  width:30%;
+}
+
+.visible-on-from-img {
+  background: rgba(113, 190, 5, 0.611);
 }
