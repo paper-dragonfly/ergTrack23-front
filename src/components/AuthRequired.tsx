@@ -1,14 +1,21 @@
 import React from "react"
-import { Outlet, Navigate, useOutletContext} from 'react-router-dom'
+import { Outlet, Navigate, useLoaderData,useOutletContext} from 'react-router-dom'
 import NavHeader from './NavHeader'
-import { useIsLoggedIn } from "./RootLayout"
+// import { useIsLoggedIn } from "./RootLayout"
+
 
 export default function AuthRequired(){
-    const {isLoggedIn} = useIsLoggedIn()
+    console.log('running auth required')
+    const loadedUserToken = useLoaderData()
+    console.log(loadedUserToken)
 
-    if(!isLoggedIn){
+    // const {isLoggedIn} = useIsLoggedIn()
+
+    if(!loadedUserToken){
+        console.log('navigating to slash')
         return <Navigate to='/' />
     }
+    console.log('loggedin')
     return(
         <>
             <NavHeader />

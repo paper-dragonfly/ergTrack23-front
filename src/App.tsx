@@ -17,6 +17,7 @@ import AuthRequired from './components/AuthRequired';
 import Log from './pages/Log';
 import About from './pages/About';
 import PublicLayout from './components/PublicLayout';
+import {loader as loginLoader} from './pages/Login'
 
 
 function checkLoggedIn(){
@@ -27,14 +28,14 @@ function checkLoggedIn(){
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />} >
+    <Route path="/" element={<RootLayout /> } errorElement=<h1>Error occurred</h1> >
       <Route element={<PublicLayout />} >
         <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
+        <Route path="login" element={<Login />} loader={loginLoader}/>
         <Route path="about" element={<About />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
-      <Route element={<AuthRequired />} > 
+      <Route element={<AuthRequired />} loader={loginLoader} > 
         <Route path='dashboard' element={<Dashboard />} />
         <Route path="addworkout" element={<AddWorkout />} />
         <Route path="log" element={<Log />} />

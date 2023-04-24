@@ -2,13 +2,19 @@ import '../App.css';
 import { firebaseSignOut, signInWithGoogle } from './firebase';
 import { GoogleAuthProvider } from 'firebase/auth' 
 import {useEffect, useState} from 'react';
-import {Navigate} from 'react-router-dom'
+import {Navigate, useLoaderData} from 'react-router-dom'
 
 const API_URL = 'http://127.0.0.1:8000'
 
+export function loader():string|null{
+  return sessionStorage.getItem('userToken')
+}
+
 export default function Login() {
-  console.log('app rendered')
-  const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken')? sessionStorage.getItem('userToken'):"")
+  console.log('login rendered')
+  // const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken')? sessionStorage.getItem('userToken'):"")
+  const userToken = useLoaderData()
+  console.log(userToken,  'line17 Login')
   const [userEmail, setUserEmail] = useState("")
   const [userName,  setUserName] = useState("")
 
@@ -44,9 +50,10 @@ export default function Login() {
           .then(response => response.json())
           .then(data => {
             console.log(data)
+            debugger
             const userToken = data['body']["user_token"]
             sessionStorage.setItem('userToken', userToken)
-            setUserToken(userToken)
+            // setUserToken(userToken)
           })
           .catch(error => console.error(error)) 
         
@@ -76,7 +83,7 @@ export default function Login() {
     firebaseSignOut()
       .then(() => {
         console.log('signed out')
-        setUserToken("")
+        // setUserToken("")
         setUserName("")
         setUserEmail("")
         sessionStorage.removeItem('userToken')
@@ -93,7 +100,8 @@ export default function Login() {
         <div className = 'showUserToken'>
           <h4> User Token </h4>
           <p>
-            {userToken?userToken.substring(0,25)+'...':'no user logged in'}
+            hi
+            {/* {userToken?userToken.substring(0,25)+'...':'no user logged in'} */}
           </p>
         </div>
         <button onClick={getEmail}> Get Email</button>
