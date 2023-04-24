@@ -2,18 +2,25 @@ import '../App.css';
 import { firebaseSignOut, signInWithGoogle } from './firebase';
 import { GoogleAuthProvider } from 'firebase/auth' 
 import {useEffect, useState} from 'react';
+import {Navigate} from 'react-router-dom'
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default function Login() {
   console.log('app rendered')
-//   const [health, setHealth] = useState(false)
-  const [userToken, setUserToken] = useState("")
+  const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken')? sessionStorage.getItem('userToken'):"")
   const [userEmail, setUserEmail] = useState("")
   const [userName,  setUserName] = useState("")
 
+  if(userToken){
+    console.log('navigating to dashboard')
+    return(<Navigate to='/dashboard' />)
+  }
+
+
   function signIn(){
     signInWithGoogle()
+    // authenticate user with firebase and get idToken
       .then((result) => {
         console.log(result)
         // const credential = GoogleAuthProvider.credentialFromResult(result)
@@ -24,6 +31,7 @@ export default function Login() {
         // const idToken = credential?credential.idToken: null
         return idToken
       })
+      // authenticate user with ergTrack server, get user_token 
       .then((idToken) => {
         const url = API_URL+'/login/'
         fetch(
@@ -36,7 +44,9 @@ export default function Login() {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            setUserToken(data["body"]["user_token"])
+            const userToken = data['body']["user_token"]
+            sessionStorage.setItem('userToken', userToken)
+            setUserToken(userToken)
           })
           .catch(error => console.error(error)) 
         
@@ -69,8 +79,11 @@ export default function Login() {
         setUserToken("")
         setUserName("")
         setUserEmail("")
+        sessionStorage.removeItem('userToken')
       })
   }
+
+
 
   return (
       <div className="App"> 

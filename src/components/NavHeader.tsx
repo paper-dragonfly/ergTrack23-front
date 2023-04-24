@@ -1,5 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { NavLink } from "react-router-dom"
+import { firebaseSignOut } from '../pages/firebase';
+
 
 const activeStyles = {
     fontWeight: "bold",
@@ -8,17 +10,33 @@ const activeStyles = {
 }
 
 export default function NavHeader () {
+     
+    function signOut(){
+        firebaseSignOut()
+          .then(() => {
+            console.log('signing out')
+            sessionStorage.removeItem('userToken')
+          })
+      }
     return (
         <header>
             <nav className='nav-header'>
                 <NavLink 
-                    to='/' 
+                    to='/dashboard' 
                     style={({isActive}) => isActive ? activeStyles : {}}
-                >Home</NavLink>
-                <NavLink to='/helloworld'>helloworld</NavLink>
-                <NavLink to='/login'>Login</NavLink>
-                <NavLink to='/sandbox'>Sandbox</NavLink>
-                <NavLink to='/addworkout'>Add Workout</NavLink>
+                >Dashboard</NavLink>
+                <NavLink 
+                    to='/helloworld' 
+                    style={({isActive}) => isActive ? activeStyles : {}}
+                >helloworld</NavLink>
+                <NavLink 
+                    to='/log' 
+                    style={({isActive}) => isActive ? activeStyles : {}}
+                >Log</NavLink>
+                <NavLink 
+                    to='/addworkout' 
+                    style={({isActive}) => isActive ? activeStyles : {}}
+                >Add Workout</NavLink>
             </nav>
         </header>
     )

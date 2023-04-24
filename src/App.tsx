@@ -12,7 +12,11 @@ import AddWorkout from './pages/addWorkout/AddWorkout';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
-import Sandbox from './pages/Sandbox';
+import Dashboard from './pages/Dashboard';
+import AuthRequired from './components/AuthRequired';
+import Log from './pages/Log';
+import About from './pages/About';
+import PublicLayout from './components/PublicLayout';
 
 
 function checkLoggedIn(){
@@ -24,12 +28,18 @@ function checkLoggedIn(){
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />} >
-      <Route index element={checkLoggedIn()?<Home />:<Login />} />
-      <Route path="helloworld" element={<h1>hello world</h1>} />
-      <Route path="login" element={<Login />} />
-      <Route path="addworkout" element={<AddWorkout />} />
-      <Route path="sandbox" element={<Sandbox />} />
-      <Route path="*" element={<ErrorPage />} />
+      <Route element={<PublicLayout />} >
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="about" element={<About />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
+      <Route element={<AuthRequired />} > 
+        <Route path='dashboard' element={<Dashboard />} />
+        <Route path="addworkout" element={<AddWorkout />} />
+        <Route path="log" element={<Log />} />
+        <Route path="helloworld" element={<h1>hello world</h1>} />
+      </Route>
     </Route>
   )
 )
