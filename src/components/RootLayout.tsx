@@ -1,23 +1,30 @@
 import React, {useEffect, useState} from "react"
-import { Outlet, Navigate, useOutletContext, useLoaderData } from 'react-router-dom'
+import { Outlet, Navigate, useOutletContext, useLoaderData, Params, LoaderFunctionArgs } from 'react-router-dom'
+import { checkAuth } from "../utils/helper"
 
-type ContextType = {isLoggedIn : string | null, setIsLoggedIn: undefined}
 
+// export type LoggedInType = {isLoggedIn : string | null}
+// // interface UserTokenType {userToken: string|null}
+
+// type userTokenType = {userToken : string|null}
+
+export async function loader({ request }: {request : Request}){
+    const userToken = await checkAuth(request)
+    return userToken }
+
+// export function loader():userTokenType{
+//     const userToken = sessionStorage.getItem('userToken') 
+//     return {userToken: userToken}
+//   }
 
 export default function RootLayout(){
-    // const [isLoggedIn, setIsLoggedIn] = useState <string|null> (null)
+    // console.log('hello', useLoaderData())
+    // const {userToken} = useLoaderData() as userTokenType
+    // const [isLoggedIn, setIsLoggedIn] = useState(userToken)
+    // console.log(`Rootlayout isLoggedIn ${isLoggedIn}`)
+    const userToken = useLoaderData()
+    console.log('In RootLayout component', userToken)
 
-    // useEffect(()=> {
-    //     console.log('RootLayout useEffect')
-    //     const userToken = sessionStorage.getItem('userToken')
-    //     if(userToken){
-    //         setIsLoggedIn(userToken)
-    //     }
-    // },[])
-
-    // if(loaderDataUserToken){
-    //     return <Navigate to='/dashboad' />
-    // }
     return(
         <>
             <Outlet />
@@ -27,6 +34,7 @@ export default function RootLayout(){
 
 // {loaderDataUserToken && <Navigate to='/dashboard' />}
 {/* <Outlet context={[isLoggedIn, setIsLoggedIn]}/>  */}
+
 // export function useIsLoggedIn(){
-//     return useOutletContext<ContextType>()
+//     return useOutletContext<LoggedInType>()
 // }

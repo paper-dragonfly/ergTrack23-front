@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,29 +13,24 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
 import Dashboard from './pages/Dashboard';
-import AuthRequired from './components/AuthRequired';
+import AuthRequiredLayout from './components/AuthRequiredLayout';
 import Log from './pages/Log';
 import About from './pages/About';
 import PublicLayout from './components/PublicLayout';
-import {loader as loginLoader} from './pages/Login'
+import {loader as rootLoader} from './components/RootLayout'
 
-
-function checkLoggedIn(){
-  const loggedIn = true
-  // let user = localStorage.getItem("user")
-  return loggedIn
-}
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout /> } errorElement=<h1>Error occurred</h1> >
+    // <Route path="/" element={<RootLayout /> } errorElement={<ErrorPage />} loader={rootLoader} >
+    <Route path="/" element={<RootLayout /> } errorElement={<ErrorPage />} >
       <Route element={<PublicLayout />} >
         <Route index element={<Home />} />
-        <Route path="login" element={<Login />} loader={loginLoader}/>
+        <Route path="login" element={<Login />}/>
         <Route path="about" element={<About />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
-      <Route element={<AuthRequired />} loader={loginLoader} > 
+      <Route element={<AuthRequiredLayout />} > 
         <Route path='dashboard' element={<Dashboard />} />
         <Route path="addworkout" element={<AddWorkout />} />
         <Route path="log" element={<Log />} />
@@ -46,6 +41,7 @@ const router = createBrowserRouter(
 )
 
 function App() {
+  console.log('running app')
   return (
     <RouterProvider router={router} />
   )
