@@ -63,7 +63,6 @@ export default function Sandbox() {
 
   return (
     <div className='sandbox'>
-        <NavHeader />
         <form onSubmit={handleSubmit}>
         <label>
             Name:

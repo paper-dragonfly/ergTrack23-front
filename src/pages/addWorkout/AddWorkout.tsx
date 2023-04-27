@@ -8,7 +8,6 @@ import { TypesWorkoutInfo, TypesWorkoutMetrics } from './interfaces'
 import { API_URL } from '../../config'
 import { generateWorkoutName } from './helperFunctions'
 
-import NavHeader from '../../components/NavHeader'
 import EditableResults from './EditableResults'
 
 export default function AddWorkout(){
@@ -120,7 +119,6 @@ export default function AddWorkout(){
     
     return(
         <div className='add-workout-div'>
-            < NavHeader />
             <form onSubmit={handleSubmit}>
                 <fieldset>
                     <legend>Entry Method</legend>
