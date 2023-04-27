@@ -4,7 +4,8 @@ import NavHeader from './NavHeader'
 // import { useIsLoggedIn } from "./RootLayout"
 import { checkAuth } from "../utils/helper"
 
-export async function loader(request: Request){
+export async function loader({request} : {request: Request}){
+    console.log('running AuthLoader')
     const userToken = await checkAuth(request)
     return userToken 
 //     const userToken = sessionStorage.getItem('userToken')
@@ -16,7 +17,7 @@ export async function loader(request: Request){
 }
 
 export default function AuthRequiredLayout(){
-    console.log('running auth required')
+    console.log('running auth required layout')
     const userToken = useLoaderData()
     console.log(userToken)
 

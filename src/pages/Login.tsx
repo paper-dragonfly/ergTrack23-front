@@ -1,7 +1,7 @@
 import '../App.css';
 import { firebaseSignOut, signInWithGoogle } from '../utils/firebase';
 import {useEffect, useState} from 'react';
-import {Navigate, useLoaderData} from 'react-router-dom'
+import {Navigate, useLoaderData, useSearchParams} from 'react-router-dom'
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -10,12 +10,16 @@ const API_URL = 'http://127.0.0.1:8000'
 // }
 
 export default function Login() {
-  console.log('login rendered')
+  console.log('running Login')
+
   const [userToken, setUserToken] = useState("")
   // const userToken = useLoaderData()
   // console.log(userToken,  'line17 Login')
   const [userEmail, setUserEmail] = useState("")
   const [userName,  setUserName] = useState("")
+
+  const[searchParams, setSearchParams] = useSearchParams()
+  const pathname = searchParams.get("redirectTo") || "/dashboard"
 
   // if(userToken){
   //   console.log('navigating to dashboard')
@@ -92,7 +96,7 @@ export default function Login() {
 
   return (
     <div className="App"> 
-        {userToken && <Navigate to="/dashboard" />}
+        {userToken && <Navigate to={pathname} />}
         <br />
         <button className= "login-with-google-btn"  onClick={signIn}>sign in with google</button>
     </div>

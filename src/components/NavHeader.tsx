@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { NavLink, redirect } from "react-router-dom"
+import { NavLink, redirect, Navigate } from "react-router-dom"
 import { firebaseSignOut } from '../utils/firebase';
 
 
@@ -10,19 +10,25 @@ const activeStyles = {
 }
 
 export default function NavHeader () {
+    const [logout, setLogout] = useState(false)
+    console.log('runningg NavHeader')
+
      
     function signOut(){
+        console.log('logout1')
         firebaseSignOut()
           .then(() => {
             console.log('signing out')
             sessionStorage.removeItem('userToken')
           })
-        //   .then(()=> {
-        //     return redirect('/')
-        // })
+          .then(()=> {
+            console.log('about to set logout to true')
+            setLogout(true)
+        })
       }
     return (
         <header>
+            {logout && <Navigate  to='/' />}
             <nav className='nav-header'>
                 <NavLink 
                     to='/dashboard' 
@@ -40,7 +46,7 @@ export default function NavHeader () {
                     to='/addworkout' 
                     style={({isActive}) => isActive ? activeStyles : {}}
                 >Add Workout</NavLink>
-                <button onSubmit={signOut}>Log Out</button>
+                <button onClick={signOut}>Log Out</button>
             </nav>
         </header>
     )

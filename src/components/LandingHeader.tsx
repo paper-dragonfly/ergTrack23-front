@@ -8,6 +8,7 @@ const activeStyles = {
 }
 
 export default function LandingHeader () {
+    console.log('runningg LandingHeader')
     return (
         <header>
             <nav className='landing-header'>

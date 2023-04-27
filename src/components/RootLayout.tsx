@@ -8,9 +8,9 @@ import { checkAuth } from "../utils/helper"
 
 // type userTokenType = {userToken : string|null}
 
-export async function loader({ request }: {request : Request}){
-    const userToken = await checkAuth(request)
-    return userToken }
+// export async function loader({ request }: {request : Request}){
+//     const userToken = await checkAuth(request) INFINITE LOOP HEREE??/
+//     return userToken }
 
 // export function loader():userTokenType{
 //     const userToken = sessionStorage.getItem('userToken') 
@@ -22,8 +22,7 @@ export default function RootLayout(){
     // const {userToken} = useLoaderData() as userTokenType
     // const [isLoggedIn, setIsLoggedIn] = useState(userToken)
     // console.log(`Rootlayout isLoggedIn ${isLoggedIn}`)
-    const userToken = useLoaderData()
-    console.log('In RootLayout component', userToken)
+    console.log('Running RootLayout')
 
     return(
         <>
