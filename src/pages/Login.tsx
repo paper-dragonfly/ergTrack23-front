@@ -23,6 +23,7 @@ export default function Login() {
         if(result.user.displayName){ 
             setUserName(result.user.displayName)}
         const idToken = result.user.getIdToken()
+        console.log('idToken', idToken)
         return idToken
       })
       // authenticate user with ergTrack server, get user_token 
