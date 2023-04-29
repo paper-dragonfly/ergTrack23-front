@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TypesNameAndDate, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from './interfaces';
+import { reformat_date } from './helperFunctions';
 import { nanoid } from 'nanoid'
 import { API_URL } from '../../config';
 
@@ -10,6 +11,7 @@ export default function EditableResults(props: ERProps) {
 
   // const [metrics, setMetrics]  =  useState<TypesWorkoutMetrics>(props.workoutMetrics)
   const metrics = props.workoutMetrics
+  const userToken = props.userToken
   
   const [nameAndDate, setNameAndDate] = useState<TypesNameAndDate>({
     workoutName: metrics.workoutName,
@@ -67,13 +69,18 @@ export default function EditableResults(props: ERProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Data:', workoutTableMetrics);
+    
+    const dateFormatted = reformat_date(nameAndDate.workoutDate)
 
     //post data to API
     const url =  API_URL+'/workout'
     const postInfo = {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({nameAndDate: nameAndDate, tableMetrics: workoutTableMetrics})
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({nameAndDate: {workoutName: nameAndDate.workoutName, workoutDate:dateFormatted}, tableMetrics: workoutTableMetrics})
       }
     fetch(url, postInfo)
       .then((response) => response.json())

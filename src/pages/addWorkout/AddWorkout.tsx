@@ -1,6 +1,7 @@
 
 import React, {useState} from 'react'
 import {nanoid} from 'nanoid'
+import { useLoaderData, useOutletContext } from 'react-router-dom'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
@@ -10,7 +11,15 @@ import { generateWorkoutName } from './helperFunctions'
 
 import EditableResults from './EditableResults'
 
+export function loader(){
+    const userToken = sessionStorage.getItem('userToken')
+    return userToken 
+}
+
 export default function AddWorkout(){
+    const userToken = useLoaderData()
+
+
     const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
         {
             entryMethod: "manual",
@@ -71,6 +80,7 @@ export default function AddWorkout(){
             const url = API_URL+"/ergImage"
             const postInfo = {
                 method: "POST",
+                headers: {'Authorization': `Bearer ${userToken}`},
                 body: formData
                 }
             
@@ -215,7 +225,7 @@ export default function AddWorkout(){
                <br />
                <button type="submit">Submit</button>
             </form>
-            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics}/> : null}
+            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} />: null}
         </div>
     )
 }

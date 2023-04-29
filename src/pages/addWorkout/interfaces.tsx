@@ -57,4 +57,5 @@ export interface TypesWorkoutTableMetrics{
 
 export interface ERProps {
     workoutMetrics: TypesWorkoutMetrics;
+    userToken: unknown;
 }

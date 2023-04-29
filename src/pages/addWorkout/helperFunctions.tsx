@@ -42,3 +42,11 @@ export function generateWorkoutName(workoutInfo: TypesWorkoutInfo): string{
     return workoutName
 }
 
+export function reformat_date(date:string) : string{
+    // convert date from MMM DD YYYY format (jan 03 2022)-> YYYY-MM-DD
+    const dateTrimmed = new Date(date.trim())
+    const dateFormatted = dateTrimmed.toISOString().substring(0,10)
+    return dateFormatted 
+
+}
+

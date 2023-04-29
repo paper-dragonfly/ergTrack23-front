@@ -8,7 +8,7 @@ import {
 
 import './App.css';
 import RootLayout from './components/RootLayout';
-import AddWorkout from './pages/addWorkout/AddWorkout';
+import AddWorkout, {loader as addWorkoutloader} from './pages/addWorkout/AddWorkout';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
@@ -33,7 +33,7 @@ const router = createBrowserRouter(
       </Route>
       <Route element={<AuthRequiredLayout />} loader={AuthLoader} > 
         <Route path='dashboard' element={<Dashboard />} />
-        <Route path="addworkout" element={<AddWorkout />} />
+        <Route path="addworkout" element={<AddWorkout />} loader = {addWorkoutloader} />
         <Route path="log" element={<Log />} />
         <Route path="helloworld" element={<h1>hello world</h1>} />
       </Route>
