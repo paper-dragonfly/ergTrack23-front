@@ -1,5 +1,5 @@
 import React from 'react'
-import {TypesWorkoutInfo, TypesLengthOptions, LOProps } from './interfaces' 
+import {TypesWorkoutInfo, TypesLengthOptions, LOProps } from '../../utils/interfaces' 
 
 
 export default function LengthOptions(props: LOProps){

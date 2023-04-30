@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import React from 'react'
-import { TypesWorkoutInfo, TypesWorkoutMetrics } from './interfaces';
+import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces';
 
 
 const d = {

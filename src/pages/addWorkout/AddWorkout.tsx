@@ -5,7 +5,7 @@ import { useLoaderData, useOutletContext } from 'react-router-dom'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
-import { TypesWorkoutInfo, TypesWorkoutMetrics } from './interfaces'
+import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces'
 import { API_URL } from '../../config'
 import { generateWorkoutName } from './helperFunctions'
 

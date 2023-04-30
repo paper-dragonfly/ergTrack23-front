@@ -59,3 +59,26 @@ export interface ERProps {
     workoutMetrics: TypesWorkoutMetrics;
     userToken: unknown;
 }
+
+// Workout Log
+export interface TypeSubWorkout{
+    id: string;
+    time: string;
+    distance: number;
+    split: string;
+    strokeRate: number;
+    heartRate: number | null ;
+}
+
+export interface TypeFetchedWorkouts{
+    workout_id: number;
+    user_id: number;
+    date: Date;
+    time: string;
+    meter: number;
+    split: string;
+    stroke_rate: number;
+    interval: boolean;
+    image_hash: string | null;
+    subworkouts: TypeSubWorkout[] 
+}

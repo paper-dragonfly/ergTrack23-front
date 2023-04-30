@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TypesNameAndDate, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from './interfaces';
+import { TypesNameAndDate, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from '../../utils/interfaces';
 import { reformat_date } from './helperFunctions';
 import { nanoid } from 'nanoid'
 import { API_URL } from '../../config';
