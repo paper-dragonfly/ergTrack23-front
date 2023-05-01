@@ -84,6 +84,7 @@ export interface TypeFetchedWorkouts{
 }
 
 export interface TypeLogCols{
+    workoutId:number;
     date: Date;
     time: string;
     meter: number;

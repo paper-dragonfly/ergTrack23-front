@@ -1,8 +1,9 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react'
-import {useLoaderData} from 'react-router-dom'
+import {useLoaderData, useNavigate} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
+import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
 import { API_URL } from '../config' 
 import { TypeFetchedWorkouts, TypeLogCols } from '../utils/interfaces'
@@ -29,11 +30,17 @@ export async function loader(){
 
 export default function Log() {
     const allWorkouts = useLoaderData() as TypeFetchedWorkouts[]
+    const navigate = useNavigate()
+    const summaryData = new Array
+    const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
+    // const [selectedRowData, setSelectedRowData] = useState<TypeFetchedWorkouts|null>(null)
+    const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
+
     console.log('allworkouts', allWorkouts)
     // make a new list of obj containing only the columns you want to display (move to helper file?)
-    const summaryData = new Array
     for(let i=0; i<allWorkouts.length; i++){
         const rowArray = {
+            workoutId: allWorkouts[i]['workout_id'],
             date: allWorkouts[i]['date'],
             time: allWorkouts[i]['time'],
             meter: allWorkouts[i]['meter'],
@@ -44,8 +51,9 @@ export default function Log() {
         summaryData.push(rowArray)
     }
 
-    const [rowData, setRowData] = useState(summaryData)
-    const [columnDefs] = useState([
+    const [rowData, setRowData] = useState<any[]>(summaryData)
+    const [columnDefs] = useState<ColDef[]>([
+        // { headerName: 'Row ID', valueGetter: 'node.id' },
         {field: 'date', filter: true},
         {field: 'time', filter: true},
         {field: 'meter', filter: 'agNumberColumnFilter'},
@@ -53,6 +61,10 @@ export default function Log() {
         {field: 'strokeRate', filter: 'agNumberColumnFilter'},
         {field: 'interval', filter: true}
     ])
+
+    const getRowId = useMemo<GetRowIdFunc>(() => {
+        return (params: GetRowIdParams) => params.data.workoutId;
+      }, []);
 
     const defaultColDef = useMemo( ()=> ( {
         floatingFilter: true,
@@ -62,9 +74,6 @@ export default function Log() {
         // }
       }), []);
 
-    const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
-
-
     const autoSizeAll = useCallback((skipHeader: boolean) => {
         const allColumnIds: string[] = [];
         gridRef.current!.columnApi.getColumns()!.forEach((column) => {
@@ -72,6 +81,31 @@ export default function Log() {
         });
         gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
       }, []);
+
+    //   const onSelectionChanged = useCallback(() => {
+    //     const selectedrows = gridRef.currerent!.api.getSelectedrows()
+    //   }, [])
+
+    const onSelectionChanged = () => {
+        const selectedRow = gridRef.current!.api.getSelectedRows();
+        setSelectedRowId(selectedRow.length > 0 ? selectedRow[0].workoutId : null);
+      };
+
+    
+    const navigateToDetails = () => {
+        let selectedRowData
+        for(let i=0;i<allWorkouts.length;i++){
+            if(allWorkouts[i]['workout_id'] ===  selectedRowId){
+                selectedRowData = allWorkouts[i]
+                break;
+            }
+        }
+        navigate('details', {state: selectedRowData})
+    }
+    const clearRowSelection = () => {
+        setSelectedRowId(null)
+        gridRef.current!.api.deselectAll() 
+    }
 
     return(
         <div className='log-div'>
@@ -84,10 +118,21 @@ export default function Log() {
                     <AgGridReact
                         ref = {gridRef}
                         rowData={rowData} animateRows={true}
-                        columnDefs={columnDefs} defaultColDef={defaultColDef}>
+                        columnDefs={columnDefs} defaultColDef={defaultColDef}
+                        getRowId={getRowId}
+                        rowSelection={'single'}
+                        onSelectionChanged={onSelectionChanged}
+                        >
                     </AgGridReact>
                 </div>
-            </div> 
+            </div>
+            { selectedRowId ?
+            <div> 
+                <button onClick = {navigateToDetails}>View Details {`${selectedRowId}`}</button> 
+                <button onClick={clearRowSelection}>Clear Selection</button>
+            </div> : 
+            <p>Select workout to view details</p>
+            }
         </div>
     )
 }
