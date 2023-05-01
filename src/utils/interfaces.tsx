@@ -82,3 +82,12 @@ export interface TypeFetchedWorkouts{
     image_hash: string | null;
     subworkouts: TypeSubWorkout[] 
 }
+
+export interface TypeLogCols{
+    date: Date;
+    time: string;
+    meter: number;
+    split: string;
+    strokeRate: number;
+    interval: boolean;
+}
