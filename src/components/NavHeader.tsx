@@ -35,10 +35,6 @@ export default function NavHeader () {
                     style={({isActive}) => isActive ? activeStyles : {}}
                 >Dashboard</NavLink>
                 <NavLink 
-                    to='/helloworld' 
-                    style={({isActive}) => isActive ? activeStyles : {}}
-                >helloworld</NavLink>
-                <NavLink 
                     to='/log' 
                     style={({isActive}) => isActive ? activeStyles : {}}
                 >Log</NavLink>
@@ -46,6 +42,10 @@ export default function NavHeader () {
                     to='/addworkout' 
                     style={({isActive}) => isActive ? activeStyles : {}}
                 >Add Workout</NavLink>
+                <NavLink 
+                    to='/profile' 
+                    style={({isActive}) => isActive ? activeStyles : {}}
+                >Profile</NavLink>
                 <button onClick={signOut}>Log Out</button>
             </nav>
         </header>

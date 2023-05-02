@@ -1,5 +1,4 @@
-
-// Shared
+ // Shared
 export interface TypesWorkoutInfo {
     entryMethod: string;
     workoutType: string;
@@ -92,3 +91,13 @@ export interface TypeLogCols{
     strokeRate: number;
     interval: boolean;
 }
+
+//Workout Details 
+
+export interface TypeDetailsCols{
+    time?: string;
+    meter?: number;
+    split?: string;
+    strokeRate?: number;
+}
+

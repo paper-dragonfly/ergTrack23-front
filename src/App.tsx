@@ -35,7 +35,7 @@ const router = createBrowserRouter(
         <Route path='dashboard' element={<Dashboard />} />
         <Route path="addworkout" element={<AddWorkout />} loader = {addWorkoutloader} />
         <Route path="log" element={<Log />} loader = {logLoader}/>
-        <Route path="helloworld" element={<h1>hello world</h1>} />
+        <Route path="profile" element={<h1>Athlete Profile</h1>} />
         <Route path='log/details' element={<WorkoutDetails />} />
       </Route>
     </Route>
