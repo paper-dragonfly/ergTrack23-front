@@ -19,7 +19,6 @@ export function loader(){
 export default function AddWorkout(){
     const userToken = useLoaderData()
 
-
     const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
         {
             entryMethod: "manual",
@@ -42,7 +41,8 @@ export default function AddWorkout(){
             hr: [], 
         }
     )
-
+    
+    const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
@@ -89,6 +89,8 @@ export default function AddWorkout(){
                 .then((data) => {
                     console.log(data)
                     if(data.status_code === 200){ 
+                        setPhotoHash(data.body.photo_hash)
+                        console.log(photoHash)
                         setWorkoutMetrics({
                             workoutName: data.body.workout_meta.wo_name,
                             workoutDate: data.body.workout_meta.wo_date,
@@ -225,7 +227,7 @@ export default function AddWorkout(){
                <br />
                <button type="submit">Submit</button>
             </form>
-            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} />: null}
+            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>
     )
 }

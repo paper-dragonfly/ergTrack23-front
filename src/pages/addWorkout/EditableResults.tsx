@@ -12,6 +12,7 @@ export default function EditableResults(props: ERProps) {
   // const [metrics, setMetrics]  =  useState<TypesWorkoutMetrics>(props.workoutMetrics)
   const metrics = props.workoutMetrics
   const userToken = props.userToken
+  const photoHash = props.photoHash
   
   const [nameAndDate, setNameAndDate] = useState<TypesNameAndDate>({
     workoutName: metrics.workoutName,
@@ -80,7 +81,7 @@ export default function EditableResults(props: ERProps) {
         'Authorization': `Bearer ${userToken}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({nameAndDate: {workoutName: nameAndDate.workoutName, workoutDate:dateFormatted}, tableMetrics: workoutTableMetrics})
+      body: JSON.stringify({nameAndDate: {workoutName: nameAndDate.workoutName, workoutDate:dateFormatted}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
       }
     fetch(url, postInfo)
       .then((response) => response.json())
