@@ -71,7 +71,9 @@ export default function EditableResults(props: ERProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Data:', workoutTableMetrics);
+    console.log('RUNNING SUBMIT')
+    console.log('Workout Table Metrics Data:', workoutTableMetrics);
+    console.log('MetaData', woMetaData)
     
     const dateFormatted = reformat_date(woMetaData.workoutDate)
 
@@ -83,7 +85,7 @@ export default function EditableResults(props: ERProps) {
         'Authorization': `Bearer ${userToken}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
+      body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
       }
     fetch(url, postInfo)
       .then((response) => response.json())

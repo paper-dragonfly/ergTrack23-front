@@ -74,6 +74,7 @@ export interface TypeSubWorkout{
 export interface TypeFetchedWorkouts{
     workout_id: number;
     user_id: number;
+    description: string | null;
     date: Date;
     time: string;
     meter: number;
@@ -81,7 +82,8 @@ export interface TypeFetchedWorkouts{
     stroke_rate: number;
     interval: boolean;
     image_hash: string | null;
-    subworkouts: TypeSubWorkout[] 
+    subworkouts: TypeSubWorkout[] ;
+    comment: string | null
 }
 
 export interface TypeLogCols{

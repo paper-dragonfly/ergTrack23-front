@@ -72,6 +72,8 @@ export default function WorkoutDetails(){
             <h1>
                 Workout Details 
             </h1>
+            <h2>Date: {workoutDetails.date}</h2>
+            <h2>Workout: {workoutDetails.description}</h2>
             <div style={{height : 300, color:'red'}}>
                 <div className = "ag-theme-alpine" style={{height:'100%', width:'90%'}} >
                     <AgGridReact
@@ -81,8 +83,8 @@ export default function WorkoutDetails(){
                     </AgGridReact>
                 </div>
             </div>
+            <p>Comment: {workoutDetails.comment}</p>
             <button onClick={onEditSaveClick}>{editing ? 'Save': 'Edit'}</button>
-            <p>{`${workoutDetails.subworkouts}`}</p>
         </div>
     )
 }

@@ -42,11 +42,13 @@ export default function Log() {
         const rowArray = {
             workoutId: allWorkouts[i]['workout_id'],
             date: allWorkouts[i]['date'],
+            workout: allWorkouts[i]['description'],
             time: allWorkouts[i]['time'],
             meter: allWorkouts[i]['meter'],
             split: allWorkouts[i]['split'],
             strokeRate: allWorkouts[i]['stroke_rate'],
-            interval: allWorkouts[i]['interval']
+            interval: allWorkouts[i]['interval'],
+            comment: allWorkouts[i]['comment']
         }
         summaryData.push(rowArray)
     }
@@ -55,11 +57,13 @@ export default function Log() {
     const [columnDefs] = useState<ColDef[]>([
         // { headerName: 'Row ID', valueGetter: 'node.id' },
         {field: 'date', filter: true},
+        {field: 'workout', filter: true},
         {field: 'time', filter: true},
         {field: 'meter', filter: 'agNumberColumnFilter'},
         {field: 'split', filter: true},
         {field: 'strokeRate', filter: 'agNumberColumnFilter'},
-        {field: 'interval', filter: true}
+        {field: 'interval', filter: true},
+        {field: 'comment', filter: true},
     ])
 
     const getRowId = useMemo<GetRowIdFunc>(() => {
