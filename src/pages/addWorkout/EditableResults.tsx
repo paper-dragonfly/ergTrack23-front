@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TypesNameAndDate, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from '../../utils/interfaces';
+import { TypesWoMetaData, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from '../../utils/interfaces';
 import { reformat_date } from './helperFunctions';
 import { nanoid } from 'nanoid'
 import { API_URL } from '../../config';
@@ -14,20 +14,22 @@ export default function EditableResults(props: ERProps) {
   const userToken = props.userToken
   const photoHash = props.photoHash
   
-  const [nameAndDate, setNameAndDate] = useState<TypesNameAndDate>({
+  const [woMetaData, setWoMetaData] = useState<TypesWoMetaData>({
     workoutName: metrics.workoutName,
     workoutDate: metrics.workoutDate,
+    comment: ""
   });
 
   useEffect(()=>{
-    console.log('hit', nameAndDate)
+    console.log('hit', woMetaData)
     // setMetrics(props.workoutMetrics)
-    setNameAndDate({
+    setWoMetaData({
       workoutName: metrics.workoutName,
-      workoutDate: metrics.workoutDate
+      workoutDate: metrics.workoutDate,
+      comment: ""
     })
     console.log('useEffect metrics', metrics)
-    console.log('useEffect nameAndDate', nameAndDate)
+    console.log('useEffect woMetaData', woMetaData)
     },[props.workoutMetrics]);
 
 
@@ -44,9 +46,9 @@ export default function EditableResults(props: ERProps) {
   });
 
 
-  const handleNDTChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+  const handleWoMetaDataChange = (e: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>):void => {
     const {name, value} = e.target 
-    setNameAndDate(oldData => {
+    setWoMetaData(oldData => {
         return{
             ...oldData,
             [name]: value
@@ -71,7 +73,7 @@ export default function EditableResults(props: ERProps) {
     e.preventDefault();
     console.log('Data:', workoutTableMetrics);
     
-    const dateFormatted = reformat_date(nameAndDate.workoutDate)
+    const dateFormatted = reformat_date(woMetaData.workoutDate)
 
     //post data to API
     const url =  API_URL+'/workout'
@@ -81,7 +83,7 @@ export default function EditableResults(props: ERProps) {
         'Authorization': `Bearer ${userToken}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({nameAndDate: {workoutName: nameAndDate.workoutName, workoutDate:dateFormatted}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
+      body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
       }
     fetch(url, postInfo)
       .then((response) => response.json())
@@ -97,8 +99,8 @@ export default function EditableResults(props: ERProps) {
                 <input 
                     type="text"
                     name = 'workoutName'
-                    value={nameAndDate.workoutName}
-                    onChange = {handleNDTChange}
+                    value={woMetaData.workoutName}
+                    onChange = {handleWoMetaDataChange}
                     />
             </label>
             <br />
@@ -107,8 +109,8 @@ export default function EditableResults(props: ERProps) {
                 <input 
                     type="text"
                     name = 'workoutDate'
-                    value={nameAndDate.workoutDate}
-                    onChange = {handleNDTChange}
+                    value={woMetaData.workoutDate}
+                    onChange = {handleWoMetaDataChange}
                     />
             </label>
             <br />
@@ -166,6 +168,15 @@ export default function EditableResults(props: ERProps) {
                 ))}
                 </tbody>
             </table>
+            <br />
+            <label>
+              Comment:
+              <br  />
+              <textarea 
+                id='comment' 
+                name='comment'
+                onChange={handleWoMetaDataChange}></textarea>
+            </label>
         </fieldset>
         <button type="submit">Save changes</button>
     </form>

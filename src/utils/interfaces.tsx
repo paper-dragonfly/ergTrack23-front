@@ -40,9 +40,10 @@ export interface UADIProps {
 }
 
 // WorkoutTable
-export interface TypesNameAndDate{
+export interface TypesWoMetaData{
     workoutName: string;
     workoutDate: string;
+    comment: string; 
 }
 
 export interface TypesWorkoutTableMetrics{
