@@ -5,9 +5,9 @@ import { useLoaderData, useOutletContext } from 'react-router-dom'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
-import { TypesWorkoutInfo, TypesWorkoutMetrics } from './interfaces'
+import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces'
 import { API_URL } from '../../config'
-import { generateWorkoutName } from './helperFunctions'
+import { generateWorkoutName, getTodaysDate } from './helperFunctions'
 
 import EditableResults from './EditableResults'
 
@@ -18,7 +18,6 @@ export function loader(){
 
 export default function AddWorkout(){
     const userToken = useLoaderData()
-
 
     const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
         {
@@ -31,6 +30,7 @@ export default function AddWorkout(){
         }
     )
 
+    // Info extracted from erg OR generated from workoutInfo
     const [workoutMetrics, setWorkoutMetrics] = useState<TypesWorkoutMetrics>(
         {
             workoutName: "",
@@ -42,7 +42,8 @@ export default function AddWorkout(){
             hr: [], 
         }
     )
-
+    
+    const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
@@ -89,6 +90,8 @@ export default function AddWorkout(){
                 .then((data) => {
                     console.log(data)
                     if(data.status_code === 200){ 
+                        setPhotoHash(data.body.photo_hash)
+                        console.log(photoHash)
                         setWorkoutMetrics({
                             workoutName: data.body.workout_meta.wo_name,
                             workoutDate: data.body.workout_meta.wo_date,
@@ -111,9 +114,10 @@ export default function AddWorkout(){
                 }
                 
                 const woName = generateWorkoutName(workoutInfo)
+                const woDate = getTodaysDate()
                 setWorkoutMetrics({
                     workoutName: woName,
-                    workoutDate: "",
+                    workoutDate: woDate,
                     time: emptyCol,
                     meter: emptyCol,
                     split:  emptyCol,
@@ -225,7 +229,7 @@ export default function AddWorkout(){
                <br />
                <button type="submit">Submit</button>
             </form>
-            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} />: null}
+            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>
     )
 }

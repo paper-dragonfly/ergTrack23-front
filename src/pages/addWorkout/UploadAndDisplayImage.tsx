@@ -1,5 +1,5 @@
 import React from 'react'
-import { UADIProps } from  './interfaces'
+import { UADIProps } from  '../../utils/interfaces'
 import "../../App.css"
 
 

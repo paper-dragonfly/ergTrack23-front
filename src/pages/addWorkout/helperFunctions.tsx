@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import React from 'react'
-import { TypesWorkoutInfo, TypesWorkoutMetrics } from './interfaces';
+import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces';
 
 
 const d = {
@@ -48,5 +48,12 @@ export function reformat_date(date:string) : string{
     const dateFormatted = dateTrimmed.toISOString().substring(0,10)
     return dateFormatted 
 
+}
+
+export function getTodaysDate() {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
+    const formattedDate = new Date().toLocaleDateString('en-US', options);
+    console.log(formattedDate.toString());
+    return formattedDate.toString()
 }
 

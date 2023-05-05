@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TypesNameAndDate, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from './interfaces';
+import { TypesWoMetaData, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from '../../utils/interfaces';
 import { reformat_date } from './helperFunctions';
 import { nanoid } from 'nanoid'
 import { API_URL } from '../../config';
@@ -12,21 +12,34 @@ export default function EditableResults(props: ERProps) {
   // const [metrics, setMetrics]  =  useState<TypesWorkoutMetrics>(props.workoutMetrics)
   const metrics = props.workoutMetrics
   const userToken = props.userToken
+  const photoHash = props.photoHash
   
-  const [nameAndDate, setNameAndDate] = useState<TypesNameAndDate>({
+  const [woMetaData, setWoMetaData] = useState<TypesWoMetaData>({
     workoutName: metrics.workoutName,
     workoutDate: metrics.workoutDate,
+    comment: ""
   });
 
   useEffect(()=>{
-    console.log('hit', nameAndDate)
-    // setMetrics(props.workoutMetrics)
-    setNameAndDate({
-      workoutName: metrics.workoutName,
-      workoutDate: metrics.workoutDate
+    const newMetrics = props.workoutMetrics
+    console.log('Running editaleResults useEffect')
+    setWoMetaData(oldData => {
+      return{
+          ...oldData,
+      workoutName: newMetrics.workoutName,
+      workoutDate: newMetrics.workoutDate}
     })
-    console.log('useEffect metrics', metrics)
-    console.log('useEffect nameAndDate', nameAndDate)
+    setWorkoutTableMetrics(() => {
+      const ergTable = []
+      for(let i = 0 ; i < newMetrics.time.length; i++ ){
+        const rowData = { id: nanoid(), time: newMetrics.time[i], distance: parseInt(newMetrics.meter[i]), split: newMetrics.split[i], strokeRate: parseInt(newMetrics.sr[i]), heartRate: parseInt(newMetrics.hr[i]) }
+        ergTable.push(rowData) 
+      }
+      return ergTable
+    })
+    
+    console.log('useEffect newMetrics', metrics)
+    console.log('useEffect woMetaData', woMetaData)
     },[props.workoutMetrics]);
 
 
@@ -43,9 +56,9 @@ export default function EditableResults(props: ERProps) {
   });
 
 
-  const handleNDTChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+  const handleWoMetaDataChange = (e: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>):void => {
     const {name, value} = e.target 
-    setNameAndDate(oldData => {
+    setWoMetaData(oldData => {
         return{
             ...oldData,
             [name]: value
@@ -68,9 +81,11 @@ export default function EditableResults(props: ERProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Data:', workoutTableMetrics);
+    console.log('RUNNING SUBMIT')
+    console.log('Workout Table Metrics Data:', workoutTableMetrics);
+    console.log('MetaData', woMetaData)
     
-    const dateFormatted = reformat_date(nameAndDate.workoutDate)
+    const dateFormatted = reformat_date(woMetaData.workoutDate)
 
     //post data to API
     const url =  API_URL+'/workout'
@@ -80,7 +95,7 @@ export default function EditableResults(props: ERProps) {
         'Authorization': `Bearer ${userToken}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({nameAndDate: {workoutName: nameAndDate.workoutName, workoutDate:dateFormatted}, tableMetrics: workoutTableMetrics})
+      body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
       }
     fetch(url, postInfo)
       .then((response) => response.json())
@@ -96,8 +111,8 @@ export default function EditableResults(props: ERProps) {
                 <input 
                     type="text"
                     name = 'workoutName'
-                    value={nameAndDate.workoutName}
-                    onChange = {handleNDTChange}
+                    value={woMetaData.workoutName}
+                    onChange = {handleWoMetaDataChange}
                     />
             </label>
             <br />
@@ -106,8 +121,8 @@ export default function EditableResults(props: ERProps) {
                 <input 
                     type="text"
                     name = 'workoutDate'
-                    value={nameAndDate.workoutDate}
-                    onChange = {handleNDTChange}
+                    value={woMetaData.workoutDate}
+                    onChange = {handleWoMetaDataChange}
                     />
             </label>
             <br />
@@ -165,6 +180,15 @@ export default function EditableResults(props: ERProps) {
                 ))}
                 </tbody>
             </table>
+            <br />
+            <label>
+              Comment:
+              <br  />
+              <textarea 
+                id='comment' 
+                name='comment'
+                onChange={handleWoMetaDataChange}></textarea>
+            </label>
         </fieldset>
         <button type="submit">Save changes</button>
     </form>

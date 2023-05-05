@@ -1,5 +1,4 @@
-
-// Shared
+ // Shared
 export interface TypesWorkoutInfo {
     entryMethod: string;
     workoutType: string;
@@ -41,9 +40,10 @@ export interface UADIProps {
 }
 
 // WorkoutTable
-export interface TypesNameAndDate{
+export interface TypesWoMetaData{
     workoutName: string;
     workoutDate: string;
+    comment: string; 
 }
 
 export interface TypesWorkoutTableMetrics{
@@ -58,4 +58,50 @@ export interface TypesWorkoutTableMetrics{
 export interface ERProps {
     workoutMetrics: TypesWorkoutMetrics;
     userToken: unknown;
+    photoHash: string;
 }
+
+// Workout Log
+export interface TypeSubWorkout{
+    id: string;
+    time: string;
+    distance: number;
+    split: string;
+    strokeRate: number;
+    heartRate: number | null ;
+}
+
+export interface TypeFetchedWorkouts{
+    workout_id: number;
+    user_id: number;
+    description: string | null;
+    date: Date;
+    time: string;
+    meter: number;
+    split: string;
+    stroke_rate: number;
+    interval: boolean;
+    image_hash: string | null;
+    subworkouts: TypeSubWorkout[] ;
+    comment: string | null
+}
+
+export interface TypeLogCols{
+    workoutId:number;
+    date: Date;
+    time: string;
+    meter: number;
+    split: string;
+    strokeRate: number;
+    interval: boolean;
+}
+
+//Workout Details 
+
+export interface TypeDetailsCols{
+    time?: string;
+    meter?: number;
+    split?: string;
+    strokeRate?: number;
+}
+
