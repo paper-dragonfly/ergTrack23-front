@@ -21,14 +21,24 @@ export default function EditableResults(props: ERProps) {
   });
 
   useEffect(()=>{
-    console.log('hit', woMetaData)
-    // setMetrics(props.workoutMetrics)
-    setWoMetaData({
-      workoutName: metrics.workoutName,
-      workoutDate: metrics.workoutDate,
-      comment: ""
+    const newMetrics = props.workoutMetrics
+    console.log('Running editaleResults useEffect')
+    setWoMetaData(oldData => {
+      return{
+          ...oldData,
+      workoutName: newMetrics.workoutName,
+      workoutDate: newMetrics.workoutDate}
     })
-    console.log('useEffect metrics', metrics)
+    setWorkoutTableMetrics(() => {
+      const ergTable = []
+      for(let i = 0 ; i < newMetrics.time.length; i++ ){
+        const rowData = { id: nanoid(), time: newMetrics.time[i], distance: parseInt(newMetrics.meter[i]), split: newMetrics.split[i], strokeRate: parseInt(newMetrics.sr[i]), heartRate: parseInt(newMetrics.hr[i]) }
+        ergTable.push(rowData) 
+      }
+      return ergTable
+    })
+    
+    console.log('useEffect newMetrics', metrics)
     console.log('useEffect woMetaData', woMetaData)
     },[props.workoutMetrics]);
 

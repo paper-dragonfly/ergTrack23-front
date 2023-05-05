@@ -7,7 +7,7 @@ import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
 import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces'
 import { API_URL } from '../../config'
-import { generateWorkoutName } from './helperFunctions'
+import { generateWorkoutName, getTodaysDate } from './helperFunctions'
 
 import EditableResults from './EditableResults'
 
@@ -30,6 +30,7 @@ export default function AddWorkout(){
         }
     )
 
+    // Info extracted from erg OR generated from workoutInfo
     const [workoutMetrics, setWorkoutMetrics] = useState<TypesWorkoutMetrics>(
         {
             workoutName: "",
@@ -113,9 +114,10 @@ export default function AddWorkout(){
                 }
                 
                 const woName = generateWorkoutName(workoutInfo)
+                const woDate = getTodaysDate()
                 setWorkoutMetrics({
                     workoutName: woName,
-                    workoutDate: "",
+                    workoutDate: woDate,
                     time: emptyCol,
                     meter: emptyCol,
                     split:  emptyCol,

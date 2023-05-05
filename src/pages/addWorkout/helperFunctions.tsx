@@ -50,3 +50,10 @@ export function reformat_date(date:string) : string{
 
 }
 
+export function getTodaysDate() {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: '2-digit' };
+    const formattedDate = new Date().toLocaleDateString('en-US', options);
+    console.log(formattedDate.toString());
+    return formattedDate.toString()
+}
+
