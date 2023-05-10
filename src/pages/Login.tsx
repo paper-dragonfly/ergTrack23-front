@@ -1,4 +1,3 @@
-import '../App.css';
 import { firebaseSignOut, signInWithGoogle } from '../utils/firebase';
 import {useEffect, useState} from 'react';
 import {Navigate, useLoaderData, useSearchParams} from 'react-router-dom'

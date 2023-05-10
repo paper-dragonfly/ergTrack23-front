@@ -571,10 +571,6 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.m-0 {
-  margin: 0px;
-}
-
 .block {
   display: block;
 }
@@ -591,9 +587,18 @@ video {
   display: none;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .bg-charcoal {
   --tw-bg-opacity: 1;
   background-color: rgb(42 40 40 / var(--tw-bg-opacity));
+}
+
+.text-textWhite {
+  --tw-text-opacity: 1;
+  color: rgb(252 255 229 / var(--tw-text-opacity));
 }
 
 .underline {

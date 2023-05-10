@@ -11,7 +11,7 @@ export default function LandingHeader () {
     console.log('running LandingHeader')
     return (
         <header>
-            <nav className='landing-header bg-charcoal m-0 '>
+            <nav className='landing-header bg-charcoal h-10 text-textWhite '>
                 <NavLink 
                     to='/' 
                     style={({isActive}) => isActive ? activeStyles : {}}

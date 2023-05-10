@@ -9,7 +9,8 @@ module.exports = {
       "coral": "#E6A091",
       "bgGrey": "#F4F3F3",
       "bgWhite": "#ECE5DF",
-      "btnGrey": "#D9D9D9"
+      "btnGrey": "#D9D9D9",
+      "textWhite": "#FCFFE5"
     },
     extend: {},
   },
