@@ -45,11 +45,13 @@ export default function AddWorkout(){
     
     const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
+    const [showError, setShowError] = useState<boolean>(false)
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
         setWorkoutInfo(oldWorkoutInfo => {
             if(type === 'file' && files){
+                setShowError(false)
                 return{
                     ...oldWorkoutInfo,
                     [name]:files[0]
@@ -102,6 +104,8 @@ export default function AddWorkout(){
                             hr: [], //hr not considered at this point
                         })
                         setShowEditableResults(true) 
+                    }else{
+                        setShowError(true) 
                     } 
                 })
             // if entryMethod = 'manual'
@@ -226,6 +230,8 @@ export default function AddWorkout(){
                     :
                     <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
                }
+               <br />
+               {showError && <p>Image processing failed. Please retake the photo.</p>}
                <br />
                <button type="submit">Submit</button>
             </form>
