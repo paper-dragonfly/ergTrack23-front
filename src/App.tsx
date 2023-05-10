@@ -6,7 +6,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom"
 
-import './App.css';
+
 import RootLayout from './components/RootLayout';
 import AddWorkout, {loader as addWorkoutloader} from './pages/addWorkout/AddWorkout';
 import Login from './pages/Login';
