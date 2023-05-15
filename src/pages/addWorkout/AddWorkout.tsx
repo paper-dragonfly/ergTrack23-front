@@ -21,7 +21,7 @@ export default function AddWorkout(){
 
     const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
         {
-            entryMethod: "manual",
+            entryMethod: "fmImg",
             workoutType:"singleDist",
             workoutLength:"2000m",
             customLength:"",
@@ -141,6 +141,17 @@ export default function AddWorkout(){
                 <fieldset>
                     <legend>Entry Method</legend>
                     <label>
+                        Image
+                        <input 
+                            type='radio'
+                            id='fmImg'
+                            name= 'entryMethod'
+                            value ='fmImg'
+                            checked={workoutInfo.entryMethod === 'fmImg'}
+                            onChange={handleChange}
+                        />
+                    </label> 
+                    <label>
                         Manual
                         <input 
                             type='radio'
@@ -151,17 +162,6 @@ export default function AddWorkout(){
                             onChange={handleChange}
                         />
                     </label>
-                    <label>
-                        From Image
-                        <input 
-                            type='radio'
-                            id='fmImg'
-                            name= 'entryMethod'
-                            value ='fmImg'
-                            checked={workoutInfo.entryMethod === 'fmImg'}
-                            onChange={handleChange}
-                        />
-                    </label> 
                 </fieldset>
                 <fieldset >
                     <legend>Workout Type</legend>
