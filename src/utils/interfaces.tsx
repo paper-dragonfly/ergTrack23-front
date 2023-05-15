@@ -4,6 +4,7 @@ export interface TypesWorkoutInfo {
     workoutType: string;
     workoutLength:string;
     customLength: string;
+    rest:string;
     subWorkouts: string;
     ergImg: File | null; 
 }

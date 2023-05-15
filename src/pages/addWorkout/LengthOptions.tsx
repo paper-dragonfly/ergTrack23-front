@@ -5,9 +5,9 @@ import {TypesWorkoutInfo, TypesLengthOptions, LOProps } from '../../utils/interf
 export default function LengthOptions(props: LOProps){
     const workoutLengthOptions: TypesLengthOptions= {
         singleDist: ['2000m', '5000m', '10000m', 'other'],
-        singleTime: ['15 min','30 min','45 min', 'other'],
+        singleTime: ['15:00','30:00','45:00', 'other'],
         intervalDist:['500m','1000m','2000m','other'],
-        intervalTime: ['1 min', '15 min','30 min','other']
+        intervalTime: ['1:00', '15:00','30:00','other']
     }
     
     let displayedType:string[] = new Array
@@ -25,7 +25,6 @@ export default function LengthOptions(props: LOProps){
         <fieldset>
             <legend>{props.workoutInfo.workoutType}</legend>
             <label>
-                {displayedType[0]}
                 <input 
                     type='radio'
                     id='lengthOption1'
@@ -33,10 +32,10 @@ export default function LengthOptions(props: LOProps){
                     value = {displayedType[0]}
                     checked = {props.workoutInfo.workoutLength === displayedType[0]}
                     onChange = {props.handleChange}
-                />
+                    />
+                {displayedType[0]}
             </label>
             <label>
-                {displayedType[1]}
                 <input 
                     type='radio'
                     id='lengthOption2'
@@ -45,9 +44,9 @@ export default function LengthOptions(props: LOProps){
                     checked = {props.workoutInfo.workoutLength === displayedType[1]}
                     onChange = {props.handleChange}
                 />
+                {displayedType[1]}
             </label>
             <label>
-                {displayedType[2]}
                 <input 
                     type='radio'
                     id='lengthOption3'
@@ -56,9 +55,9 @@ export default function LengthOptions(props: LOProps){
                     checked = {props.workoutInfo.workoutLength === displayedType[2]}
                     onChange = {props.handleChange}
                 />
+                {displayedType[2]}
             </label>
             <label>
-                Other
                 <input 
                     type='radio'
                     id='lengthOption4'
@@ -67,6 +66,7 @@ export default function LengthOptions(props: LOProps){
                     checked = {props.workoutInfo.workoutLength === 'other'}
                     onChange = {props.handleChange}
                 />
+                Other
             </label>
             <input 
                 type='text' 
