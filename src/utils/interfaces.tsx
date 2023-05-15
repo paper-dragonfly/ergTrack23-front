@@ -81,7 +81,6 @@ export interface TypeFetchedWorkouts{
     meter: number;
     split: string;
     stroke_rate: number;
-    interval: boolean;
     image_hash: string | null;
     subworkouts: TypeSubWorkout[] ;
     comment: string | null
@@ -94,7 +93,6 @@ export interface TypeLogCols{
     meter: number;
     split: string;
     strokeRate: number;
-    interval: boolean;
 }
 
 //Workout Details 

@@ -2,6 +2,7 @@
 import React, {useState} from 'react'
 import {nanoid} from 'nanoid'
 import { useLoaderData, useOutletContext } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
@@ -47,6 +48,7 @@ export default function AddWorkout(){
     const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
+    
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
@@ -110,30 +112,30 @@ export default function AddWorkout(){
                     } 
                 })
             // if entryMethod = 'manual'
-            }else if(workoutInfo.entryMethod === 'manual'){
-                console.log('running submit for manual')
-                // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
-                const emptyCol: string[] = [""]
-                for(let i=0; i < parseInt(workoutInfo.subWorkouts); i++){
-                    emptyCol.push("")
-                }
-                
-                const woName = generateWorkoutName(workoutInfo)
-                const woDate = getTodaysDate()
-                setWorkoutMetrics({
-                    workoutName: woName,
-                    workoutDate: woDate,
-                    time: emptyCol,
-                    meter: emptyCol,
-                    split:  emptyCol,
-                    sr: emptyCol,
-                    hr: [],
-                })
-                console.log('workoutInfo', workoutInfo)
-                console.log('manualInputWorkoutMetrics', workoutMetrics)
-                setShowEditableResults(true)
+        }else if(workoutInfo.entryMethod === 'manual'){
+            console.log('running submit for manual')
+            // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
+            const emptyCol: string[] = [""]
+            for(let i=0; i < parseInt(workoutInfo.subWorkouts); i++){
+                emptyCol.push("")
+            }
+            
+            const woName = generateWorkoutName(workoutInfo)
+            const woDate = getTodaysDate()
+            setWorkoutMetrics({
+                workoutName: woName,
+                workoutDate: woDate,
+                time: emptyCol,
+                meter: emptyCol,
+                split:  emptyCol,
+                sr: emptyCol,
+                hr: [],
+            })
+            console.log('workoutInfo', workoutInfo)
+            console.log('manualInputWorkoutMetrics', workoutMetrics)
+            setShowEditableResults(true)
 
-            }  
+        }  
     }       
     
     return(
@@ -245,8 +247,12 @@ export default function AddWorkout(){
                     : // From Image
                     <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
                }
-               <br />
-               {showError && <p>Image processing failed. Please retake the photo.</p>}
+               {showError && 
+               <div> 
+                    <h4>Image processing failed</h4> 
+                    <p>Please retake the photo and try again</p>
+                </div>
+                }
                <br />
                <button type="submit">Submit</button>
             </form>
