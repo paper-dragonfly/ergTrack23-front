@@ -49,6 +49,9 @@ export default function AddWorkout(){
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
     
+    const { handleSubmit, formState }  = useForm() 
+    const {isSubmitting} = formState
+
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
@@ -73,8 +76,9 @@ export default function AddWorkout(){
         })
     }
     
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>){
-        e.preventDefault() //prevent immediate submittion 
+    function submitForm(){
+        // e: React.FormEvent<HTMLFormElement>
+        // e.preventDefault() //prevent immediate submittion 
         
         //if entryMethod === 'fmImg' & img selected -> create form, add image file, POST to API -> process resp 
         if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg){
@@ -90,57 +94,60 @@ export default function AddWorkout(){
                 body: formData
                 }
             
-            fetch(url, postInfo)
-                .then((response) => response.json()) 
-                .then((data) => {
-                    console.log(data)
-                    if(data.status_code === 200){ 
-                        setPhotoHash(data.body.photo_hash)
-                        console.log(photoHash)
-                        setWorkoutMetrics({
-                            workoutName: data.body.workout_meta.wo_name,
-                            workoutDate: data.body.workout_meta.wo_date,
-                            time: data.body.workout_data.time,
-                            meter: data.body.workout_data.meter,
-                            split:  data.body.workout_data.split,
-                            sr: data.body.workout_data.sr,
-                            hr: [], //hr not considered at this point
-                        })
-                        setShowEditableResults(true) 
-                    }else{
-                        setShowError(true) 
-                    } 
+            return(
+                fetch(url, postInfo)
+                    .then((response) => response.json()) 
+                    .then((data) => {
+                        console.log(data)
+                        if(data.status_code === 200){ 
+                            setPhotoHash(data.body.photo_hash)
+                            console.log(photoHash)
+                            setWorkoutMetrics({
+                                workoutName: data.body.workout_meta.wo_name,
+                                workoutDate: data.body.workout_meta.wo_date,
+                                time: data.body.workout_data.time,
+                                meter: data.body.workout_data.meter,
+                                split:  data.body.workout_data.split,
+                                sr: data.body.workout_data.sr,
+                                hr: [], //hr not considered at this point
+                            })
+                            setShowEditableResults(true) 
+                        }else{
+                            setShowError(true) 
+                        } 
                 })
+            )
             // if entryMethod = 'manual'
         }else if(workoutInfo.entryMethod === 'manual'){
             console.log('running submit for manual')
             // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
-            const emptyCol: string[] = [""]
-            for(let i=0; i < parseInt(workoutInfo.subWorkouts); i++){
-                emptyCol.push("")
-            }
-            
-            const woName = generateWorkoutName(workoutInfo)
-            const woDate = getTodaysDate()
-            setWorkoutMetrics({
-                workoutName: woName,
-                workoutDate: woDate,
-                time: emptyCol,
-                meter: emptyCol,
-                split:  emptyCol,
-                sr: emptyCol,
-                hr: [],
-            })
-            console.log('workoutInfo', workoutInfo)
-            console.log('manualInputWorkoutMetrics', workoutMetrics)
-            setShowEditableResults(true)
-
-        }  
+            return new Promise<void>(resolve => {
+                const emptyCol: string[] = [""]
+                for(let i=0; i < parseInt(workoutInfo.subWorkouts); i++){
+                    emptyCol.push("")
+                }
+                
+                const woName = generateWorkoutName(workoutInfo)
+                const woDate = getTodaysDate()
+                setWorkoutMetrics({
+                    workoutName: woName,
+                    workoutDate: woDate,
+                    time: emptyCol,
+                    meter: emptyCol,
+                    split:  emptyCol,
+                    sr: emptyCol,
+                    hr: [],
+                })
+                console.log('workoutInfo', workoutInfo)
+                console.log('manualInputWorkoutMetrics', workoutMetrics)
+                setShowEditableResults(true)
+                resolve()
+        })}  
     }       
     
     return(
         <div className='add-workout-div'>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(submitForm)}>
                 <fieldset>
                     <legend>Entry Method</legend>
                     <label>
@@ -254,7 +261,7 @@ export default function AddWorkout(){
                 </div>
                 }
                <br />
-               <button type="submit">Submit</button>
+               <button disabled={isSubmitting} className='addwo-form-submit-bt' type="submit">Submit</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>

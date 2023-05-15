@@ -20,6 +20,7 @@ import PublicLayout from './components/PublicLayout';
 import {loader as AuthLoader} from './components/AuthRequiredLayout'
 import { checkAuth } from './utils/helper';
 import WorkoutDetails from './pages/WorkoutDetails';
+import Submitted from './pages/addWorkout/Submitted';
 
 
 const router = createBrowserRouter(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
         <Route path="log" element={<Log />} loader = {logLoader}/>
         <Route path="profile" element={<h1>Athlete Profile</h1>} />
         <Route path='log/details' element={<WorkoutDetails />} />
+        <Route path='addworkout/submitted' element={<Submitted />} />
       </Route>
     </Route>
   )
