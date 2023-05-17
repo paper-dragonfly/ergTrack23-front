@@ -2,6 +2,7 @@
 import React, {useState} from 'react'
 import {nanoid} from 'nanoid'
 import { useLoaderData, useOutletContext } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
@@ -21,10 +22,11 @@ export default function AddWorkout(){
 
     const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
         {
-            entryMethod: "manual",
+            entryMethod: "fmImg",
             workoutType:"singleDist",
             workoutLength:"2000m",
             customLength:"",
+            rest:"",
             subWorkouts: "4",
             ergImg: null, 
         }
@@ -46,6 +48,10 @@ export default function AddWorkout(){
     const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
+    
+    const { handleSubmit, formState }  = useForm() 
+    const {isSubmitting} = formState
+
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
@@ -70,8 +76,9 @@ export default function AddWorkout(){
         })
     }
     
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>){
-        e.preventDefault() //prevent immediate submittion 
+    function submitForm(){
+        // e: React.FormEvent<HTMLFormElement>
+        // e.preventDefault() //prevent immediate submittion 
         
         //if entryMethod === 'fmImg' & img selected -> create form, add image file, POST to API -> process resp 
         if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg){
@@ -87,31 +94,34 @@ export default function AddWorkout(){
                 body: formData
                 }
             
-            fetch(url, postInfo)
-                .then((response) => response.json()) 
-                .then((data) => {
-                    console.log(data)
-                    if(data.status_code === 200){ 
-                        setPhotoHash(data.body.photo_hash)
-                        console.log(photoHash)
-                        setWorkoutMetrics({
-                            workoutName: data.body.workout_meta.wo_name,
-                            workoutDate: data.body.workout_meta.wo_date,
-                            time: data.body.workout_data.time,
-                            meter: data.body.workout_data.meter,
-                            split:  data.body.workout_data.split,
-                            sr: data.body.workout_data.sr,
-                            hr: [], //hr not considered at this point
-                        })
-                        setShowEditableResults(true) 
-                    }else{
-                        setShowError(true) 
-                    } 
+            return(
+                fetch(url, postInfo)
+                    .then((response) => response.json()) 
+                    .then((data) => {
+                        console.log(data)
+                        if(data.status_code === 200){ 
+                            setPhotoHash(data.body.photo_hash)
+                            console.log(photoHash)
+                            setWorkoutMetrics({
+                                workoutName: data.body.workout_meta.wo_name,
+                                workoutDate: data.body.workout_meta.wo_date,
+                                time: data.body.workout_data.time,
+                                meter: data.body.workout_data.meter,
+                                split:  data.body.workout_data.split,
+                                sr: data.body.workout_data.sr,
+                                hr: [], //hr not considered at this point
+                            })
+                            setShowEditableResults(true) 
+                        }else{
+                            setShowError(true) 
+                        } 
                 })
+            )
             // if entryMethod = 'manual'
-            }else if(workoutInfo.entryMethod === 'manual'){
-                console.log('running submit for manual')
-                // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
+        }else if(workoutInfo.entryMethod === 'manual'){
+            console.log('running submit for manual')
+            // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
+            return new Promise<void>(resolve => {
                 const emptyCol: string[] = [""]
                 for(let i=0; i < parseInt(workoutInfo.subWorkouts); i++){
                     emptyCol.push("")
@@ -131,28 +141,16 @@ export default function AddWorkout(){
                 console.log('workoutInfo', workoutInfo)
                 console.log('manualInputWorkoutMetrics', workoutMetrics)
                 setShowEditableResults(true)
-
-            }  
+                resolve()
+        })}  
     }       
     
     return(
         <div className='add-workout-div'>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(submitForm)}>
                 <fieldset>
                     <legend>Entry Method</legend>
                     <label>
-                        Manual
-                        <input 
-                            type='radio'
-                            id='manual'
-                            name= 'entryMethod'
-                            value ='manual'
-                            checked={workoutInfo.entryMethod === 'manual'}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        From Image
                         <input 
                             type='radio'
                             id='fmImg'
@@ -161,79 +159,109 @@ export default function AddWorkout(){
                             checked={workoutInfo.entryMethod === 'fmImg'}
                             onChange={handleChange}
                         />
+                        Image
                     </label> 
-                </fieldset>
-                <fieldset >
-                    <legend>Workout Type</legend>
                     <label>
-                        Single Distance
                         <input 
                             type='radio'
-                            id='singleDist'
-                            name='workoutType'
-                            value = 'singleDist'
-                            checked = {workoutInfo.workoutType === 'singleDist'}
-                            onChange = {handleChange}
+                            id='manual'
+                            name= 'entryMethod'
+                            value ='manual'
+                            checked={workoutInfo.entryMethod === 'manual'}
+                            onChange={handleChange}
                         />
-                    </label>
-                    <label>
-                        Single Time
-                        <input 
-                            type='radio'
-                            id='singleTime'
-                            name='workoutType'
-                            value = 'singleTime'
-                            checked = {workoutInfo.workoutType === 'singleTime'}
-                            onChange = {handleChange}
-                        />
-                    </label>
-                    <label>
-                        Interval Distance
-                        <input 
-                            type='radio'
-                            id='intervalDist'
-                            name='workoutType'
-                            value = 'intervalDist'
-                            checked = {workoutInfo.workoutType === 'intervalDist'}
-                            onChange = {handleChange}
-                        />
-                    </label>
-                    <label>
-                        Interval Time
-                        <input 
-                            type='radio'
-                            id='intervalTime'
-                            name='workoutType'
-                            value = 'intervalTime'
-                            checked = {workoutInfo.workoutType === 'intervalTime'}
-                            onChange = {handleChange}
-                        />
+                        Manual
                     </label>
                 </fieldset>
                 {
                     workoutInfo.entryMethod === "manual"?
                     <div className='visible-on-manual'>
-                    <LengthOptions className="visible-on-manual" workoutInfo={workoutInfo} handleChange={handleChange}/> 
-                    <fieldset className="visible-on-manual">
-                        <label>
-                            Number of Sub-Workouts
-                            <input
-                                type='number'
-                                name='subWorkouts'
-                                value={workoutInfo.subWorkouts}
-                                onChange= {handleChange}
-                            />
-                        </label>
-                    </fieldset>
-                    <br /> 
+                        <fieldset >
+                            <legend>Workout Type</legend>
+                            <label>
+                                <input 
+                                    type='radio'
+                                    id='singleDist'
+                                    name='workoutType'
+                                    value = 'singleDist'
+                                    checked = {workoutInfo.workoutType === 'singleDist'}
+                                    onChange = {handleChange}
+                                />
+                                Single Distance
+                            </label>
+                            <label>
+                                <input 
+                                    type='radio'
+                                    id='singleTime'
+                                    name='workoutType'
+                                    value = 'singleTime'
+                                    checked = {workoutInfo.workoutType === 'singleTime'}
+                                    onChange = {handleChange}
+                                />
+                                Single Time
+                            </label>
+                            <label>
+                                <input 
+                                    type='radio'
+                                    id='intervalDist'
+                                    name='workoutType'
+                                    value = 'intervalDist'
+                                    checked = {workoutInfo.workoutType === 'intervalDist'}
+                                    onChange = {handleChange}
+                                />
+                                Interval Distance
+                            </label>
+                            <label>
+                                <input 
+                                    type='radio'
+                                    id='intervalTime'
+                                    name='workoutType'
+                                    value = 'intervalTime'
+                                    checked = {workoutInfo.workoutType === 'intervalTime'}
+                                    onChange = {handleChange}
+                                />
+                                Interval Time
+                            </label>
+                        </fieldset>
+                        <LengthOptions className="visible-on-manual" workoutInfo={workoutInfo} handleChange={handleChange}/> 
+                        <fieldset className="visible-on-manual">
+                            <label>
+                                Number of Sub-Workouts
+                                <input
+                                    type='number'
+                                    name='subWorkouts'
+                                    value={workoutInfo.subWorkouts}
+                                    onChange= {handleChange}
+                                />
+                            </label>
+                        </fieldset>
+                        {workoutInfo.workoutType === 'intervalTime'  || workoutInfo.workoutType ==='intervalDist'? 
+                            <fieldset className="visible-on-manual">
+                                <label>
+                                    Rest 
+                                    <input
+                                        type='text'
+                                        name='rest'
+                                        value={workoutInfo.rest}
+                                        onChange= {handleChange}
+                                        placeholder='mm:ss'
+                                    />
+                                </label>
+                            </fieldset>: null
+                        }
+                        <br /> 
                     </div>
-                    :
+                    : // From Image
                     <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
                }
+               {showError && 
+               <div> 
+                    <h4>Image processing failed</h4> 
+                    <p>Please retake the photo and try again</p>
+                </div>
+                }
                <br />
-               {showError && <p>Image processing failed. Please retake the photo.</p>}
-               <br />
-               <button type="submit">Submit</button>
+               <button disabled={isSubmitting} className='addwo-form-submit-bt' type="submit">Submit</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>

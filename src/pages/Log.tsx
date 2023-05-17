@@ -47,7 +47,6 @@ export default function Log() {
             meter: allWorkouts[i]['meter'],
             split: allWorkouts[i]['split'],
             strokeRate: allWorkouts[i]['stroke_rate'],
-            interval: allWorkouts[i]['interval'],
             comment: allWorkouts[i]['comment']
         }
         summaryData.push(rowArray)
@@ -62,7 +61,6 @@ export default function Log() {
         {field: 'meter', filter: 'agNumberColumnFilter'},
         {field: 'split', filter: true},
         {field: 'strokeRate', filter: 'agNumberColumnFilter'},
-        {field: 'interval', filter: true},
         {field: 'comment', filter: true},
     ])
 
