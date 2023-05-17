@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import {useForm} from 'react-hook-form'
+
 import { TypesWoMetaData, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from '../../utils/interfaces';
 import { reformat_date } from './helperFunctions';
 import { nanoid } from 'nanoid'
@@ -6,14 +9,15 @@ import { API_URL } from '../../config';
 
 export default function EditableResults(props: ERProps) {
 
-  //TODO: how do I get the Results Workrout Name to change when workoutMetrics changes?
-  // TODO: generate empty table of correct dimensions 
-
-  // const [metrics, setMetrics]  =  useState<TypesWorkoutMetrics>(props.workoutMetrics)
   const metrics = props.workoutMetrics
   const userToken = props.userToken
   const photoHash = props.photoHash
-  
+
+  const {handleSubmit, formState} = useForm() 
+  const { isSubmitting } = formState; 
+
+  const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false)
+  const [viewSaveError, setViewSaveError] = useState<boolean>(false)
   const [woMetaData, setWoMetaData] = useState<TypesWoMetaData>({
     workoutName: metrics.workoutName,
     workoutDate: metrics.workoutDate,
@@ -79,119 +83,133 @@ export default function EditableResults(props: ERProps) {
     setWorkoutTableMetrics(newData);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('RUNNING SUBMIT')
-    console.log('Workout Table Metrics Data:', workoutTableMetrics);
-    console.log('MetaData', woMetaData)
-    
-    const dateFormatted = reformat_date(woMetaData.workoutDate)
+  const submitForm = () => {
+    setViewSaveError(false)
+    try{
+      console.log('RUNNING SUBMIT')
+      console.log('Workout Table Metrics Data:', workoutTableMetrics);
+      console.log('MetaData', woMetaData)
+      
+      const dateFormatted = reformat_date(woMetaData.workoutDate)
 
-    //post data to API
-    const url =  API_URL+'/workout'
-    const postInfo = {
-      method: "POST",
-      headers: {
-        'Authorization': `Bearer ${userToken}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
-      }
-    fetch(url, postInfo)
-      .then((response) => response.json())
-      .then((data)=> console.log(data))
+      //post data to API
+      const url =  API_URL+'/workout'
+      const postInfo = {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
+        }
+      return(
+        fetch(url, postInfo)
+          .then((response) => response.json())
+          .then((data)=> {
+            console.log(data)
+            setSubmitSuccessful(true)
+          })
+      )
+    } catch (error){
+      console.log(error)
+      setViewSaveError(true)
+    }
     };
 
   return (
-    <form onSubmit={handleSubmit}>
-        <fieldset>
-            <legend>Workout Results - edit as needed</legend>
-            <label>
-                Workout Name
-                <input 
-                    type="text"
-                    name = 'workoutName'
-                    value={woMetaData.workoutName}
-                    onChange = {handleWoMetaDataChange}
-                    />
-            </label>
-            <br />
-            <label>
-                Date
-                <input 
-                    type="text"
-                    name = 'workoutDate'
-                    value={woMetaData.workoutDate}
-                    onChange = {handleWoMetaDataChange}
-                    />
-            </label>
-            <br />
-            <table>
-                <thead>
-                <tr>
-                    <th>time</th>
-                    <th>meter</th>
-                    <th>/500m</th>
-                    <th>s/m</th>
-                </tr>
-                </thead>
-                <tbody>
-                {workoutTableMetrics.map((row) => (
-                    <tr key={row.id}>
-                    <td>
-                    <input
-                        type="text"
-                        value={row.time}
-                        onChange={(e) => handleMetricsChange(e, row.id, 'time')}
-                        />
-                    </td>
-                    <td>
-                        <input
-                        type="number"
-                        value={row.distance}
-                        onChange={(e) => handleMetricsChange(e, row.id, 'distance')}
-                        />
-                    </td>
-                    <td>
-                        <input
-                        type="text"
-                        value={row.split}
-                        onChange={(e) => handleMetricsChange(e, row.id, 'split')}
-                        />
-                    </td>
-                    <td>
-                        <input
-                        type="number"
-                        value={row.strokeRate}
-                        onChange={(e) => handleMetricsChange(e, row.id, 'strokeRate')}
-                        />
-                    </td>
-                    {row.heartRate? 
-                        <td>
-                            <input
-                            type="number"
-                            value={row.heartRate}
-                            onChange={(e) => handleMetricsChange(e, row.id, 'heartRate')}
-                            />
-                        </td> : 
-                        null
-                    }
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-            <br />
-            <label>
-              Comment:
-              <br  />
-              <textarea 
-                id='comment' 
-                name='comment'
-                onChange={handleWoMetaDataChange}></textarea>
-            </label>
-        </fieldset>
-        <button type="submit">Save changes</button>
-    </form>
+    <div> 
+      <form onSubmit={handleSubmit(submitForm)}>
+          <fieldset>
+              <legend>Workout Results - edit as needed</legend>
+              <label>
+                  Workout Name
+                  <input 
+                      type="text"
+                      name = 'workoutName'
+                      value={woMetaData.workoutName}
+                      onChange = {handleWoMetaDataChange}
+                      />
+              </label>
+              <br />
+              <label>
+                  Date
+                  <input 
+                      type="text"
+                      name = 'workoutDate'
+                      value={woMetaData.workoutDate}
+                      onChange = {handleWoMetaDataChange}
+                      />
+              </label>
+              <br />
+              <table>
+                  <thead>
+                  <tr>
+                      <th>time</th>
+                      <th>meter</th>
+                      <th>/500m</th>
+                      <th>s/m</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {workoutTableMetrics.map((row) => (
+                      <tr key={row.id}>
+                      <td>
+                      <input
+                          type="text"
+                          value={row.time}
+                          onChange={(e) => handleMetricsChange(e, row.id, 'time')}
+                          />
+                      </td>
+                      <td>
+                          <input
+                          type="number"
+                          value={row.distance}
+                          onChange={(e) => handleMetricsChange(e, row.id, 'distance')}
+                          />
+                      </td>
+                      <td>
+                          <input
+                          type="text"
+                          value={row.split}
+                          onChange={(e) => handleMetricsChange(e, row.id, 'split')}
+                          />
+                      </td>
+                      <td>
+                          <input
+                          type="number"
+                          value={row.strokeRate}
+                          onChange={(e) => handleMetricsChange(e, row.id, 'strokeRate')}
+                          />
+                      </td>
+                      {row.heartRate? 
+                          <td>
+                              <input
+                              type="number"
+                              value={row.heartRate}
+                              onChange={(e) => handleMetricsChange(e, row.id, 'heartRate')}
+                              />
+                          </td> : 
+                          null
+                      }
+                      </tr>
+                  ))}
+                  </tbody>
+              </table>
+              <br />
+              <label>
+                Comment:
+                <br  />
+                <textarea 
+                  id='comment' 
+                  name='comment'
+                  onChange={handleWoMetaDataChange}></textarea>
+              </label>
+          </fieldset>
+          <button disabled={isSubmitting} className='editableTable-form-submit-btn' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
+      </form>
+      {viewSaveError? <><h4>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all feilds and try again</p></>: null}
+      {submitSuccessful ? <Navigate to='/addworkout/submitted' /> : null}
+    </div>
   );
 }
 

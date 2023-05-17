@@ -30,12 +30,12 @@ export function generateWorkoutName(workoutInfo: TypesWorkoutInfo): string{
         workoutName = workoutInfo.customLength ? workoutInfo.customLength.toString()+' min': workoutInfo.workoutLength
     } else if(workoutInfo.workoutType === 'intervalDist'){
         workoutName = workoutInfo.customLength ? 
-            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.customLength.toString() +'m' : 
-            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.workoutLength
+            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.customLength.toString() +'m' + '/' + workoutInfo.rest + 'r' : 
+            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.workoutLength + '/' + workoutInfo.rest + 'r'
     }else if(workoutInfo.workoutType  === 'intervalTime'){
         workoutName = workoutInfo.customLength ? 
-            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.customLength.toString() : 
-            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.workoutLength
+            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.customLength.toString() + '/' + workoutInfo.rest + 'r' : 
+            workoutInfo.subWorkouts.toString() +'x' + workoutInfo.workoutLength + '/' + workoutInfo.rest + 'r'
     }
 
     

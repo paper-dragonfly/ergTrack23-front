@@ -46,7 +46,7 @@
 html, body {
   margin: 10px;
   padding: 0;
-  background-color: #FFF7ED;
+  background-color: whitesmoke;
   font-family: "Inter", sans-serif;
 }
 
@@ -135,9 +135,9 @@ header a:hover {
 
 /* AddWorkout */
 .uploaded-img {
-  width:30%;
+  width:60%;
 }
 
-.visible-on-from-img {
+/* .visible-on-from-img {
   background: rgba(113, 190, 5, 0.611);
-}
+} */

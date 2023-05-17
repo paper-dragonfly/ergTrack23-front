@@ -1,18 +1,26 @@
 import React, {useState, useMemo, useRef} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useLoaderData, Navigate} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 import { TypeDetailsCols } from '../utils/interfaces'
+import { API_URL } from '../config'
 
+
+export async function loader(){
+    const userToken = sessionStorage.getItem('userToken')
+    return userToken
+}
 
 export default function WorkoutDetails(){
+    const userToken = useLoaderData() 
     const location  = useLocation()
     const workoutDetails = location.state 
     console.log(workoutDetails)
     const gridRef = useRef<AgGridReact<TypeDetailsCols>>(null);
     const [editing, setEditing] = useState(false)
+    const [deleted, setDeleted] = useState<boolean>(false)
     
     const summaryRow: TypeDetailsCols = {
         time: workoutDetails.time,
@@ -67,6 +75,30 @@ export default function WorkoutDetails(){
         return null
     }
 
+    const onDeleteClick = () => {
+        console.log('Running DELETE workout')
+        //post data to API
+        const url =  API_URL+`/workout/${workoutDetails.workout_id}`
+        const delInfo = {
+        method: "DELETE",
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+          "Content-Type": "application/json"
+        },
+        
+        }
+        return(
+            fetch(url, delInfo)
+            .then((response) => response.json())
+            .then((data)=> {
+                console.log(data)
+                if(data.body.message === 'delete successful'){
+                    setDeleted(true)
+                }
+            })
+        )
+    }
+
     return (
         <div className='wo-details-div'>
             <h1>
@@ -85,6 +117,8 @@ export default function WorkoutDetails(){
             </div>
             <p>Comment: {workoutDetails.comment}</p>
             <button onClick={onEditSaveClick}>{editing ? 'Save': 'Edit'}</button>
+            <button onClick={onDeleteClick}>Delete Workout</button>
+            {deleted ? <Navigate to='/log/deleted' /> : null }
         </div>
     )
 }
