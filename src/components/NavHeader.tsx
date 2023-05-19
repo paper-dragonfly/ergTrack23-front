@@ -46,6 +46,10 @@ export default function NavHeader () {
                     to='/profile' 
                     style={({isActive}) => isActive ? activeStyles : {}}
                 >Profile</NavLink>
+                <NavLink 
+                    to='/about2' 
+                    style={({isActive}) => isActive ? activeStyles : {}}
+                >About</NavLink>
                 <button onClick={signOut}>Log Out</button>
             </nav>
         </header>
