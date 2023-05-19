@@ -3,19 +3,41 @@ import React from 'react'
 export default function About(){
     return(
         <div> 
+            <h1>About ergTrack </h1>
             <section>
-                <h1>About ergTrack </h1>
+                <h4>Record</h4>
+                <p>
+                    ergTrack uses computer vision to extract workout data from a photograph of a Concept2 RowErg memory screen 
+                </p>
+                <h4>View</h4>
+                <p>
+                    Checkout your Log to see the summary metrics for all your workouts. Select a specific entry to view interval/sub-workout details 
+                </p>
+                <h4>Compare</h4>
+                <p>
+                    Filter and sort Log entries to compare workouts
+                </p>
+            </section>
+            <section>
                 <h2>FAQ</h2>
                 <h4>How do I use ergTrack?</h4>
-                <p>{"Complete a workout on your Concept 2 indoor rower. Use the monitor buttons to navigate to the memory screen [Menu >  Memory > Select by Date> your-workout ] . Upload a photo of your memory screen to the ‘Add Workout’ page of ergTrack. Edit extracted data as needed. Save. Voila, that’s it.  Check out Log to view your workouts"}</p>
+                <p>{"Complete a workout on your Concept 2 indoor rower. Use the monitor buttons to navigate to the memory screen [Menu >  Memory > Select by Date> your-workout ] . Upload a photo of your memory screen to the ‘Add Workout’ page of ergTrack. Edit extracted data as needed. Save. Voila, that’s it. Check out Log to view your workouts"}</p>
                 <h4>What kind of  machine do I need?</h4>
-                <p>ergTrack is designed to work with a Concept 2 indoor rower with a PM5 monitor. It will not work with other indoor rowing machines or earlier monitor versions</p>
+                <p>
+                    ergTrack is designed to work with a Concept 2 indoor rower with a PM5 monitor. It will not work with other indoor rowing machines or earlier monitor versions
+                </p>
                 <h4>What makes for a 'good' upload photo?</h4>
-                <p>For best results, take a photo straight on in good lighting that captures the complete monitor but little background beyond that </p>
+                <p>
+                    For best results, take a photo straight on in good lighting that captures the complete monitor but little background beyond that 
+                </p>
                 <h4>Do I have to use a photo to input my workout data?</h4>
-                <p>No, therrer is an option for manual input</p>
+                <p>
+                    No, therrer is an option for manual input
+                </p>
                 <h4>What metrics does ergTrack rrecord?</h4>
-                <p>Date, description, distance, time, split (pace), stroke rate, comment (optional)</p>
+                <p>
+                    Date, description, distance, time, split (pace), stroke rate, comment (optional)
+                </p>
             </section>
             <section>
                 <h2>Comming in Version 2</h2>
