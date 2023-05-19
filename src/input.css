@@ -1,3 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html{
+        font-family: 'Inria Serif', serif;
+    }
+}
+
+/* Hide radio */
+[type=radio]{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Buttons */
+input::file-selector-button, 
+.login-with-google-btn,
+.demo-login-btn,
+.addwo-form-submit-bt,
+.editableTable-form-submit-btn {
+    background-color: #DDE691;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+/* Remove "no file chosen" text */
+input[type='file'] {
+    color: rgba(0, 0, 0, 0)
+  }
+
+

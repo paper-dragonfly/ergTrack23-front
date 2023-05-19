@@ -5,6 +5,6 @@ export default function Dashboard(){
 
     const userName = 'Kaja'
     return(
-        <h1>Welcome to YOUR ergTrack  DASHBOARD</h1>
+        <h1 className='text-xl text-center font-bold mt-6'>Welcome to ergTrack {userName}</h1>
     )
 }
