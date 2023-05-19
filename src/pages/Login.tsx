@@ -10,7 +10,6 @@ export default function Login() {
 
   const [userToken, setUserToken] = useState("")
   const [userName, setUserName] = useState("")
-  const [demoLogin, setDemoLogin] = useState(false)
 
   const[searchParams, setSearchParams] = useSearchParams()
   const pathname = searchParams.get("redirectTo") || "/dashboard"
@@ -54,8 +53,6 @@ export default function Login() {
         {userToken && <Navigate to={pathname} />}
         <br />
         <button className= "login-with-google-btn"  onClick={signIn}>sign in with google</button>
-        <button className= "demo-login-btn"  onClick={()=> setDemoLogin(true)}>demo login</button>
-        {demoLogin && <Navigate to='/dashboard' />}
     </div>
   )}
   
