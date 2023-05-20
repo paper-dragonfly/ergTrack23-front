@@ -52,8 +52,11 @@ export default function Login() {
     <div className="App"> 
         {userToken && <Navigate to={pathname} />}
         <br />
-        <button className= "login-with-google-btn"  onClick={signIn}>sign in with google</button>
-        <button className= "demo-login-btn"  onClick={()=> setDemoLogin(true)}>demo login</button>
+        <h1 className='text-xl font-bold text-center'>Sign in with</h1>
+        <div className='flex pt-6 justify-center gap-6'>
+          <button className= "login-with-google-btn"  onClick={signIn}>Google</button>
+          <button className= "demo-login-btn"  onClick={()=> setDemoLogin(true)}>Demo</ button>
+        </div>
         {demoLogin && <Navigate to='/dashboard' />}
     </div>
   )}

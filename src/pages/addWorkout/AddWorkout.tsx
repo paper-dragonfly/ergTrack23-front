@@ -4,6 +4,7 @@ import {nanoid} from 'nanoid'
 import { useLoaderData, useOutletContext } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
+
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
 import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces'
@@ -11,6 +12,9 @@ import { API_URL } from '../../config'
 import { generateWorkoutName, getTodaysDate } from './helperFunctions'
 
 import EditableResults from './EditableResults'
+
+import { BsImage } from "react-icons/bs"
+import { SlNote } from "react-icons/sl"
 
 export function loader(){
     const userToken = sessionStorage.getItem('userToken')
@@ -144,13 +148,14 @@ export default function AddWorkout(){
                 resolve()
         })}  
     }       
-    
+ 
     return(
-        <div className='add-workout-div'>
-            <form onSubmit={handleSubmit(submitForm)}>
-                <fieldset>
-                    <legend>Entry Method</legend>
-                    <label>
+        <div className='add-workout-div ml-14'>
+            <form onSubmit={handleSubmit(submitForm)} className="my-0 mx-auto">
+                <fieldset className='flex gap-10 my-10'>
+                    <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
+                    <label className='flex flex-col justify-center items-center text-center bg-bgGrey shadow-2xl rounded-lg w-24 h-24'>
+                        <BsImage size={30} />
                         <input 
                             type='radio'
                             id='fmImg'
@@ -159,9 +164,11 @@ export default function AddWorkout(){
                             checked={workoutInfo.entryMethod === 'fmImg'}
                             onChange={handleChange}
                         />
+                        
                         Image
                     </label> 
-                    <label>
+                    <label className={`flex flex-col justify-center items-center text-center bg-bgGrey shadow-2xl rounded-lg w-24 h-24 ${workoutInfo.entryMethod === 'manual' ? 'border-charcoal' + 'border-2' : ''}`}>
+                        <SlNote size={30}/>
                         <input 
                             type='radio'
                             id='manual'
@@ -261,7 +268,7 @@ export default function AddWorkout(){
                 </div>
                 }
                <br />
-               <button disabled={isSubmitting} className='addwo-form-submit-bt' type="submit">Submit</button>
+               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6' type="submit">Submit</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>

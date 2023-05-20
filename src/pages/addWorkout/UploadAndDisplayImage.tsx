@@ -17,7 +17,7 @@ export default function UploadAndDisplayImage(props: UADIProps){
             {props.workoutInfo.ergImg && (
                 <div>
                     <img 
-                        className='uploaded-img'
+                        className='uploaded-img w-11/12 mt-6 md:w-1/3'
                         alt='erg photo' 
                         src={URL.createObjectURL(props.workoutInfo.ergImg)}
                     />

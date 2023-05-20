@@ -205,7 +205,7 @@ export default function EditableResults(props: ERProps) {
                   onChange={handleWoMetaDataChange}></textarea>
               </label>
           </fieldset>
-          <button disabled={isSubmitting} className='editableTable-form-submit-btn' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
+          <button disabled={isSubmitting} className='editableTable-form-submit-btn mb-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
       </form>
       {viewSaveError? <><h4>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all feilds and try again</p></>: null}
       {submitSuccessful ? <Navigate to='/addworkout/submitted' /> : null}
