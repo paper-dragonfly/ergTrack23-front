@@ -26,13 +26,18 @@ input::file-selector-button,
 .login-with-google-btn,
 .demo-login-btn,
 .addwo-form-submit-bt,
-.editableTable-form-submit-btn
+.editableTable-form-submit-btn,
+.add-workout-btn,
+.view-log-btn
  {
     background-color: #DDE691;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
     font-size: 1.25rem;
+}
+.add-workout-btn {
+  background-color: #E6A091;
 }
 
 /* Remove "no file chosen" text */
