@@ -39,6 +39,8 @@ const router = createBrowserRouter(
         <Route path="addworkout" element={<AddWorkout />} loader = {addWorkoutloader} />
         <Route path="log" element={<Log />} loader = {logLoader}/>
         <Route path="profile" element={<ProfileView />} loader = {profileViewLoader} />
+        <Route path="about2" element={<About />} />
+        
         <Route path="profile/edit" element={<ProfileEdit />} action={profileEditAction}/>
         <Route path='log/details' element={<WorkoutDetails />} loader = {detailsLoader}/>
         <Route path='addworkout/submitted' element={<Submitted />} />
