@@ -20,13 +20,15 @@ export default function LandingHeader () {
 
     console.log('running LandingHeader')
     return (
-        <header>
-            <nav className='flex justify-between items-center px-6 bg-bgGrey h-14 text-xl font-bold md:h-28 md:text-2xl'>
-                <div onClick={() => setNav(!nav)} className="pl-4 z-10 delay-100 md:hidden">
+        <header className='px-6 md:px-14'>
+            <nav className='flex justify-between items-center bg-bgGrey h-14 text-xl font-bold md:h-28 md:text-2xl'>
+
+                {/* hamburger menu icon */}
+                <div onClick={() => setNav(!nav)} className="z-10 delay-100 md:hidden">
                     {nav ? <FaTimes size={25} /> : <FaBars size={25} />}
                 </div>
 
-                {/* hamburger menu */}
+                {/* open hamburger menu */}
                 {nav && (
                     <ul className='flex flex-col pt-28 items-center absolute top-0 left-0 w-full h-screen bg-bgGrey text-4xl font-bold gap-8'>
                         <NavLink to='/' onClick={() => setNav(!nav)}>Home</NavLink>
@@ -35,19 +37,23 @@ export default function LandingHeader () {
                     </ul>
                 ) }
 
-
-                <img src={logoWheel} alt="erg wheel" className="hidden md:flex md:max-h-16"/> 
-                {/* <div className='flex'> */}
+            {/* medium screen and larger */}
+                <NavLink to='/'><img src={logoWheel} alt="erg wheel"
+                    className="hidden md:flex md:max-h-16"/></NavLink>
+               
                 <NavLink 
-                    to='/'><img src={ergTrack} alt="ergTrack logo" className="self-center max-h-8 md:max-h-10" /></NavLink>
+                    to='/'><img src={ergTrack} alt="ergTrack logo" 
+                    className=" max-h-8 md:max-h-10" /></NavLink>
                 <div className='flex'>
-                {/* <NavLink 
-                    to='/' 
-                    style={({isActive}) => isActive ? activeStyles : {}}
-                    className="hidden md:flex"
-                >Home</NavLink> */}
-                <NavLink to='/login' className="text-xl font-bold">Login</NavLink>
-                {/* <NavLink to='/about' className="hidden md:flex">About</NavLink> */}
+           
+                    <NavLink 
+                        to='/about' 
+                        style={({isActive}) => isActive ? activeStyles : {}}
+                        className="hidden md:flex font-bold mr-6">About</NavLink>
+                    <NavLink to='/login' 
+                        style={({isActive}) => isActive ? activeStyles : {}}
+                        className="text-xl font-bold md:text-2xl">Login</NavLink>
+                
                 </div>
             </nav>
         </header>

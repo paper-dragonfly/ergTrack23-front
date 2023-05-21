@@ -24,7 +24,8 @@ export default function LengthOptions(props: LOProps){
     return(
         <fieldset>
             <legend>{props.workoutInfo.workoutType}</legend>
-            <label>
+            <div className='flex justify-between text-sm'>
+            <label className='workout-input-btn'>
                 <input 
                     type='radio'
                     id='lengthOption1'
@@ -35,7 +36,7 @@ export default function LengthOptions(props: LOProps){
                     />
                 {displayedType[0]}
             </label>
-            <label>
+            <label className='workout-input-btn'>
                 <input 
                     type='radio'
                     id='lengthOption2'
@@ -46,7 +47,7 @@ export default function LengthOptions(props: LOProps){
                 />
                 {displayedType[1]}
             </label>
-            <label>
+            <label className='workout-input-btn'>
                 <input 
                     type='radio'
                     id='lengthOption3'
@@ -57,7 +58,7 @@ export default function LengthOptions(props: LOProps){
                 />
                 {displayedType[2]}
             </label>
-            <label>
+            <label className='workout-input-btn'>
                 <input 
                     type='radio'
                     id='lengthOption4'
@@ -73,8 +74,10 @@ export default function LengthOptions(props: LOProps){
                 name = 'customLength'
                 style={{'display':props.workoutInfo.workoutLength === 'other'? 'block':'none'}}
                 onChange={props.handleChange} 
-                placeholder = 'custom'
+                placeholder = 'Custom'
+                className='editable-input custom'
             />
+            </div>
         </fieldset>
         
     )

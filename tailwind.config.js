@@ -10,7 +10,8 @@ module.exports = {
       "bgGrey": "#FAF7F7",
       "bgWhite": "#ECE5DF",
       "btnGrey": "#D9D9D9",
-      "textWhite": "#FCFFE5"
+      "textWhite": "#FCFFE5",
+      "tableGrey": "#767171"
     },
     extend: {},
   },
