@@ -33,17 +33,16 @@ export default function NavHeader () {
       }
 
     return (
-        <header>
+        <header className='px-6 lg:px-14 bg-bgGrey'>
             {logout && <Navigate  to='/' />}
-            <nav className='nav-header flex justify-between items-center px-6 bg-bgGrey h-14 text-black font-base  md:h-28 md:text-2xl'>
-                <div className='flex gap-32'>
-
-                            {/* hamburger menu */}
-
-                    <div onClick={() => setNav(!nav)} className="pl-4 z-20 delay-300    md:hidden">
+            <nav className='nav-header flex justify-between items-center h-14 text-xl font-bold lg:h-28 lg:text-2xl'>
+               
+                    {/* hamburger menu icon */}
+                    <div onClick={() => setNav(!nav)} className="flex z-20 delay-300 lg:hidden">
                         {nav ? <FaTimes size={25} /> : <FaBars size={25} />}
                     </div>
 
+                    {/* open hamburger menu */}
                     {nav && (
                     <div className='flex flex-col pt-28 items-center absolute top-0 left-0 w-full h-screen bg-bgGrey text-4xl font-bold gap-8 z-10'>
                         <NavLink to='/dashboard' onClick={() => setNav(!nav)}>Home</NavLink>
@@ -52,31 +51,37 @@ export default function NavHeader () {
                         <NavLink to='/about' onClick={() => setNav(!nav)}>About</NavLink>
                         <NavLink to='/profile' onClick={() => setNav(!nav)}>Profile</NavLink>
                     </div>
-                ) }
+                    ) }
+                                    
+                    <img src={ergTrack} alt="ergTrack logo" className="self-center  max-h-8 lg:hidden" />
+                    <span onClick={signOut} className='text-xl font-bold lg:hidden'>Log Out</span>
 
-                <img src={logoWheel} alt="erg wheel" className="hidden md:flex md:max-h-16"/> 
-                <img src={ergTrack} alt="ergTrack logo" className="self-center max-h-6 md:max-h-10" />
-                <span onClick={signOut} className='text-xl font-bold md:hidden'>Log Out</span>
-                </div>
-                <ul className='hidden md:flex md:justify-between md:gap-10'>
-                <li><NavLink 
-                    to='/dashboard' 
-                    style={({isActive}) => isActive ? activeStyles : {}}
-                >Dashboard</NavLink></li>
-                <li><NavLink 
-                    to='/log' 
-                    style={({isActive}) => isActive ? activeStyles : {}}
-                >Log</NavLink></li>
-                <li><NavLink 
-                    to='/addworkout' 
-                    style={({isActive}) => isActive ? activeStyles : {}}
-                >Add Workout</NavLink></li>
-                <li><NavLink 
-                    to='/profile' 
-                    style={({isActive}) => isActive ? activeStyles : {}}
-                    >Profile</NavLink></li>
-                <li><button onClick={signOut}>Log Out</button></li>
-                </ul>
+                 {/* large screen nav */}
+                <nav className='hidden lg:flex lg:justify-between lg:w-full'>
+                    <div className="hidden lg:flex items-center gap-6">
+                        <NavLink to='/dashboard'><img src={logoWheel} alt="erg wheel" className="hidden lg:flex lg:max-h-16"/> </NavLink>
+                        <NavLink to='/dashboard'><img src={ergTrack} alt="ergTrack logo" className="hidden lg:flex lg:max-h-10"/></NavLink>
+                    </div>
+                    <ul className='hidden lg:flex lg:justify-between items-center   lg:gap-10'>
+                        <li><NavLink 
+                            to='/dashboard' 
+                            style={({isActive}) => isActive ? activeStyles : {}}
+                        >Dashboard</NavLink></li>
+                        <li><NavLink 
+                            to='/log' 
+                            style={({isActive}) => isActive ? activeStyles : {}}
+                        >Log</NavLink></li>
+                        <li><NavLink 
+                            to='/addworkout' 
+                            style={({isActive}) => isActive ? activeStyles : {}}
+                        >Add Workout</NavLink></li>
+                        <li><NavLink 
+                            to='/profile' 
+                            style={({isActive}) => isActive ? activeStyles : {}}
+                            >Profile</NavLink></li>
+                        <li><button onClick={signOut}>Log Out</button></li>
+                    </ul>
+                </nav>
             </nav>
         </header>
     )

@@ -57,6 +57,7 @@ export default function AddWorkout(){
     const {isSubmitting} = formState
 
 
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
         setWorkoutInfo(oldWorkoutInfo => {
@@ -150,11 +151,11 @@ export default function AddWorkout(){
     }       
  
     return(
-        <div className='add-workout-div ml-14'>
-            <form onSubmit={handleSubmit(submitForm)} className="my-0 mx-auto">
+        <div className='add-workout-div flex flex-col items-center px-4 overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-10'>
+            <form onSubmit={handleSubmit(submitForm)}  >
                 <fieldset className='flex gap-10 my-10'>
                     <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
-                    <label className='flex flex-col justify-center items-center text-center bg-bgGrey shadow-2xl rounded-lg w-24 h-24'>
+                    <label className='flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24'>
                         <BsImage size={30} />
                         <input 
                             type='radio'
@@ -167,7 +168,7 @@ export default function AddWorkout(){
                         
                         Image
                     </label> 
-                    <label className={`flex flex-col justify-center items-center text-center bg-bgGrey shadow-2xl rounded-lg w-24 h-24 ${workoutInfo.entryMethod === 'manual' ? 'border-charcoal' + 'border-2' : ''}`}>
+                    <label className={`flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24`}>
                         <SlNote size={30}/>
                         <input 
                             type='radio'
@@ -182,10 +183,11 @@ export default function AddWorkout(){
                 </fieldset>
                 {
                     workoutInfo.entryMethod === "manual"?
-                    <div className='visible-on-manual'>
+                    <div className='visible-on-manual text-lg md:flex md:flex-col'>
                         <fieldset >
-                            <legend>Workout Type</legend>
-                            <label>
+                            <legend className='text-xl pb-4'>Workout Type</legend>
+                            <div className='flex justify-between text-sm pb-4 gap-3'>
+                            <label className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='singleDist'
@@ -193,10 +195,11 @@ export default function AddWorkout(){
                                     value = 'singleDist'
                                     checked = {workoutInfo.workoutType === 'singleDist'}
                                     onChange = {handleChange}
+                                    
                                 />
-                                Single Distance
+                                Single<br />Distance
                             </label>
-                            <label>
+                            <label className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='singleTime'
@@ -205,9 +208,9 @@ export default function AddWorkout(){
                                     checked = {workoutInfo.workoutType === 'singleTime'}
                                     onChange = {handleChange}
                                 />
-                                Single Time
+                                Single<br />Time
                             </label>
-                            <label>
+                            <label className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='intervalDist'
@@ -216,9 +219,9 @@ export default function AddWorkout(){
                                     checked = {workoutInfo.workoutType === 'intervalDist'}
                                     onChange = {handleChange}
                                 />
-                                Interval Distance
+                                Interval<br />Distance
                             </label>
-                            <label>
+                            <label className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='intervalTime'
@@ -227,8 +230,9 @@ export default function AddWorkout(){
                                     checked = {workoutInfo.workoutType === 'intervalTime'}
                                     onChange = {handleChange}
                                 />
-                                Interval Time
+                                Interval<br />Time
                             </label>
+                            </div>
                         </fieldset>
                         <LengthOptions className="visible-on-manual" workoutInfo={workoutInfo} handleChange={handleChange}/> 
                         <fieldset className="visible-on-manual">
@@ -239,6 +243,7 @@ export default function AddWorkout(){
                                     name='subWorkouts'
                                     value={workoutInfo.subWorkouts}
                                     onChange= {handleChange}
+                                    className='editable-input sub'
                                 />
                             </label>
                         </fieldset>
@@ -252,6 +257,7 @@ export default function AddWorkout(){
                                         value={workoutInfo.rest}
                                         onChange= {handleChange}
                                         placeholder='mm:ss'
+                                        className='editable-input rest'
                                     />
                                 </label>
                             </fieldset>: null
@@ -268,7 +274,7 @@ export default function AddWorkout(){
                 </div>
                 }
                <br />
-               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6' type="submit">Submit</button>
+               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6 text-xl' type="submit">Submit</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>

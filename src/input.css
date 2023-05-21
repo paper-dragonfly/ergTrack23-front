@@ -9,6 +9,10 @@
     }
 }
 
+body {
+  margin:0;
+}
+
 /* Hide radio */
 [type=radio]{
     position: absolute;
@@ -22,11 +26,13 @@ input::file-selector-button,
 .login-with-google-btn,
 .demo-login-btn,
 .addwo-form-submit-bt,
-.editableTable-form-submit-btn {
+.editableTable-form-submit-btn
+ {
     background-color: #DDE691;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
+    font-size: 1.25rem;
 }
 
 /* Remove "no file chosen" text */
@@ -34,4 +40,64 @@ input[type='file'] {
     color: rgba(0, 0, 0, 0)
   }
 
+/* Manual workout input options */
+  .workout-input-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 80px;
+    height: 50px;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+  }
 
+/* Workout results editable table */
+.editable-table {
+    table-layout: auto;
+    border-collapse: collapse;
+}
+
+.editable-fieldset{
+    display:table-cell;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    min-width: none;
+}
+
+.editable-row {
+   width:100%;
+   padding: 10px 2px;
+   text-align: center;
+}
+
+.editable-input {
+  border: 1px solid #767171;
+  border-radius: 5px;
+  width: 200px;
+}
+
+ .editable-input.name, 
+ .editable-input.date,
+ .editable-input.sub,
+ .editable-input.rest {
+  padding: 2px;
+  margin: 10px;
+  padding-left: 10px;
+}
+
+.editable-input.sub,
+.editable-input.rest {
+  width: 100px;
+}
+
+.editable-input.comment {
+  width: 100%;
+  height: 100px;
+  padding: 8px;
+}
+
+.editable-input.custom{
+  width: 20%;
+  padding-left: 8px;
+}
