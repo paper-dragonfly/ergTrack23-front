@@ -9,7 +9,7 @@ export default function Login() {
 
   const [userToken, setUserToken] = useState("")
   const [userName, setUserName] = useState("")
-  const [demoLogin, setDemoLogin] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const[searchParams, setSearchParams] = useSearchParams()
   const pathname = searchParams.get("redirectTo") || "/dashboard"
@@ -17,7 +17,8 @@ export default function Login() {
   function signIn(){
     signInWithGoogle()
     // authenticate user with firebase and get idToken
-      .then((result) => {
+    .then((result) => {
+        setLoading(true)
         console.log(result)
         if(result.user.displayName){ 
             setUserName(result.user.displayName)}
@@ -52,12 +53,11 @@ export default function Login() {
     <div className="App"> 
         {userToken && <Navigate to={pathname} />}
         <br />
-        <h1 className='text-xl font-bold text-center'>Sign in with</h1>
+
         <div className='flex pt-6 justify-center gap-6'>
-          <button className= "login-with-google-btn"  onClick={signIn}>Google</button>
-          <button className= "demo-login-btn"  onClick={()=> setDemoLogin(true)}>Demo</ button>
+        <button className= "login-with-google-btn"  onClick={signIn}>{loading?'Logging in...':'Sign in with Google'}</button>
         </div>
-        {demoLogin && <Navigate to='/dashboard' />}
+      
     </div>
   )}
   
