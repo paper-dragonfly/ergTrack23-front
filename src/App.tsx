@@ -22,7 +22,8 @@ import { checkAuth } from './utils/helper';
 import WorkoutDetails, {loader as detailsLoader} from './pages/WorkoutDetails';
 import Submitted from './pages/addWorkout/Submitted';
 import Deleted from './pages/Deleted';
-
+import ProfileView, {loader as profileViewLoader} from './pages/ProfileView';
+import ProfileEdit, {action as profileEditAction} from './pages/ProfileEdit';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,7 +38,10 @@ const router = createBrowserRouter(
         <Route path='dashboard' element={<Dashboard />} />
         <Route path="addworkout" element={<AddWorkout />} loader = {addWorkoutloader} />
         <Route path="log" element={<Log />} loader = {logLoader}/>
-        <Route path="profile" element={<h1>Athlete Profile</h1>} />
+        <Route path="profile" element={<ProfileView />} loader = {profileViewLoader} />
+        <Route path="about2" element={<About />} />
+        
+        <Route path="profile/edit" element={<ProfileEdit />} action={profileEditAction}/>
         <Route path='log/details' element={<WorkoutDetails />} loader = {detailsLoader}/>
         <Route path='addworkout/submitted' element={<Submitted />} />
         <Route path='log/deleted' element={<Deleted />} />

@@ -104,3 +104,32 @@ export interface TypeDetailsCols{
     strokeRate?: number;
 }
 
+// Profile
+export interface TypeProfileLoaded{
+    userInfo: TypeUserInfo;
+    userToken: string;
+}
+
+export interface TypeUserInfo{
+    auth_uid: string;
+    user_name: string;
+    email: string;
+    jointed: Date;
+    country: string | null;
+    sex: string | null;
+    age: number | null; 
+    weight_class: string | null;
+    para_class: string | null;
+
+}
+
+export interface TypeProfileInfo{
+    userInfo: TypeUserInfo;
+    setEditting: React.Dispatch<React.SetStateAction<boolean>>
+}
+export interface TypeProfileEdit{
+    userInfo: TypeUserInfo
+    userToken: string;
+    setUserInfo: React.Dispatch<React.SetStateAction<TypeUserInfo>>
+    setEditting: React.Dispatch<React.SetStateAction<boolean>>
+}
