@@ -28,15 +28,20 @@ input::file-selector-button,
 .addwo-form-submit-bt,
 .editableTable-form-submit-btn,
 .add-workout-btn,
-.view-log-btn
- {
+.view-log-btn,
+.btn {
     background-color: #DDE691;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
     font-size: 1.25rem;
 }
-.add-workout-btn {
+.btn.small {
+  padding: 5px 10px;
+  font-size: 1rem;
+}
+.add-workout-btn,
+.btn.coral {
   background-color: #E6A091;
 }
 
@@ -105,4 +110,12 @@ input[type='file'] {
 .editable-input.custom{
   width: 20%;
   padding-left: 8px;
+}
+
+/* Log table */
+.ag-theme-alpine {
+  /* --ag-grid-size: 3px;
+  --ag-row-height: 20px;
+  	 */
+--ag-widget-container-horizontal-padding: 4px;
 }
