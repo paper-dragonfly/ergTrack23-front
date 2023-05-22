@@ -20,8 +20,8 @@ export default function LandingHeader () {
 
     console.log('running LandingHeader')
     return (
-        <header className='px-6 md:px-14'>
-            <nav className='flex justify-between items-center bg-bgGrey h-14 text-xl font-bold md:h-28 md:text-2xl'>
+        <header className='px-6 md:px-10 bg-bgGrey '>
+            <nav className='flex justify-between items-center h-14 text-xl font-bold md:h-28 md:text-2xl'>
 
                 {/* hamburger menu icon */}
                 <div onClick={() => setNav(!nav)} className="z-10 delay-100 md:hidden">

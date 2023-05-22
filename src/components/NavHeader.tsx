@@ -33,12 +33,12 @@ export default function NavHeader () {
       }
 
     return (
-        <header className='px-6 lg:px-14 bg-bgGrey'>
+        <header className='px-6 md:px-10 bg-bgGrey lg:px-14'>
             {logout && <Navigate  to='/' />}
-            <nav className='nav-header flex justify-between items-center h-14 text-xl font-bold lg:h-28 lg:text-2xl'>
+            <nav className='nav-header flex justify-between items-center h-14 text-xl font-bold md:h-28 lg:text-2xl'>
                
                     {/* hamburger menu icon */}
-                    <div onClick={() => setNav(!nav)} className="flex z-20 delay-300 lg:hidden">
+                    <div onClick={() => setNav(!nav)} className="flex z-20 delay-300 md:hidden">
                         {nav ? <FaTimes size={25} /> : <FaBars size={25} />}
                     </div>
 
@@ -53,16 +53,16 @@ export default function NavHeader () {
                     </div>
                     ) }
                                     
-                    <img src={ergTrack} alt="ergTrack logo" className="self-center  max-h-8 lg:hidden" />
-                    <span onClick={signOut} className='text-xl font-bold lg:hidden'>Log Out</span>
+                    <img src={ergTrack} alt="ergTrack logo" className="self-center  max-h-8 md:hidden" />
+                    <span onClick={signOut} className='text-xl font-bold md:hidden'>Log Out</span>
 
-                 {/* large screen nav */}
-                <nav className='hidden lg:flex lg:justify-between lg:w-full'>
-                    <div className="hidden lg:flex items-center gap-6">
-                        <NavLink to='/dashboard'><img src={logoWheel} alt="erg wheel" className="hidden lg:flex lg:max-h-16"/> </NavLink>
-                        <NavLink to='/dashboard'><img src={ergTrack} alt="ergTrack logo" className="hidden lg:flex lg:max-h-10"/></NavLink>
+                 {/* md/large screen nav */}
+                <nav className='hidden md:flex md:justify-between md:w-full'>
+                    <div className="hidden md:flex items-center gap-4 lg:gap-8">
+                        <NavLink to='/dashboard'><img src={logoWheel} alt="erg wheel" className="hidden md:flex md:max-h-16"/> </NavLink>
+                        <NavLink to='/dashboard'><img src={ergTrack} alt="ergTrack logo" className="hidden md:flex md:max-h-10"/></NavLink>
                     </div>
-                    <ul className='hidden lg:flex lg:justify-between items-center   lg:gap-10'>
+                    <ul className='hidden md:flex md:justify-between items-center   md:gap-4 lg:gap-8'>
                         <li><NavLink 
                             to='/dashboard' 
                             style={({isActive}) => isActive ? activeStyles : {}}
@@ -75,6 +75,10 @@ export default function NavHeader () {
                             to='/addworkout' 
                             style={({isActive}) => isActive ? activeStyles : {}}
                         >Add Workout</NavLink></li>
+                        <li><NavLink 
+                        to='/about' 
+                        style={({isActive}) => isActive ? activeStyles : {}}
+                       >About</NavLink></li>
                         <li><NavLink 
                             to='/profile' 
                             style={({isActive}) => isActive ? activeStyles : {}}
