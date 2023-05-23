@@ -68,6 +68,7 @@ export default function AddWorkout(){
                     [name]:files[0]
                 }
             }else if(name === 'entryMethod' && value ===  'manual'){
+                setShowError(false)
                 return {
                     ...oldWorkoutInfo,
                     entryMethod: 'manual',
@@ -274,7 +275,7 @@ export default function AddWorkout(){
                 </div>
                 }
                <br />
-               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6 text-xl' type="submit">Submit</button>
+               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6 text-xl ' type="submit">Submit</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>
