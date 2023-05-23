@@ -28,8 +28,8 @@ export default function ProfileView(){
     const userToken = loadData.userToken
 
     return(
-        <div className='profile-info'>
-            <h1>Profile</h1>
+        <div className='profile-info pl-8 space-x-4'>
+            <h1 className='text-2xl font-bold pb-2'>Profile</h1>
             <p>Name: {userInfo.user_name}</p>
             <p>Email: {userInfo.email}</p>
             <p>Age: {userInfo.age?userInfo.age:null}</p>
@@ -37,7 +37,7 @@ export default function ProfileView(){
             <p>Country: {userInfo.country?userInfo.country:null}</p>
             <p>Weight Class: {userInfo.weight_class?userInfo.weight_class:null}</p>
             <p>Para Class: {userInfo.para_class?userInfo.para_class:null}</p>
-            <Link to='edit' state={{userToken:userToken, userInfo:userInfo}}>Edit</Link>
+            <Link to='edit' state={{userToken:userToken, userInfo:userInfo}} className='btn grey'>Edit</Link>
         </div>
     )
 }

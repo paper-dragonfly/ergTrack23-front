@@ -27,7 +27,6 @@ input::file-selector-button,
 .demo-login-btn,
 .addwo-form-submit-bt,
 .editableTable-form-submit-btn,
-.add-workout-btn,
 .view-log-btn,
 .btn {
     background-color: #DDE691;
@@ -40,9 +39,13 @@ input::file-selector-button,
   padding: 5px 10px;
   font-size: 1rem;
 }
-.add-workout-btn,
+
 .btn.coral {
   background-color: #E6A091;
+}
+
+.btn.grey{
+  background-color: #D9D9D9;
 }
 
 /* Remove "no file chosen" text */
@@ -117,5 +120,5 @@ input[type='file'] {
   /* --ag-grid-size: 3px;
   --ag-row-height: 20px;
   	 */
---ag-widget-container-horizontal-padding: 4px;
+/* --ag-widget-container-horizontal-padding: 4px; */
 }
