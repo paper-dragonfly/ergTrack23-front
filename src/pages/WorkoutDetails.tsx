@@ -1,11 +1,12 @@
 import React, {useState, useMemo, useRef} from 'react'
-import {useLocation, useLoaderData, Navigate} from 'react-router-dom'
+import {useLocation, useLoaderData, Navigate, NavLink} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 import { TypeDetailsCols } from '../utils/interfaces'
 import { API_URL } from '../config'
+import { BsArrowLeftShort } from "react-icons/bs"
 
 
 export async function loader(){
@@ -100,12 +101,13 @@ export default function WorkoutDetails(){
     }
 
     return (
-        <div className='wo-details-div'>
-            <h1>
+        <div className='wo-details-div px-6'>
+            <NavLink to='/log' className='flex justify-end pt-2 text-base'><BsArrowLeftShort size={25}/>Back to Log</NavLink>
+            <h1 className='text-2xl font-bold'>
                 Workout Details 
             </h1>
-            <h2>Date: {workoutDetails.date}</h2>
-            <h2>Workout: {workoutDetails.description}</h2>
+            <h2 className='text-lg pt-6 pb-1'>Date: {workoutDetails.date}</h2>
+            <h2 className='text-lg pb-6'>Workout: {workoutDetails.description}</h2>
             <div style={{height : 300, color:'red'}}>
                 <div className = "ag-theme-alpine" style={{height:'100%', width:'90%'}} >
                     <AgGridReact
@@ -115,10 +117,13 @@ export default function WorkoutDetails(){
                     </AgGridReact>
                 </div>
             </div>
-            <p>Comment: {workoutDetails.comment}</p>
-            <button onClick={onEditSaveClick}>{editing ? 'Save': 'Edit'}</button>
-            <button onClick={onDeleteClick}>Delete Workout</button>
-            {deleted ? <Navigate to='/log/deleted' /> : null }
+           
+            <p className='text-lg py-4'>Comment: {workoutDetails.comment}</p>
+            <div className='space-x-4'>
+                <button onClick={onEditSaveClick} className='btn small'>  {editing ? 'Save': 'Edit'}</button>
+                <button onClick={onDeleteClick} className='btn small coral'>Delete  Workout</button>
+                {deleted ? <Navigate to='/log/deleted' /> : null }
+            </div>
         </div>
     )
 }

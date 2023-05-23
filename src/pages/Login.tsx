@@ -1,4 +1,3 @@
-import '../App.css';
 import { firebaseSignOut, signInWithGoogle } from '../utils/firebase';
 import {useEffect, useState} from 'react';
 import {Navigate, useLoaderData, useSearchParams} from 'react-router-dom'
@@ -54,7 +53,11 @@ export default function Login() {
     <div className="App"> 
         {userToken && <Navigate to={pathname} />}
         <br />
-        <button className= "login-with-google-btn"  onClick={signIn}>{loading?'Logging in...':'sign in with google'}</button>
+
+        <div className='flex pt-6 justify-center gap-6'>
+        <button className= "login-with-google-btn"  onClick={signIn}>{loading?'Logging in...':'Sign in with Google'}</button>
+        </div>
+      
     </div>
   )}
   

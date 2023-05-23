@@ -1,6 +1,6 @@
 import React from 'react'
 import { UADIProps } from  '../../utils/interfaces'
-import "../../App.css"
+
 
 
 export default function UploadAndDisplayImage(props: UADIProps){
@@ -17,7 +17,7 @@ export default function UploadAndDisplayImage(props: UADIProps){
             {props.workoutInfo.ergImg && (
                 <div>
                     <img 
-                        className='uploaded-img'
+                        className='uploaded-img w-10/12  mt-6'
                         alt='erg photo' 
                         src={URL.createObjectURL(props.workoutInfo.ergImg)}
                     />

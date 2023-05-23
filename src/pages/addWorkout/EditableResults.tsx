@@ -117,47 +117,51 @@ export default function EditableResults(props: ERProps) {
     };
 
   return (
-    <div> 
+    <div className='editable-table text-xl w-11/12 md:w-1/2'> 
       <form onSubmit={handleSubmit(submitForm)}>
-          <fieldset>
-              <legend>Workout Results - edit as needed</legend>
+          <fieldset className=' editable-fieldset'>
+              <legend className='text-2xl text-center font-bold mb-6'>Workout Results - Edit as Needed</legend>
               <label>
-                  Workout Name
+                  Workout:
                   <input 
                       type="text"
                       name = 'workoutName'
                       value={woMetaData.workoutName}
                       onChange = {handleWoMetaDataChange}
+                      className='editable-input name'
                       />
               </label>
               <br />
               <label>
-                  Date
+                  Date:
                   <input 
                       type="text"
                       name = 'workoutDate'
                       value={woMetaData.workoutDate}
                       onChange = {handleWoMetaDataChange}
+                      className='editable-input date'
                       />
               </label>
               <br />
               <table>
                   <thead>
-                  <tr>
-                      <th>time</th>
-                      <th>meter</th>
-                      <th>/500m</th>
-                      <th>s/m</th>
+                  <tr  className='border-b-tableGrey border-b-2 py-4 '>
+                      <th>Time</th>
+                      <th>Meter</th>
+                      <th>Split</th>
+                      <th>S/M</th>
                   </tr>
                   </thead>
                   <tbody>
                   {workoutTableMetrics.map((row) => (
-                      <tr key={row.id}>
+                      <tr key={row.id} className='editable-row border-b-tableGrey border-b-2'
+                      >
                       <td>
                       <input
                           type="text"
                           value={row.time}
                           onChange={(e) => handleMetricsChange(e, row.id, 'time')}
+                          className='editable-row'
                           />
                       </td>
                       <td>
@@ -165,6 +169,7 @@ export default function EditableResults(props: ERProps) {
                           type="number"
                           value={row.distance}
                           onChange={(e) => handleMetricsChange(e, row.id, 'distance')}
+                          className='editable-row'
                           />
                       </td>
                       <td>
@@ -172,6 +177,7 @@ export default function EditableResults(props: ERProps) {
                           type="text"
                           value={row.split}
                           onChange={(e) => handleMetricsChange(e, row.id, 'split')}
+                          className='editable-row'
                           />
                       </td>
                       <td>
@@ -179,6 +185,7 @@ export default function EditableResults(props: ERProps) {
                           type="number"
                           value={row.strokeRate}
                           onChange={(e) => handleMetricsChange(e, row.id, 'strokeRate')}
+                          className='editable-row'
                           />
                       </td>
                       {row.heartRate? 
@@ -187,6 +194,7 @@ export default function EditableResults(props: ERProps) {
                               type="number"
                               value={row.heartRate}
                               onChange={(e) => handleMetricsChange(e, row.id, 'heartRate')}
+                              className='editable-row'
                               />
                           </td> : 
                           null
@@ -202,10 +210,12 @@ export default function EditableResults(props: ERProps) {
                 <textarea 
                   id='comment' 
                   name='comment'
-                  onChange={handleWoMetaDataChange}></textarea>
+                  onChange={handleWoMetaDataChange}
+                  className='editable-input comment'></textarea>
+                  
               </label>
           </fieldset>
-          <button disabled={isSubmitting} className='editableTable-form-submit-btn' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
+          <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
       </form>
       {viewSaveError? <><h4>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all feilds and try again</p></>: null}
       {submitSuccessful ? <Navigate to='/addworkout/submitted' /> : null}

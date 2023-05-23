@@ -6,7 +6,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom"
 
-import './App.css';
+
 import RootLayout from './components/RootLayout';
 import AddWorkout, {loader as addWorkoutloader} from './pages/addWorkout/AddWorkout';
 import Login from './pages/Login';
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
       <Route element={<PublicLayout />} >
         <Route index element={<Home />} />
         <Route path="login" element={<Login />}/>
-        <Route path="about" element={<About />} />
+        <Route path="aboutergtrack" element={<About />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
       <Route element={<AuthRequiredLayout />} loader={AuthLoader} > 
@@ -39,7 +39,7 @@ const router = createBrowserRouter(
         <Route path="addworkout" element={<AddWorkout />} loader = {addWorkoutloader} />
         <Route path="log" element={<Log />} loader = {logLoader}/>
         <Route path="profile" element={<ProfileView />} loader = {profileViewLoader} />
-        <Route path="about2" element={<About />} />
+        <Route path="about" element={<About />} />
         
         <Route path="profile/edit" element={<ProfileEdit />} action={profileEditAction}/>
         <Route path='log/details' element={<WorkoutDetails />} loader = {detailsLoader}/>

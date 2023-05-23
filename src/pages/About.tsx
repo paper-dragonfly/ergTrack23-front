@@ -3,7 +3,7 @@ import React from 'react'
 export default function About(){
     return(
         <div> 
-            <h1>About ergTrack </h1>
+            <h1 className='text-2xl text-center font-bold mt-6'>About ergTrack </h1>
             <section>
                 <h4>Record</h4>
                 <p>
@@ -19,7 +19,7 @@ export default function About(){
                 </p>
             </section>
             <section>
-                <h2>FAQ</h2>
+                <h2 className='text-2xl font-bold'>FAQ</h2>
                 <h4>How do I use ergTrack?</h4>
                 <p>{"Complete a workout on your Concept 2 indoor rower. Use the monitor buttons to navigate to the memory screen [Menu >  Memory > Select by Date> your-workout ] . Upload a photo of your memory screen to the ‘Add Workout’ page of ergTrack. Edit extracted data as needed. Save. Voila, that’s it. Check out Log to view your workouts"}</p>
                 <h4>What kind of  machine do I need?</h4>

@@ -24,7 +24,7 @@ export async function loader(){
             console.log(data)
             console.log(data['body']['workouts'])
             return data['body']['workouts']}) 
-        .catch(error => console.log(error(error)))
+        .catch(error => console.error(error(error)))
 }
 
 
@@ -110,17 +110,17 @@ export default function Log() {
     }
 
     return(
-        <div className='log-div'>
-            <h3>workout log table</h3>
-            <button onClick={() => autoSizeAll(false)}>
-            Compact Display
+        <div className='log-div px-6'>
+            <h3 className='text-2xl font-bold py-6'>Workout Log</h3>
+            <button onClick={() => autoSizeAll(false)} className='btn small'>
+            Change Display
             </button>
             { selectedRowId ?
-            <div> 
-                <button onClick = {navigateToDetails}>View Details {`${selectedRowId}`}</button> 
-                <button onClick={clearRowSelection}>Clear Selection</button>
+            <div className='text-xl py-4 space-x-4'> 
+                <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
+                <button onClick={clearRowSelection} className='btn small coral'>Clear Selection</button>
             </div> : 
-            <p>Select workout to view details</p>
+            <p  className='pt-4 pb-2 text-base'>Select workout to view details</p>
             }
             <div style={{height : 400, color:'red'}}>
                 <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
