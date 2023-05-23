@@ -1,7 +1,5 @@
-// export const API_URL =  'http://localhost:8000'
-export const API_URL =  'https://api-05132023-l2bdq77a5q-uc.a.run.app'
-
-export const ALLOW_DEMO = true
+export const API_URL =  'http://localhost:8000'
+// export const API_URL =  'https://api-05132023-l2bdq77a5q-uc.a.run.app'
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDRLMm7fq5w9LmOzO9YWuLl9OVdkYenccQ",

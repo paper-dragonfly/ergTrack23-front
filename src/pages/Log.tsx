@@ -113,11 +113,11 @@ export default function Log() {
         <div className='log-div px-6'>
             <h3 className='text-2xl font-bold py-6'>Workout Log</h3>
             <button onClick={() => autoSizeAll(false)} className='btn small'>
-            Compact Display
+            Change Display
             </button>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
-                <button onClick = {navigateToDetails} className='btn small'>View Details {`${selectedRowId}`}</button> 
+                <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
                 <button onClick={clearRowSelection} className='btn small coral'>Clear Selection</button>
             </div> : 
             <p  className='pt-4 pb-2 text-base'>Select workout to view details</p>

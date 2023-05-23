@@ -5,7 +5,8 @@ import ergWelcome from '../assets/ergWelcome.png'
 export default function Dashboard(){
     console.log('runningg Dashboard')
 
-    const userName = 'Kaja'
+    // <h1 className='text-xl text-center font-bold mt-6'>Welcome to ergTrack {userName}</h1>
+    const userName = ''
     return(
         <div>
             <img src={ergWelcome} alt="Two people on ergs next to water" />

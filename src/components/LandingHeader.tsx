@@ -32,7 +32,7 @@ export default function LandingHeader () {
                 {nav && (
                     <ul className='flex flex-col pt-28 items-center absolute top-0 left-0 w-full h-screen bg-bgGrey text-4xl font-bold gap-8'>
                         <NavLink to='/' onClick={() => setNav(!nav)}>Home</NavLink>
-                        <NavLink to='/about' onClick={() => setNav(!nav)}>About</NavLink>
+                        <NavLink to='/aboutergtrack' onClick={() => setNav(!nav)}>About</NavLink>
                         <NavLink to='/login' onClick={() => setNav(!nav)}>Sign Up</NavLink>
                     </ul>
                 ) }
