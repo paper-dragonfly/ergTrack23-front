@@ -52,11 +52,15 @@ export default function AddWorkout(){
     const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
+    const [selected, setSelected] = useState(false)
     
     const { handleSubmit, formState }  = useForm() 
     const {isSubmitting} = formState
 
-
+    const selectedStyle = {
+        backgroundColor: "#FAF7F7",
+        boxShadow: '5px 5px 5px #D9D9D9'
+    }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
@@ -156,7 +160,9 @@ export default function AddWorkout(){
             <form onSubmit={handleSubmit(submitForm)}  >
                 <fieldset className='flex gap-10 my-10'>
                     <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
-                    <label className='flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24'>
+                    <label onClick={() => setSelected(!selected)} 
+                    style={({selected}) ? selectedStyle : {} }
+                    className='flex flex-col justify-center items-center text-center text-xl rounded-lg w-24 h-24'>
                         <BsImage size={30} />
                         <input 
                             type='radio'

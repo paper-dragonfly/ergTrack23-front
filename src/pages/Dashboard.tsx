@@ -1,5 +1,6 @@
 import React from 'react'
-import bgHero from "../assets/hero.png"
+import ergWelcome from '../assets/ergWelcome.png'
+
 
 export default function Dashboard(){
     console.log('runningg Dashboard')
@@ -7,15 +8,9 @@ export default function Dashboard(){
     // <h1 className='text-xl text-center font-bold mt-6'>Welcome to ergTrack {userName}</h1>
     const userName = ''
     return(
-        <div> 
-            <h1 className="text-xl font-bold text-center text-textWhite pt-6 h-72 md:h-96 "
-                    style={{ 
-                        backgroundImage: `url(${bgHero})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize:'cover'
-                      }}>{userName} 
-            </h1>
-            <h2 className="text-center">Welcome to ergTrack</h2>
+        <div>
+            <img src={ergWelcome} alt="Two people on ergs next to water" />
+            <h1 className='text-2xl mt-6 text-green text-center md:text-5xl md:mt-10'>Welcome {userName}</h1>
         </div>
     )
 }
