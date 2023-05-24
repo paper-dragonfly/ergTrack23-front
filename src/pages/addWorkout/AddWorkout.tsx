@@ -52,18 +52,20 @@ export default function AddWorkout(){
     const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
-    const [selected, setSelected] = useState(false)
+    const [fmImgSelected, setFmImgSelected] = useState(true)
     
     const { handleSubmit, formState }  = useForm() 
     const {isSubmitting} = formState
 
     const selectedStyle = {
         backgroundColor: "#FAF7F7",
+        // backgroundColor: '#E6A091',
         boxShadow: '5px 5px 5px #D9D9D9'
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
+        console.log('handlechange begins', fmImgSelected)
         setWorkoutInfo(oldWorkoutInfo => {
             if(type === 'file' && files){
                 setShowError(false)
@@ -73,11 +75,14 @@ export default function AddWorkout(){
                 }
             }else if(name === 'entryMethod' && value ===  'manual'){
                 setShowError(false)
+                setFmImgSelected(false)
                 return {
                     ...oldWorkoutInfo,
                     entryMethod: 'manual',
                     ergImg: null
                 }
+            }else if (name === 'entryMethod' && value === 'fmImg'){
+                setFmImgSelected(true) 
             }
             return{
                 ...oldWorkoutInfo,
@@ -160,8 +165,8 @@ export default function AddWorkout(){
             <form onSubmit={handleSubmit(submitForm)}  >
                 <fieldset className='flex gap-10 my-10'>
                     <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
-                    <label onClick={() => setSelected(!selected)} 
-                    style={({selected}) ? selectedStyle : {} }
+                    <label 
+                    style={fmImgSelected ? selectedStyle : {} }
                     className='flex flex-col justify-center items-center text-center text-xl rounded-lg w-24 h-24'>
                         <BsImage size={30} />
                         <input 
@@ -175,7 +180,9 @@ export default function AddWorkout(){
                         
                         Image
                     </label> 
-                    <label className={`flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24`}>
+                    <label 
+                    style={fmImgSelected ? {}: selectedStyle }
+                    className={`flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24`}>
                         <SlNote size={30}/>
                         <input 
                             type='radio'
