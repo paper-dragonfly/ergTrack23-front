@@ -184,8 +184,9 @@ export default function AddWorkout(){
                         Image
                     </label> 
                     <label 
-                    style={fmImgSelected ? {}: selectedStyle }
-                    className={`flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24`}>
+                        style={fmImgSelected ? {}: selectedStyle }
+                        className={`flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24`}
+                    >
                         <SlNote size={30}/>
                         <input 
                             type='radio'
@@ -205,7 +206,7 @@ export default function AddWorkout(){
                             <legend className='text-xl pb-4'>Workout Type</legend>
                             <div className='flex justify-between text-sm pb-4 gap-3'>
                             <label 
-                            style={selectedWorkoutType === 'singleDist'? {backgroundColor: '#BDC76D'}:{}}
+                            style={selectedWorkoutType === 'singleDist'? {backgroundColor: "#DDE691"}:{}}
                             className='workout-input-btn'>
                                 <input 
                                     type='radio'
@@ -219,7 +220,7 @@ export default function AddWorkout(){
                                 Single<br />Distance
                             </label>
                             <label 
-                            style={selectedWorkoutType === 'singleTime'? {backgroundColor: '#BDC76D'}:{}}
+                            style={selectedWorkoutType === 'singleTime'? {backgroundColor: "#DDE691"}:{}}
                             className='workout-input-btn'>
                                 <input 
                                     type='radio'
@@ -232,7 +233,7 @@ export default function AddWorkout(){
                                 Single<br />Time
                             </label>
                             <label 
-                            style={selectedWorkoutType === 'intervalDist'? {backgroundColor: '#BDC76D'}:{}}
+                            style={selectedWorkoutType === 'intervalDist'? {backgroundColor: "#DDE691"}:{}}
                             className='workout-input-btn'>
                                 <input 
                                     type='radio'
@@ -245,7 +246,7 @@ export default function AddWorkout(){
                                 Interval<br />Distance
                             </label>
                             <label 
-                            style={selectedWorkoutType === 'intervalTime'? {backgroundColor: '#BDC76D'}:{}}
+                            style={selectedWorkoutType === 'intervalTime'? {backgroundColor: "#DDE691"}:{}}
                             className='workout-input-btn'>
                                 <input 
                                     type='radio'

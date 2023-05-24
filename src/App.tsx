@@ -24,6 +24,7 @@ import Submitted from './pages/addWorkout/Submitted';
 import Deleted from './pages/Deleted';
 import ProfileView, {loader as profileViewLoader} from './pages/ProfileView';
 import ProfileEdit, {action as profileEditAction} from './pages/ProfileEdit';
+import Sandbox from './pages/Sandbox';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="login" element={<Login />}/>
         <Route path="aboutergtrack" element={<About />} />
+        <Route path="sandbox" element={<Sandbox />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
       <Route element={<AuthRequiredLayout />} loader={AuthLoader} > 
