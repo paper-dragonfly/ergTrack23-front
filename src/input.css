@@ -50,7 +50,12 @@ input::file-selector-button,
 
 /* Remove "no file chosen" text */
 input[type='file'] {
-    color: rgba(0, 0, 0, 0)
+    color: rgba(0, 0, 0, 0);
+  }
+  #choose-file, .visible-on-from-img {
+    padding-left: 100px;
+    text-align: center;
+    margin: 0 auto;
   }
 
 /* Manual workout input options */
@@ -121,4 +126,7 @@ input[type='file'] {
   --ag-row-height: 20px;
   	 */
 /* --ag-widget-container-horizontal-padding: 4px; */
+}
+.profile-header{
+  margin-top: 100px;
 }

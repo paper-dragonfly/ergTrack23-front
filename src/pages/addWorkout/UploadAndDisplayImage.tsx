@@ -8,11 +8,13 @@ export default function UploadAndDisplayImage(props: UADIProps){
         console.log(URL.createObjectURL(props.workoutInfo.ergImg))
         }
     return(
-        <div className= 'visible-on-from-img'>
+        <div className= 'visible-on-from-img block mx-auto'>
             <input
+                id='choose-file'
                 type="file"
                 name = 'ergImg'
                 onChange = {props.handleChange}
+                // className='block mx-auto text-center'
             />
             {props.workoutInfo.ergImg && (
                 <div>

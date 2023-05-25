@@ -165,9 +165,10 @@ export default function AddWorkout(){
  
     return(
         <div className='add-workout-div flex flex-col items-center px-4 overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-10'>
-            <form onSubmit={handleSubmit(submitForm)}  >
+            <form onSubmit={handleSubmit(submitForm)} 
+            className='flex flex-col justify-center items-center' >
                 <fieldset className='flex gap-10 my-10'>
-                    <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
+                    <legend className='text-2xl text-center font-bold pl-1 my-10'> Entry Method</legend>
                     <label 
                     style={fmImgSelected ? selectedStyle : {} }
                     className='flex flex-col justify-center items-center text-center text-xl rounded-lg w-24 h-24'>
@@ -185,7 +186,7 @@ export default function AddWorkout(){
                     </label> 
                     <label 
                         style={fmImgSelected ? {}: selectedStyle }
-                        className={`flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24`}
+                        className={`flex flex-col justify-center items-center text-center text-xl rounded-lg w-24 h-24`}
                     >
                         <SlNote size={30}/>
                         <input 
