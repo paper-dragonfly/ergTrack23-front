@@ -41,6 +41,7 @@ export default function Login() {
             console.log(data)
             const userToken = data['body']["user_token"]
             sessionStorage.setItem('userToken', userToken)
+            sessionStorage.setItem('userName', userName)
             return userToken
           })
           .then(userToken => setUserToken(userToken))
