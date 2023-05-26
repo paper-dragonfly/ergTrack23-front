@@ -52,18 +52,10 @@ input::file-selector-button,
 input[type='file'] {
     color: rgba(0, 0, 0, 0);
   }
-  /* #choose-file, .visible-on-from-img {
-    padding-left: 100px;
-    text-align: center;
-    margin: 0 auto;
-  } */
-
-  .uploadedImg {
-    max-width: 400px !important;
-  }
 
 /* Manual workout input options */
-  .workout-input-btn {
+  .workout-input-btn,
+  .profile-edit-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,6 +66,10 @@ input[type='file'] {
     border-radius: 5px;
   }
 
+.weight {
+  width: 120px;
+  height: 60px; 
+}
 
 /* Workout results editable table */
 .editable-table {
@@ -98,15 +94,12 @@ input[type='file'] {
   border: 1px solid #767171;
   border-radius: 5px;
   width: 200px;
-}
-
- .editable-input.name, 
- .editable-input.date,
- .editable-input.sub,
- .editable-input.rest {
   padding: 2px;
   margin: 10px;
   padding-left: 10px;
+}
+.email {
+  width: 250px;
 }
 
 .editable-input.sub,
@@ -126,12 +119,10 @@ input[type='file'] {
 }
 
 /* Log table */
-.ag-theme-alpine {
-  /* --ag-grid-size: 3px;
+  /*.ag-theme-alpine {
+ --ag-grid-size: 3px;
   --ag-row-height: 20px;
   	 */
-/* --ag-widget-container-horizontal-padding: 4px; */
-}
-.profile-header{
-  margin-top: 100px;
-}
+/* --ag-widget-container-horizontal-padding: 4px;
+} */
+
