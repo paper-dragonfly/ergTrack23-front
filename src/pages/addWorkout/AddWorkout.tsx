@@ -5,6 +5,7 @@ import { useLoaderData, useOutletContext } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 
+
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
 import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces'
@@ -15,6 +16,7 @@ import EditableResults from './EditableResults'
 
 import { BsImage } from "react-icons/bs"
 import { SlNote } from "react-icons/sl"
+import Loading from '../../components/Loading'
 
 export function loader(){
     const userToken = sessionStorage.getItem('userToken')
@@ -166,9 +168,9 @@ export default function AddWorkout(){
     return(
         <div className='add-workout-div flex flex-col items-center overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-14'>
             <form onSubmit={handleSubmit(submitForm)} 
-            className='ml-14'
+            className=''
            >
-                <fieldset className='flex gap-10 my-10'>
+                <fieldset className='flex flex-wrap gap-10 my-10'>
                     <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
                     <label 
                     style={fmImgSelected ? selectedStyle : {} }
@@ -302,8 +304,9 @@ export default function AddWorkout(){
                 </div>
                 }
                <br />
-               {isSubmitting? <p>This could take a minute</p>: null}
-               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6 text-xl ' type="submit">{isSubmitting? "submitting..." :"Submit"}</button>
+               {isSubmitting? <Loading />: null}
+               <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
+               style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>

@@ -602,6 +602,11 @@ html{
   margin-bottom: 2.5rem;
 }
 
+.my-4{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .my-6{
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -609,10 +614,6 @@ html{
 
 .mb-6{
   margin-bottom: 1.5rem;
-}
-
-.ml-14{
-  margin-left: 3.5rem;
 }
 
 .ml-8{
@@ -635,12 +636,24 @@ html{
   margin-top: 1.5rem;
 }
 
+.mt-2{
+  margin-top: 0.5rem;
+}
+
 .block{
   display: block;
 }
 
+.inline-block{
+  display: inline-block;
+}
+
 .flex{
   display: flex;
+}
+
+.inline-flex{
+  display: inline-flex;
 }
 
 .table{
@@ -687,12 +700,18 @@ html{
   width: 100%;
 }
 
-.w-screen{
-  width: 100vw;
+.max-w-full{
+  max-width: 100%;
 }
 
 .max-w-sm{
   max-width: 24rem;
+}
+
+.max-w-fit{
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
 }
 
 .flex-col{
@@ -801,6 +820,11 @@ html{
 .py-6{
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.px-4{
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .pb-1{
@@ -1031,7 +1055,9 @@ input[type='file'] {
 }
 
 .editable-input.custom{
-  width: 20%;
+  margin:0;
+  width: 200px;
+  height: 50px;
   padding-left: 8px;
 }
 
