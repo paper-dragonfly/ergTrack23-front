@@ -14,7 +14,7 @@ export default function Dashboard(){
             <h1 className='text-2xl my-6 text-green text-center md:text-5xl md:mt-10'>Welcome {userName}</h1>
             <div className='flex justify-center gap-8'>
                 {/* self-center on buttons keeps them from expanding the whole width of page */}
-                <Link to="/addworkout" className='btn coral self-center'>Add Workout</Link>
+                <Link to="/addworkout" className='btn  self-center'>Add Workout</Link>
                 <Link to="/log" className='btn self-center'>View Log</Link>
             </div>   
         </div>

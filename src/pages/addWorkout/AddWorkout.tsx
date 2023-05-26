@@ -301,7 +301,8 @@ export default function AddWorkout(){
                 </div>
                 }
                <br />
-               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6 text-xl ' type="submit">Submit</button>
+               {isSubmitting? <p>This could take a minute</p>: null}
+               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6 text-xl ' type="submit">{isSubmitting? "submitting..." :"Submit"}</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>

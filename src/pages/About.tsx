@@ -73,7 +73,7 @@ export default function About(){
                 <h2 className='text-2xl font-bold  pb-2'>About Us</h2>
                 <img  src='#' alt='photo KN' />
                 <h4 className='font-bold'>Kathleen Noble</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, vel! Facere harum incidunt a eos vel dolorem praesentium in quos accusamus quaerat debitis error, ipsa quasi sint fugit? Non, voluptates!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium repudiandae accusantium provident quaerat eius esse veniam optio earum non odio impedit, obcaecati, cumque voluptatibus</p>
                 <br/>
                 <img src='#' alt='photo LC' />
                 <h4 className='font-bold'>Laura Connor</h4>
