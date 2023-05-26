@@ -4,6 +4,7 @@ import {TypesWorkoutInfo, TypesLengthOptions, LOProps } from '../../utils/interf
 export default function LengthOptions(props: LOProps){
     const [selectedOption, setSelectedOption] = useState("lengthOption1");
 
+
     const workoutLengthOptions: TypesLengthOptions= {
         singleDist: ['2000m', '5000m', '10000m', 'other'],
         singleTime: ['15:00','30:00','45:00', 'other'],
