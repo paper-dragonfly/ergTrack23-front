@@ -120,8 +120,7 @@ export default function EditableResults(props: ERProps) {
     <div className='editable-table text-xl w-11/12 md:w-1/2'> 
       <form onSubmit={handleSubmit(submitForm)}>
           <fieldset className=' editable-fieldset'>
-              <legend className='text-2xl text-center font-bold mb-6'>Result Metrics</legend>
-              <p>Edit as needed</p>
+              <legend className='text-2xl text-center font-bold mb-6'>Workout Metrics</legend>
               <label>
                   Workout:
                   <input 
