@@ -83,7 +83,7 @@ export default function Log() {
         });
         gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
       }, []);
-
+    
     //   const onSelectionChanged = useCallback(() => {
     //     const selectedrows = gridRef.currerent!.api.getSelectedrows()
     //   }, [])
@@ -112,8 +112,8 @@ export default function Log() {
     return(
         <div className='log-div px-6'>
             <h3 className='text-2xl font-bold py-6'>Workout Log</h3>
-            <button onClick={() => autoSizeAll(false)} className='btn small'>
-            Change Display
+            <button onClick={() => autoSizeAll(false)} className='btn small grey'>
+            Wide Display
             </button>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 

@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import {TypesWorkoutInfo, TypesLengthOptions, LOProps } from '../../utils/interfaces' 
 
 export default function LengthOptions(props: LOProps){
-    const [selectedOption, setSelectedOption] = useState('lengthOption1');
+    const [selectedOption, setSelectedOption] = useState("lengthOption1");
+
 
     const workoutLengthOptions: TypesLengthOptions= {
         singleDist: ['2000m', '5000m', '10000m', 'other'],
