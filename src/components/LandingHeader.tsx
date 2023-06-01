@@ -47,7 +47,7 @@ export default function LandingHeader () {
                 <div className='flex'>
            
                     <NavLink 
-                        to='/about' 
+                        to='/aboutergtrack' 
                         style={({isActive}) => isActive ? activeStyles : {}}
                         className="hidden md:flex font-bold mr-6">About</NavLink>
                     <NavLink to='/login' 
