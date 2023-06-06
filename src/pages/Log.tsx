@@ -131,10 +131,9 @@ export default function Log() {
             <div className='text-xl py-4 space-x-4'> 
                 <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
                 <button onClick={clearRowSelection} className='btn small coral'>Clear Selection</button>
-            </div> : 
-            <p  className='pt-4 pb-2 text-base'>Select row to view details</p>
+            </div> : <br />
             }
-            <div style={{height : 400, color:'red'}}>
+            <div style={{height : 500, color:'red'}}>
                 <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
                     <AgGridReact
                         ref = {gridRef}
