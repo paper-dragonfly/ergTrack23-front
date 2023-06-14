@@ -56,7 +56,7 @@ export default function Log() {
     const [rowData, setRowData] = useState<any[]>(summaryData)
     const [columnDefs] = useState<ColDef[]>([
         // { headerName: 'Row ID', valueGetter: 'node.id' },
-        {field: 'date', filter: true},
+        {field: 'date', filter: true, sortable: true},
         {field: 'workout', filter: true},
         {field: 'time', filter: true},
         {field: 'meter', filter: 'agNumberColumnFilter'},
