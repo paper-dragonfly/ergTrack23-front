@@ -577,6 +577,10 @@ html{
   --tw-backdrop-sepia:  ;
 }
 
+.invisible{
+  visibility: hidden;
+}
+
 .absolute{
   position: absolute;
 }
@@ -628,6 +632,10 @@ html{
   margin-top: 2.5rem;
 }
 
+.mt-2{
+  margin-top: 0.5rem;
+}
+
 .mt-4{
   margin-top: 1rem;
 }
@@ -636,28 +644,20 @@ html{
   margin-top: 1.5rem;
 }
 
-.mt-2{
-  margin-top: 0.5rem;
-}
-
 .block{
   display: block;
-}
-
-.inline-block{
-  display: inline-block;
 }
 
 .flex{
   display: flex;
 }
 
-.inline-flex{
-  display: inline-flex;
-}
-
 .table{
   display: table;
+}
+
+.grid{
+  display: grid;
 }
 
 .hidden{
@@ -696,22 +696,16 @@ html{
   width: 6rem;
 }
 
+.w-5\/6{
+  width: 83.333333%;
+}
+
 .w-full{
   width: 100%;
 }
 
-.max-w-full{
-  max-width: 100%;
-}
-
 .max-w-sm{
   max-width: 24rem;
-}
-
-.max-w-fit{
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
 }
 
 .flex-col{
@@ -822,17 +816,16 @@ html{
   padding-bottom: 1.5rem;
 }
 
-.px-4{
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 .pb-1{
   padding-bottom: 0.25rem;
 }
 
 .pb-2{
   padding-bottom: 0.5rem;
+}
+
+.pb-3{
+  padding-bottom: 0.75rem;
 }
 
 .pb-4{
@@ -865,10 +858,6 @@ html{
 
 .pt-28{
   padding-top: 7rem;
-}
-
-.pt-4{
-  padding-top: 1rem;
 }
 
 .pt-6{
@@ -1063,13 +1052,9 @@ input[type='file'] {
 
 /* Log table */
 
-/*.ag-theme-alpine {
- --ag-grid-size: 3px;
-  --ag-row-height: 20px;
-  	 */
-
-/* --ag-widget-container-horizontal-padding: 4px;
-} */
+.ag-theme-alpine {
+  --ag-cell-horizontal-padding:10px !important;
+}
 
 @media (min-width: 768px){
   .md\:ml-40{
@@ -1226,4 +1211,3 @@ input[type='file'] {
     line-height: 2rem;
   }
 }
-
