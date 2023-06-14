@@ -49,7 +49,7 @@ export default function WorkoutDetails(){
 
     const [rowData, setRowData] = useState<TypeDetailsCols[]>(detailTableData)
     const [columnDefs] = useState<ColDef[]>([
-        {field: 'time'},
+        {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
         {field: 'split'},
         {field: 'strokeRate'}
@@ -62,7 +62,7 @@ export default function WorkoutDetails(){
     
     //Column auto-resizing hack
     useEffect(()=>{
-    // only apply to small screens
+    // // only apply to small screens
     if(window.innerWidth < 768){ 
         setTimeout(()=>{
             console.log('useEffect running in workout details')

@@ -122,10 +122,6 @@ input[type='file'] {
 }
 
 /* Log table */
-  /*.ag-theme-alpine {
- --ag-grid-size: 3px;
-  --ag-row-height: 20px;
-  	 */
-/* --ag-widget-container-horizontal-padding: 4px;
-} */
-
+.ag-theme-alpine {
+  --ag-cell-horizontal-padding:10px !important;
+}
