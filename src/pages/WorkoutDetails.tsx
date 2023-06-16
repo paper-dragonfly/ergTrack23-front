@@ -29,7 +29,7 @@ export default function WorkoutDetails(){
         time: workoutDetails.time,
         meter: workoutDetails.meter,
         split: workoutDetails.split,
-        strokeRate: workoutDetails.stroke_rate
+        rate: workoutDetails.stroke_rate
     }
 
     const detailTableData = [summaryRow, {}]
@@ -40,7 +40,7 @@ export default function WorkoutDetails(){
             time: subworkouts[i].time,
             meter: subworkouts[i].distance,
             split: subworkouts[i].split,
-            strokeRate: subworkouts[i].strokeRate
+            rate: subworkouts[i].strokeRate
         }
         detailTableData.push(row)
         console.log(detailTableData)
@@ -52,7 +52,7 @@ export default function WorkoutDetails(){
         {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
         {field: 'split'},
-        {field: 'strokeRate'}
+        {field: 'rate'}
     ])
 
     const defaultColDef = useMemo( ()=> ( {
