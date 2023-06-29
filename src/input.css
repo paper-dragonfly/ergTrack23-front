@@ -125,3 +125,7 @@ input[type='file'] {
 .ag-theme-alpine {
   --ag-cell-horizontal-padding:10px !important;
 }
+.headshot{
+  width: 200px;
+  border-radius: 10px;
+}

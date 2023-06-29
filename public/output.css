@@ -756,6 +756,10 @@ html{
   gap: 2rem;
 }
 
+.gap-7{
+  gap: 1.75rem;
+}
+
 .space-x-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
@@ -1056,6 +1060,11 @@ input[type='file'] {
   --ag-cell-horizontal-padding:10px !important;
 }
 
+.headshot{
+  width: 200px;
+  border-radius: 10px;
+}
+
 @media (min-width: 768px){
   .md\:ml-40{
     margin-left: 10rem;
@@ -1137,6 +1146,10 @@ input[type='file'] {
     gap: 1.5rem;
   }
 
+  .md\:gap-7{
+    gap: 1.75rem;
+  }
+
   .md\:space-x-10 > :not([hidden]) ~ :not([hidden]){
     --tw-space-x-reverse: 0;
     margin-right: calc(2.5rem * var(--tw-space-x-reverse));
@@ -1167,6 +1180,14 @@ input[type='file'] {
 
   .md\:pt-6{
     padding-top: 1.5rem;
+  }
+
+  .md\:pb-2{
+    padding-bottom: 0.5rem;
+  }
+
+  .md\:text-left{
+    text-align: left;
   }
 
   .md\:text-2xl{
