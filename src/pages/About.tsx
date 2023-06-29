@@ -2,6 +2,7 @@ import React from 'react'
 import { Collapse } from 'antd'
 import { BsPencil, BsEye, BsLaptop } from 'react-icons/bs'
 import { HiMagnifyingGlass } from 'react-icons/hi2'
+import kathleen_headshot from '../assets/headshot.jpeg'
 export default function About(){
     
     const { Panel } = Collapse
@@ -71,9 +72,9 @@ export default function About(){
             </section>
             <section className='pl-10 pr-20 py-6'>
                 <h2 className='text-2xl font-bold  pb-2'>About Us</h2>
-                <img  src='#' alt='photo KN' />
+                <img  src={kathleen_headshot} alt='photo KN' />
                 <h4 className='font-bold'>Kathleen Noble</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium repudiandae accusantium provident quaerat eius esse veniam optio earum non odio impedit, obcaecati, cumque voluptatibus</p>
+                <p>Kathleen is an Ugandan Olympic Rower and full stack software engineer. She began rowing at Princeton University as a walk-on to the lightweight women’s crew team and has been rowing ever since. She conceived the idea for ergTrack during winter training when she realized her only system for tracking erg workouts consisted of taking photos and then proceeding to do nothing with them. Conversations with other rowers revealed that this was a common phenomenon. At that time she did not have sufficient programming skills to build her envisioned image-to-database app but as she continued to dive deeper into software, building ergTrack remained a goal.</p>
                 <br/>
                 <img src='#' alt='photo LC' />
                 <h4 className='font-bold'>Laura Connor</h4>
