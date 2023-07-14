@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useRef} from 'react'
+import React, {useEffect, useCallback, useState, useMemo, useRef} from 'react'
 import {useLocation, useLoaderData, Navigate, NavLink} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
@@ -20,6 +20,8 @@ export default function WorkoutDetails(){
     const workoutDetails = location.state 
     console.log(workoutDetails)
     const gridRef = useRef<AgGridReact<TypeDetailsCols>>(null);
+    const btnAutoSizeCols = useRef<HTMLButtonElement>(null)
+
     const [editing, setEditing] = useState(false)
     const [deleted, setDeleted] = useState<boolean>(false)
     
@@ -27,7 +29,7 @@ export default function WorkoutDetails(){
         time: workoutDetails.time,
         meter: workoutDetails.meter,
         split: workoutDetails.split,
-        strokeRate: workoutDetails.stroke_rate
+        rate: workoutDetails.stroke_rate
     }
 
     const detailTableData = [summaryRow, {}]
@@ -38,20 +40,19 @@ export default function WorkoutDetails(){
             time: subworkouts[i].time,
             meter: subworkouts[i].distance,
             split: subworkouts[i].split,
-            strokeRate: subworkouts[i].strokeRate
+            rate: subworkouts[i].strokeRate
         }
         detailTableData.push(row)
         console.log(detailTableData)
     }
 
 
-
     const [rowData, setRowData] = useState<TypeDetailsCols[]>(detailTableData)
     const [columnDefs] = useState<ColDef[]>([
-        {field: 'time'},
+        {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
         {field: 'split'},
-        {field: 'strokeRate'}
+        {field: 'rate'}
     ])
 
     const defaultColDef = useMemo( ()=> ( {
@@ -59,6 +60,27 @@ export default function WorkoutDetails(){
         editable: true 
       }), []);
     
+    //Column auto-resizing hack
+    useEffect(()=>{
+    // // only apply to small screens
+    if(window.innerWidth < 768){ 
+        setTimeout(()=>{
+            console.log('useEffect running in workout details')
+            if(btnAutoSizeCols.current && gridRef.current){
+                btnAutoSizeCols.current.click()}
+            },500)
+        }
+    },[])
+            
+            
+    const autoSizeAll = useCallback((skipHeader: boolean) => {
+        console.log('autosizeall is running')
+        const allColumnIds: string[] = [];
+        gridRef.current!.columnApi.getColumns()!.forEach((column) => {
+            allColumnIds.push(column.getId());
+        });
+        gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
+        }, []);
     
     // const onCellEditingStopped = (params) => {
     //     const { data, colDef } = params;
@@ -109,14 +131,16 @@ export default function WorkoutDetails(){
             <h2 className='text-lg pt-6 pb-1'>Date: {workoutDetails.date}</h2>
             <h2 className='text-lg pb-6'>Workout: {workoutDetails.description}</h2>
             <div style={{height : 300, color:'red'}}>
-                <div className = "ag-theme-alpine" style={{height:'100%', width:'90%'}} >
+                <div className = "ag-theme-alpine" style={{height:'100%', width:'100%'}} >
                     <AgGridReact
+                        ref = {gridRef}
                         rowData={rowData} animateRows={true}
                         columnDefs={columnDefs} defaultColDef={defaultColDef}
                         >
                     </AgGridReact>
                 </div>
             </div>
+            <button ref={btnAutoSizeCols} style = {{display:'none'}} onClick={() => autoSizeAll(false)} >auto-size-cols</button>
            
             <p className='text-lg py-4'>Comment: {workoutDetails.comment}</p>
             <div className='space-x-4'>

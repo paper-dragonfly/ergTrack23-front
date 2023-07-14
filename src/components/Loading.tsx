@@ -2,10 +2,12 @@ import React from 'react';
 import { Alert, Space, Spin } from 'antd';
 
 export default function Loading () {
-  <Space direction="vertical" className='w-screen h-screen'>
+  return(
+    <div className='flex flex-col items-center'>
+  <Space direction="vertical" className='flex flex-col items-center'>
     <Space>   
-      <Spin tip="Loading" size="large">
-        <div className="content" />
+      <Spin  size="large"  >
+        <div className="content " />
       </Spin>
     </Space>
 
@@ -14,7 +16,10 @@ export default function Loading () {
         message="Extracting your data"
         description="This can take a minute"
         type="info"
+        className='my-4'
       />
     {/* </Spin> */}
   </Space>
+  </div>
+  )
 }

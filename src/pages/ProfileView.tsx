@@ -28,16 +28,16 @@ export default function ProfileView(){
     const userToken = loadData.userToken
 
     return(
-        <div className='profile-info pl-8 space-x-4'>
-            <h1 className='text-2xl font-bold pb-2'>Profile</h1>
+        <div className='profile-info flex flex-col ml-8 mt-10 gap-6 md:ml-40'>
+            <h1 className='profile-header text-2xl font-bold'>Profile</h1>
             <p>Name: {userInfo.user_name}</p>
             <p>Email: {userInfo.email}</p>
             <p>Age: {userInfo.age?userInfo.age:null}</p>
             <p>Sex: {userInfo.sex?userInfo.sex:null}</p>
             <p>Country: {userInfo.country?userInfo.country:null}</p>
             <p>Weight Class: {userInfo.weight_class?userInfo.weight_class:null}</p>
-            <p>Para Class: {userInfo.para_class?userInfo.para_class:null}</p>
-            <Link to='edit' state={{userToken:userToken, userInfo:userInfo}} className='btn grey'>Edit</Link>
+            <p className='mb-6'>Para Class: {userInfo.para_class?userInfo.para_class:null}</p>
+            <Link to='edit' state={{userToken:userToken, userInfo:userInfo}} className='btn coral self-start'>Edit</Link>
         </div>
     )
 }

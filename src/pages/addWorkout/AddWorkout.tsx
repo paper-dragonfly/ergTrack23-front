@@ -5,6 +5,7 @@ import { useLoaderData, useOutletContext } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 
+
 import LengthOptions from './LengthOptions'
 import UploadAndDisplayImage from './UploadAndDisplayImage'
 import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces'
@@ -15,6 +16,7 @@ import EditableResults from './EditableResults'
 
 import { BsImage } from "react-icons/bs"
 import { SlNote } from "react-icons/sl"
+import Loading from '../../components/Loading'
 
 export function loader(){
     const userToken = sessionStorage.getItem('userToken')
@@ -52,18 +54,21 @@ export default function AddWorkout(){
     const [photoHash, setPhotoHash] = useState("")
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
-    const [selected, setSelected] = useState(false)
+    const [fmImgSelected, setFmImgSelected] = useState(true)
+    const [selectedWorkoutType, setSelectedWorkoutType] = useState('singleDist')
     
     const { handleSubmit, formState }  = useForm() 
     const {isSubmitting} = formState
 
     const selectedStyle = {
         backgroundColor: "#FAF7F7",
+        // backgroundColor: '#E6A091',
         boxShadow: '5px 5px 5px #D9D9D9'
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
+        console.log('handlechange begins', fmImgSelected)
         setWorkoutInfo(oldWorkoutInfo => {
             if(type === 'file' && files){
                 setShowError(false)
@@ -73,11 +78,16 @@ export default function AddWorkout(){
                 }
             }else if(name === 'entryMethod' && value ===  'manual'){
                 setShowError(false)
+                setFmImgSelected(false)
                 return {
                     ...oldWorkoutInfo,
                     entryMethod: 'manual',
                     ergImg: null
                 }
+            }else if (name === 'entryMethod' && value === 'fmImg'){
+                setFmImgSelected(true) 
+            }else if (name === 'workoutType'){
+                setSelectedWorkoutType(value)
             }
             return{
                 ...oldWorkoutInfo,
@@ -156,12 +166,14 @@ export default function AddWorkout(){
     }       
  
     return(
-        <div className='add-workout-div flex flex-col items-center px-4 overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-10'>
-            <form onSubmit={handleSubmit(submitForm)}  >
-                <fieldset className='flex gap-10 my-10'>
+        <div className='add-workout-div flex flex-col items-center overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-14'>
+            <form onSubmit={handleSubmit(submitForm)} 
+            className=''
+           >
+                <fieldset className='flex flex-wrap gap-10 my-10'>
                     <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
-                    <label onClick={() => setSelected(!selected)} 
-                    style={({selected}) ? selectedStyle : {} }
+                    <label 
+                    style={fmImgSelected ? selectedStyle : {} }
                     className='flex flex-col justify-center items-center text-center text-xl rounded-lg w-24 h-24'>
                         <BsImage size={30} />
                         <input 
@@ -175,7 +187,10 @@ export default function AddWorkout(){
                         
                         Image
                     </label> 
-                    <label className={`flex flex-col justify-center items-center text-center text-xl bg-bgGrey shadow-2xl rounded-lg w-24 h-24`}>
+                    <label 
+                        style={fmImgSelected ? {}: selectedStyle }
+                        className={`flex flex-col justify-center items-center text-center text-xl rounded-lg w-24 h-24`}
+                    >
                         <SlNote size={30}/>
                         <input 
                             type='radio'
@@ -194,7 +209,9 @@ export default function AddWorkout(){
                         <fieldset >
                             <legend className='text-xl pb-4'>Workout Type</legend>
                             <div className='flex justify-between text-sm pb-4 gap-3'>
-                            <label className='workout-input-btn'>
+                            <label 
+                            style={selectedWorkoutType === 'singleDist'? {backgroundColor: "#DDE691"}:{}}
+                            className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='singleDist'
@@ -206,7 +223,9 @@ export default function AddWorkout(){
                                 />
                                 Single<br />Distance
                             </label>
-                            <label className='workout-input-btn'>
+                            <label 
+                            style={selectedWorkoutType === 'singleTime'? {backgroundColor: "#DDE691"}:{}}
+                            className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='singleTime'
@@ -217,7 +236,9 @@ export default function AddWorkout(){
                                 />
                                 Single<br />Time
                             </label>
-                            <label className='workout-input-btn'>
+                            <label 
+                            style={selectedWorkoutType === 'intervalDist'? {backgroundColor: "#DDE691"}:{}}
+                            className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='intervalDist'
@@ -228,7 +249,9 @@ export default function AddWorkout(){
                                 />
                                 Interval<br />Distance
                             </label>
-                            <label className='workout-input-btn'>
+                            <label 
+                            style={selectedWorkoutType === 'intervalTime'? {backgroundColor: "#DDE691"}:{}}
+                            className='workout-input-btn'>
                                 <input 
                                     type='radio'
                                     id='intervalTime'
@@ -281,7 +304,9 @@ export default function AddWorkout(){
                 </div>
                 }
                <br />
-               <button disabled={isSubmitting} className='addwo-form-submit-bt mb-6 text-xl ' type="submit">Submit</button>
+               {isSubmitting? <Loading />: null}
+               <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
+               style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>
             {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
         </div>

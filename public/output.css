@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap');
 
 /*
-! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com
+! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -441,6 +441,9 @@ html{
   --tw-pan-y:  ;
   --tw-pinch-zoom:  ;
   --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
   --tw-ordinal:  ;
   --tw-slashed-zero:  ;
   --tw-numeric-figure:  ;
@@ -488,6 +491,9 @@ html{
   --tw-pan-y:  ;
   --tw-pinch-zoom:  ;
   --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
   --tw-ordinal:  ;
   --tw-slashed-zero:  ;
   --tw-numeric-figure:  ;
@@ -535,6 +541,9 @@ html{
   --tw-pan-y:  ;
   --tw-pinch-zoom:  ;
   --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
   --tw-ordinal:  ;
   --tw-slashed-zero:  ;
   --tw-numeric-figure:  ;
@@ -568,6 +577,10 @@ html{
   --tw-backdrop-sepia:  ;
 }
 
+.invisible{
+  visibility: hidden;
+}
+
 .absolute{
   position: absolute;
 }
@@ -593,6 +606,11 @@ html{
   margin-bottom: 2.5rem;
 }
 
+.my-4{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .my-6{
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -602,8 +620,20 @@ html{
   margin-bottom: 1.5rem;
 }
 
+.ml-8{
+  margin-left: 2rem;
+}
+
 .mr-6{
   margin-right: 1.5rem;
+}
+
+.mt-10{
+  margin-top: 2.5rem;
+}
+
+.mt-2{
+  margin-top: 0.5rem;
 }
 
 .mt-4{
@@ -612,6 +642,10 @@ html{
 
 .mt-6{
   margin-top: 1.5rem;
+}
+
+.mt-8{
+  margin-top: 2rem;
 }
 
 .block{
@@ -624,6 +658,10 @@ html{
 
 .table{
   display: table;
+}
+
+.grid{
+  display: grid;
 }
 
 .hidden{
@@ -650,10 +688,6 @@ html{
   max-height: 100vh;
 }
 
-.w-10\/12{
-  width: 83.333333%;
-}
-
 .w-11\/12{
   width: 91.666667%;
 }
@@ -666,12 +700,16 @@ html{
   width: 6rem;
 }
 
+.w-5\/6{
+  width: 83.333333%;
+}
+
 .w-full{
   width: 100%;
 }
 
-.w-screen{
-  width: 100vw;
+.max-w-sm{
+  max-width: 24rem;
 }
 
 .flex-col{
@@ -728,6 +766,10 @@ html{
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.self-start{
+  align-self: flex-start;
+}
+
 .self-center{
   align-self: center;
 }
@@ -754,11 +796,6 @@ html{
   background-color: rgb(250 247 247 / var(--tw-bg-opacity));
 }
 
-.bg-green{
-  --tw-bg-opacity: 1;
-  background-color: rgb(189 199 109 / var(--tw-bg-opacity));
-}
-
 .p-4{
   padding: 1rem;
 }
@@ -766,11 +803,6 @@ html{
 .px-10{
   padding-left: 2.5rem;
   padding-right: 2.5rem;
-}
-
-.px-4{
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 
 .px-6{
@@ -788,12 +820,21 @@ html{
   padding-bottom: 1.5rem;
 }
 
+.py-2{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .pb-1{
   padding-bottom: 0.25rem;
 }
 
 .pb-2{
   padding-bottom: 0.5rem;
+}
+
+.pb-3{
+  padding-bottom: 0.75rem;
 }
 
 .pb-4{
@@ -812,10 +853,6 @@ html{
   padding-left: 2.5rem;
 }
 
-.pl-8{
-  padding-left: 2rem;
-}
-
 .pr-20{
   padding-right: 5rem;
 }
@@ -830,10 +867,6 @@ html{
 
 .pt-28{
   padding-top: 7rem;
-}
-
-.pt-4{
-  padding-top: 1rem;
 }
 
 .pt-6{
@@ -878,11 +911,6 @@ html{
   font-weight: 700;
 }
 
-.text-green{
-  --tw-text-opacity: 1;
-  color: rgb(189 199 109 / var(--tw-text-opacity));
-}
-
 .text-textWhite{
   --tw-text-opacity: 1;
   color: rgb(252 255 229 / var(--tw-text-opacity));
@@ -890,12 +918,6 @@ html{
 
 .underline{
   text-decoration-line: underline;
-}
-
-.shadow-2xl{
-  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .filter{
@@ -964,12 +986,13 @@ input::file-selector-button,
 /* Remove "no file chosen" text */
 
 input[type='file'] {
-  color: rgba(0, 0, 0, 0)
+  color: rgba(0, 0, 0, 0);
 }
 
 /* Manual workout input options */
 
-.workout-input-btn {
+.workout-input-btn,
+  .profile-edit-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -978,6 +1001,11 @@ input[type='file'] {
   height: 50px;
   background-color: #D9D9D9;
   border-radius: 5px;
+}
+
+.weight {
+  width: 120px;
+  height: 60px;
 }
 
 /* Workout results editable table */
@@ -1004,15 +1032,13 @@ input[type='file'] {
   border: 1px solid #767171;
   border-radius: 5px;
   width: 200px;
-}
-
-.editable-input.name, 
- .editable-input.date,
- .editable-input.sub,
- .editable-input.rest {
   padding: 2px;
   margin: 10px;
   padding-left: 10px;
+}
+
+.email {
+  width: 250px;
 }
 
 .editable-input.sub,
@@ -1027,20 +1053,28 @@ input[type='file'] {
 }
 
 .editable-input.custom{
-  width: 20%;
+  margin:0;
+  width: 200px;
+  height: 50px;
   padding-left: 8px;
 }
 
 /* Log table */
 
 .ag-theme-alpine {
-  /* --ag-grid-size: 3px;
-  --ag-row-height: 20px;
-  	 */
-  /* --ag-widget-container-horizontal-padding: 4px; */
+  --ag-cell-horizontal-padding:10px !important;
+}
+
+.headshot{
+  width: 200px;
+  border-radius: 10px;
 }
 
 @media (min-width: 768px){
+  .md\:ml-40{
+    margin-left: 10rem;
+  }
+
   .md\:mt-10{
     margin-top: 2.5rem;
   }
@@ -1117,6 +1151,10 @@ input[type='file'] {
     gap: 1.5rem;
   }
 
+  .md\:gap-7{
+    gap: 1.75rem;
+  }
+
   .md\:space-x-10 > :not([hidden]) ~ :not([hidden]){
     --tw-space-x-reverse: 0;
     margin-right: calc(2.5rem * var(--tw-space-x-reverse));
@@ -1132,8 +1170,8 @@ input[type='file'] {
     background-color: rgb(250 247 247 / var(--tw-bg-opacity));
   }
 
-  .md\:p-10{
-    padding: 2.5rem;
+  .md\:p-14{
+    padding: 3.5rem;
   }
 
   .md\:p-6{
@@ -1145,8 +1183,20 @@ input[type='file'] {
     padding-right: 2.5rem;
   }
 
+  .md\:pb-2{
+    padding-bottom: 0.5rem;
+  }
+
   .md\:pt-6{
     padding-top: 1.5rem;
+  }
+
+  .md\:pr-20{
+    padding-right: 5rem;
+  }
+
+  .md\:text-left{
+    text-align: left;
   }
 
   .md\:text-2xl{

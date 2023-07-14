@@ -2,6 +2,9 @@ import React from 'react'
 import { Collapse } from 'antd'
 import { BsPencil, BsEye, BsLaptop } from 'react-icons/bs'
 import { HiMagnifyingGlass } from 'react-icons/hi2'
+import laura from '../assets/laura.jpeg'
+import kathleen_headshot from '../assets/headshot.jpeg'
+
 export default function About(){
     
     const { Panel } = Collapse
@@ -58,7 +61,7 @@ export default function About(){
                     </Panel>
                 </Collapse>
             </section>
-            <section className='bg-bgGrey pl-10 pr-20 mt-4 py-6'>
+            <section className='bg-bgGrey px-10 mt-4 py-6 md:pr-20'>
                 <h2 className='text-2xl font-bold py-6'>Coming in Version 2</h2>
                 <h4 className='text-xl font-bold'>More Metrics</h4>
                 <p className='pb-6'>Currently ergTrack does not support recording calories, watts or heart rate</p>
@@ -69,15 +72,23 @@ export default function About(){
                 <h4 className='text-xl font-bold'>Graphical Comparison</h4>
                 <p className='pb-6'>Select multiple workouts and graph their metrics to easily visualize your progress</p>
             </section>
-            <section className='pl-10 pr-20 py-6'>
-                <h2 className='text-2xl font-bold  pb-2'>About Us</h2>
-                <img  src='#' alt='photo KN' />
-                <h4 className='font-bold'>Kathleen Noble</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, vel! Facere harum incidunt a eos vel dolorem praesentium in quos accusamus quaerat debitis error, ipsa quasi sint fugit? Non, voluptates!</p>
-                <br/>
-                <img src='#' alt='photo LC' />
-                <h4 className='font-bold'>Laura Connor</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium repudiandae accusantium provident quaerat eius esse veniam optio earum non odio impedit, obcaecati, cumque voluptatibus fugit numquam rerum quod asperiores repellat.</p>
+            <section className='px-10 py-6 md:pr-20'>
+                <h2 className='text-2xl font-bold'>About Us</h2>
+                <div className='flex flex-col mt-8 md:flex-row md:gap-7 items-center'>
+                    <img  src={kathleen_headshot} alt='photo KN' className='headshot'/>
+                    <div className='flex flex-col'>
+                        <h4 className='font-bold text-xl py-2 text-center md:text-left'>Kathleen Noble</h4>
+                        <p>Kathleen is an Ugandan Olympic Rower and full stack software engineer. She began rowing at Princeton University as a walk-on to the lightweight women’s crew team and has been rowing ever since. She conceived the idea for ergTrack during winter training when she realized her only system for tracking erg workouts consisted of taking photos and then proceeding to do nothing with them. Conversations with other rowers revealed that this was a common phenomenon. At that time she did not have sufficient programming skills to build her envisioned image-to-database app but as she continued to dive deeper into software, building ergTrack remained a goal.</p>
+                    </div>
+                </div>
+                <div className='flex flex-col mt-10 md:flex-row md:gap-7 items-center'>
+                    <img src={laura} alt='photo LC' className='headshot'/>
+                    <div className='flex flex-col'>
+                        <h4 className='font-bold text-xl py-2 text-center md:text-left'>Laura Connor</h4>
+                        <p>Laura is a full stack software engineer. Always curious and creative, Laura stumbled into web     development while trying to solve a problem. She was starting a business selling her handmade clothing and needed an online store. As she dove into building the site, she quickly   discovered code as an exciting new medium. She has been     learning and building ever since.</p>
+                    </div>
+                </div>
+
             </section>
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from 'react'
+import React, { useState, useLayoutEffect, useRef, useCallback, useMemo, useEffect } from 'react'
 import {useLoaderData, useNavigate} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
@@ -35,6 +35,7 @@ export default function Log() {
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     // const [selectedRowData, setSelectedRowData] = useState<TypeFetchedWorkouts|null>(null)
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
+    const btnWideDisplay = useRef<HTMLButtonElement>(null) 
 
     console.log('allworkouts', allWorkouts)
     // make a new list of obj containing only the columns you want to display (move to helper file?)
@@ -46,7 +47,7 @@ export default function Log() {
             time: allWorkouts[i]['time'],
             meter: allWorkouts[i]['meter'],
             split: allWorkouts[i]['split'],
-            strokeRate: allWorkouts[i]['stroke_rate'],
+            rate: allWorkouts[i]['stroke_rate'],
             comment: allWorkouts[i]['comment']
         }
         summaryData.push(rowArray)
@@ -55,12 +56,12 @@ export default function Log() {
     const [rowData, setRowData] = useState<any[]>(summaryData)
     const [columnDefs] = useState<ColDef[]>([
         // { headerName: 'Row ID', valueGetter: 'node.id' },
-        {field: 'date', filter: true},
+        {field: 'date', filter: true, sortable: true},
         {field: 'workout', filter: true},
         {field: 'time', filter: true},
         {field: 'meter', filter: 'agNumberColumnFilter'},
         {field: 'split', filter: true},
-        {field: 'strokeRate', filter: 'agNumberColumnFilter'},
+        {field: 'rate', filter: 'agNumberColumnFilter'},
         {field: 'comment', filter: true},
     ])
 
@@ -76,17 +77,31 @@ export default function Log() {
         // }
       }), []);
 
+      
+    // TODO: Find a better solution, this is a hack
+    // Auto sizes the column width to show full cell content for small screens rather than fitting table to screen width
+    // does this by clicking an invisible button after 0.05 seconds.  
+    // Timeout was neccessary to allow grid to render before autoSizeAll is called
+    useEffect(()=>{
+        if(window.innerWidth < 768){ 
+            setTimeout(()=>{
+                console.log('useEffect running')
+                if(btnWideDisplay.current && gridRef.current){
+                    btnWideDisplay.current.click()}
+                },50)
+            }
+        },[])
+            
+            
     const autoSizeAll = useCallback((skipHeader: boolean) => {
+        console.log('autosizeall is running')
         const allColumnIds: string[] = [];
         gridRef.current!.columnApi.getColumns()!.forEach((column) => {
-          allColumnIds.push(column.getId());
+            allColumnIds.push(column.getId());
         });
         gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
-      }, []);
+        }, []);
 
-    //   const onSelectionChanged = useCallback(() => {
-    //     const selectedrows = gridRef.currerent!.api.getSelectedrows()
-    //   }, [])
 
     const onSelectionChanged = () => {
         const selectedRow = gridRef.current!.api.getSelectedRows();
@@ -111,18 +126,14 @@ export default function Log() {
 
     return(
         <div className='log-div px-6'>
-            <h3 className='text-2xl font-bold py-6'>Workout Log</h3>
-            <button onClick={() => autoSizeAll(false)} className='btn small'>
-            Change Display
-            </button>
+            <h3 className='text-2xl font-bold pt-6 pb-3'>Workout Log</h3>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
                 <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
                 <button onClick={clearRowSelection} className='btn small coral'>Clear Selection</button>
-            </div> : 
-            <p  className='pt-4 pb-2 text-base'>Select workout to view details</p>
+            </div> : <br />
             }
-            <div style={{height : 400, color:'red'}}>
+            <div style={{height : 500, color:'red'}}>
                 <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
                     <AgGridReact
                         ref = {gridRef}
@@ -135,6 +146,9 @@ export default function Log() {
                     </AgGridReact>
                 </div>
             </div>
+            <button ref={btnWideDisplay} style={{display:'none'}} onClick={() => autoSizeAll(false)} className='btn small grey'>
+            wide-display
+            </button>
         </div>
     )
 }

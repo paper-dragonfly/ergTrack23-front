@@ -101,7 +101,7 @@ export interface TypeDetailsCols{
     time?: string;
     meter?: number;
     split?: string;
-    strokeRate?: number;
+    rate?: number;
 }
 
 // Profile
