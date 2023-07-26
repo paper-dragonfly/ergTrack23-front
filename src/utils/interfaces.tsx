@@ -114,7 +114,7 @@ export interface TypeUserInfo{
     auth_uid: string;
     user_name: string;
     email: string;
-    jointed: Date;
+    joined: Date;
     country: string | null;
     sex: string | null;
     age: number | null; 
