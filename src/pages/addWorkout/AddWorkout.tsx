@@ -179,8 +179,7 @@ export default function AddWorkout(){
     return(
         <div className='add-workout-div flex flex-col items-center overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-14'>
             <form onSubmit={handleSubmit(submitForm)} 
-            className=''
-           >
+            className=''>
                 <fieldset className='flex flex-wrap gap-10 my-10'>
                     <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
                     <label 
@@ -307,17 +306,17 @@ export default function AddWorkout(){
                     </div>
                     : // From Image
                     <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
-               }
-               {showError && 
-               <div> 
+            }
+            {showError && 
+            <div> 
                     <h4>Image processing failed</h4> 
                     <p>Please retake the photo and try again</p>
                 </div>
                 }
-               <br />
-               {isSubmitting? <Loading />: null}
-               <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
-               style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
+            <br />
+            {isSubmitting? <Loading />: null}
+            <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
+            style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>
             <div ref={resultsTableRef}>
                 {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} /> : null}
