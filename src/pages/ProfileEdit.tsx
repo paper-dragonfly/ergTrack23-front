@@ -9,6 +9,7 @@ export async function action({request}:{request: Request}){
     const userToken = sessionStorage.getItem('userToken')
     const formData = await request.formData()
     const formDataObj = Object.fromEntries(formData.entries())
+    console.log('FORM DATA OBJ',  formDataObj)
     const url = API_URL+'/user'
     const patchData = {
         method:  'PATCH',
@@ -49,9 +50,9 @@ export default function ProfileEdit(){
     //     e.preventDefault() //prevent immediate submittion 
         
     // }
-    const [selectedGender, setSelectedGender] = useState('')
-    const [selectedClass, setSelectedClass] = useState('')
-    const [selectedPara, setSelectedPara] = useState('')
+    const [selectedGender, setSelectedGender] = useState(userInfo.sex)
+    const [selectedClass, setSelectedClass] = useState(userInfo.weight_class)
+    const [selectedPara, setSelectedPara] = useState(userInfo.para_class)
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>){
         const genderOption = e.target.id
@@ -90,11 +91,11 @@ export default function ProfileEdit(){
                         defaultValue={userInfo.email}
                     />
                 </label>
-                <label>
+                <label >
                     Age:
                     <input 
                         className='editable-input'
-                        type='text'
+                        type='number'
                         name='age'
                         defaultValue={userInfo.age? userInfo.age: ""}
                     />
@@ -218,18 +219,6 @@ export default function ProfileEdit(){
                 >Info on Para Classifications</a>
                 <div className='flex gap-6 flex-wrap'>
                     <label className='profile-edit-btn'
-                     style={{backgroundColor: selectedPara === 'na' ? "#DDE691" : ""}}>
-                        <input 
-                            type='radio'
-                            name='para_class'
-                            id="na"
-                            value=""
-                            defaultChecked = {!userInfo.para_class?true:false}
-                            onChange = {handlePara}
-                        />
-                        N/A
-                    </label>
-                    <label className='profile-edit-btn'
                      style={{backgroundColor: selectedPara === 'pr3' ? "#DDE691" : ""}}>
                         <input 
                             type='radio'
@@ -264,6 +253,18 @@ export default function ProfileEdit(){
                             onChange={handlePara}
                         />
                         PR1
+                    </label>
+                    <label className='profile-edit-btn'
+                     style={{backgroundColor: selectedPara === 'na' ? "#DDE691" : ""}}>
+                        <input 
+                            type='radio'
+                            name='para_class'
+                            id="na"
+                            value=""
+                            defaultChecked = {!userInfo.para_class?true:false}
+                            onChange = {handlePara}
+                        />
+                        N/A
                     </label>
                 </div>
                 <button type='submit' className='btn coral self-start my-10'>Update</button>
