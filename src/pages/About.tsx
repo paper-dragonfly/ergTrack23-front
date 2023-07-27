@@ -52,6 +52,10 @@ export default function About(){
                     <p>For best results, take a photo straight on in good lighting that captures the complete monitor but little background beyond that</p>
                     </Panel>
 
+                    <Panel header="What photo formats does ergTrack accept?" key='6'>
+                    <p>Images must be of type jpeg, png, tiff or pdf and less than 5MB</p>
+                    </Panel>
+
                     <Panel header="Do I have to use a photo to input my workout data" key='4'>
                     <p>No, there is an option for manual input</p>
                     </Panel>
