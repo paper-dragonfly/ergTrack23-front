@@ -50,9 +50,9 @@ export default function ProfileEdit(){
     //     e.preventDefault() //prevent immediate submittion 
         
     // }
-    const [selectedGender, setSelectedGender] = useState(userInfo.sex)
-    const [selectedClass, setSelectedClass] = useState(userInfo.weight_class)
-    const [selectedPara, setSelectedPara] = useState(userInfo.para_class)
+    const [selectedGender, setSelectedGender] = useState(userInfo.sex? userInfo.sex:'gender-none')
+    const [selectedClass, setSelectedClass] = useState(userInfo.weight_class ? userInfo.weight_class: "none")
+    const [selectedPara, setSelectedPara] = useState(userInfo.para_class? userInfo.para_class:"na")
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>){
         const genderOption = e.target.id
@@ -74,7 +74,7 @@ export default function ProfileEdit(){
            <Form method='post'
            className='flex flex-col ml-8 mt-10 gap-4 md:ml-40'>
                 <label >
-                    Name:
+                    <b>Name</b>
                     <input 
                         className='editable-input'
                         type='text'
@@ -83,7 +83,7 @@ export default function ProfileEdit(){
                     />
                 </label>
                 <label>
-                    Email:
+                    <b>Email</b>
                     <input 
                         className='editable-input email'
                         type='text'
@@ -92,7 +92,7 @@ export default function ProfileEdit(){
                     />
                 </label>
                 <label >
-                    Age:
+                    <b>Age</b>
                     <input 
                         className='editable-input'
                         type='number'
@@ -100,7 +100,7 @@ export default function ProfileEdit(){
                         defaultValue={userInfo.age? userInfo.age: ""}
                     />
                 </label>
-                <legend>Sex:</legend>
+                <legend><b>Sex</b></legend>
                 <div className='flex gap-6'>
                     <label className='profile-edit-btn'
                     style={{backgroundColor: selectedGender === 'female' ? "#DDE691" : ""}}
@@ -142,7 +142,7 @@ export default function ProfileEdit(){
                     
                 </div>
                 <label>
-                    Country:
+                    <b>Country</b>
                     <input 
                         className='editable-input'
                         type='text'
@@ -150,7 +150,7 @@ export default function ProfileEdit(){
                         defaultValue={userInfo.country? userInfo.country: ""}
                     />
                 </label>
-                <legend>Weight Class:</legend>
+                <legend><b>Weight Class</b></legend>
                 <div className='flex gap-6 flex-wrap'>
                     <label className='profile-edit-btn weight'
                      style={{backgroundColor: selectedClass === 'light-women' ? "#DDE691" : ""}}>
@@ -213,7 +213,7 @@ export default function ProfileEdit(){
                         None
                     </label>
                 </div>
-                <legend>Para Classification</legend>
+                <legend><b>Para Classification</b></legend>
                 <a href='https://www.paralympic.org/rowing/classification' target='_blank'
                 className="underline"
                 >Info on Para Classifications</a>
