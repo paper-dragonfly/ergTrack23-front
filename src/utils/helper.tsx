@@ -15,3 +15,27 @@ export async function checkAuth(request: Request){
     }
     return userToken
 }
+
+export function durationToSeconds(duration: string): number {
+    const timeComponents: number[] = duration.split(':').map(parseFloat);
+    let seconds: number = 0;
+  
+    // Extract seconds (last element)
+    seconds = timeComponents.pop()!;
+  
+    // If there are more components, extract minutes (if any)
+    if (timeComponents.length > 0) {
+      const minutes: number = timeComponents.pop()!;
+      seconds += minutes * 60;
+    }
+  
+    // If there are more components, extract hours (if any)
+    if (timeComponents.length > 0) {
+      const hours: number = timeComponents.pop()!;
+      seconds += hours * 3600;
+    }
+  
+    return seconds;
+  }
+  
+  
