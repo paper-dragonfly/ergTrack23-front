@@ -30,13 +30,13 @@ export default function ProfileView(){
     return(
         <div className='profile-info flex flex-col ml-8 mt-10 gap-6 md:ml-40'>
             <h1 className='profile-header text-2xl font-bold'>Profile</h1>
-            <p>Name: {userInfo.user_name}</p>
-            <p>Email: {userInfo.email}</p>
-            <p>Age: {userInfo.age?userInfo.age:null}</p>
-            <p>Sex: {userInfo.sex?userInfo.sex:null}</p>
-            <p>Country: {userInfo.country?userInfo.country:null}</p>
-            <p>Weight Class: {userInfo.weight_class?userInfo.weight_class:null}</p>
-            <p className='mb-6'>Para Class: {userInfo.para_class?userInfo.para_class:null}</p>
+            <p><b>Name:</b> {userInfo.user_name}</p>
+            {userInfo.email? <p><b>Email:</b> {userInfo.email}</p>:null}
+            {userInfo.age? <p><b>Age:</b> {userInfo.age}</p>:null}
+            {userInfo.sex? <p><b>Sex:</b> {userInfo.sex}</p>:null}
+            {userInfo.country? <p><b>Country:</b> {userInfo.country}</p>:null}
+            {userInfo.weight_class? <p><b>Weight Class:</b> {userInfo.weight_class}</p>:null}
+            {userInfo.para_class? <p><b>Para Class:</b> {userInfo.para_class}</p>:null}
             <Link to='edit' state={{userToken:userToken, userInfo:userInfo}} className='btn coral self-start'>Edit</Link>
         </div>
     )

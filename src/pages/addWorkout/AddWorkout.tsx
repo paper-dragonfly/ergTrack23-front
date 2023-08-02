@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import {nanoid} from 'nanoid'
 import { useLoaderData, useOutletContext } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -25,6 +25,7 @@ export function loader(){
 
 export default function AddWorkout(){
     const userToken = useLoaderData()
+    const resultsTableRef = useRef<HTMLDivElement | null>(null)
 
     const [workoutInfo, setWorkoutInfo] = useState<TypesWorkoutInfo>(
         {
@@ -65,6 +66,13 @@ export default function AddWorkout(){
         // backgroundColor: '#E6A091',
         boxShadow: '5px 5px 5px #D9D9D9'
     }
+
+    const scrollToTable = () => {
+        if (resultsTableRef.current) {
+            console.log('Scroll ran')
+            resultsTableRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
@@ -131,10 +139,13 @@ export default function AddWorkout(){
                                 sr: data.body.workout_data.sr,
                                 hr: [], //hr not considered at this point
                             })
-                            setShowEditableResults(true) 
+                            setShowEditableResults(true)
                         }else{
                             setShowError(true) 
-                        } 
+                        }
+                        console.log('before scoll')
+                        scrollToTable() 
+                        console.log('after scoll') 
                 })
             )
             // if entryMethod = 'manual'
@@ -168,8 +179,7 @@ export default function AddWorkout(){
     return(
         <div className='add-workout-div flex flex-col items-center overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-14'>
             <form onSubmit={handleSubmit(submitForm)} 
-            className=''
-           >
+            className=''>
                 <fieldset className='flex flex-wrap gap-10 my-10'>
                     <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
                     <label 
@@ -296,19 +306,21 @@ export default function AddWorkout(){
                     </div>
                     : // From Image
                     <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
-               }
-               {showError && 
-               <div> 
+            }
+            {showError && 
+            <div> 
                     <h4>Image processing failed</h4> 
                     <p>Please retake the photo and try again</p>
                 </div>
                 }
-               <br />
-               {isSubmitting? <Loading />: null}
-               <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
-               style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
+            <br />
+            {isSubmitting? <Loading />: null}
+            <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
+            style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>
-            {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} />: null}
+            <div ref={resultsTableRef}>
+                {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} /> : null}
+            </div>
         </div>
     )
 }
