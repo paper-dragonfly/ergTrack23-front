@@ -4,6 +4,7 @@ import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
+
 import { TypeDetailsCols } from '../utils/interfaces'
 import { API_URL } from '../config'
 import { BsArrowLeftShort } from "react-icons/bs"
@@ -29,7 +30,9 @@ export default function WorkoutDetails(){
         time: workoutDetails.time,
         meter: workoutDetails.meter,
         split: workoutDetails.split,
-        rate: workoutDetails.stroke_rate
+        rate: workoutDetails.stroke_rate,
+        watts: workoutDetails.watts,
+        cal: workoutDetails.cal
     }
 
     const detailTableData = [summaryRow, {}]
@@ -40,7 +43,9 @@ export default function WorkoutDetails(){
             time: subworkouts[i].time,
             meter: subworkouts[i].distance,
             split: subworkouts[i].split,
-            rate: subworkouts[i].strokeRate
+            rate: subworkouts[i].strokeRate,
+            watts: subworkouts[i].watts,
+            cals: subworkouts[i].cals,
         }
         detailTableData.push(row)
         console.log(detailTableData)

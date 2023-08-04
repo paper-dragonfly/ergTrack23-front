@@ -7,7 +7,6 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
 import { API_URL } from '../config' 
 import { TypeFetchedWorkouts, TypeLogCols } from '../utils/interfaces'
-import { durationToSeconds } from '../utils/helper'
 
 
 export async function loader(){
@@ -41,18 +40,6 @@ export default function Log() {
     console.log('allworkouts', allWorkouts)
     // make a new list of obj containing only the columns you want to display (move to helper file?)
     for(let i=0; i<allWorkouts.length; i++){
-        // calculate watts and calories based on split
-        const split = allWorkouts[i]['split']
-        
-        const pace = durationToSeconds(split)/500
-        const watts = Math.ceil(2.8/Math.pow(pace,3))
-        console.log('split, pace, watts', split, pace, watts)
-
-        const time = allWorkouts[i]['time']
-        // watts/1000 x time[hours] x 860 x 4[25% efficiency] + 300[heat]
-        const time_hour = durationToSeconds(time)/3600
-        const cals= Math.ceil(watts/1000 * time_hour * 860 * 4 + 300)
-
         const rowArray = {
             workoutId: allWorkouts[i]['workout_id'],
             date: allWorkouts[i]['date'],
@@ -60,9 +47,9 @@ export default function Log() {
             time: allWorkouts[i]['time'],
             meters: allWorkouts[i]['meter'],
             split: allWorkouts[i]['split'],
-            watts: watts,
-            cals: cals,
             rate: allWorkouts[i]['stroke_rate'],
+            watts: allWorkouts[i]['watts'],
+            cal: allWorkouts[i]['cal'],
             comment: allWorkouts[i]['comment']
         }
         summaryData.push(rowArray)
@@ -76,9 +63,9 @@ export default function Log() {
         {field: 'time', filter: true},
         {field: 'meters', filter: 'agNumberColumnFilter'},
         {field: 'split', filter: true},
-        {field: 'watts', filter: true},
-        {field: 'cals', filter: true},
         {field: 'rate', filter: 'agNumberColumnFilter'},
+        {field: 'watts', filter: true},
+        {field: 'cal', filter: true},
         {field: 'comment', filter: true},
     ])
 
