@@ -31,8 +31,6 @@ export default function WorkoutDetails(){
         meter: workoutDetails.meter,
         split: workoutDetails.split,
         rate: workoutDetails.stroke_rate,
-        watts: workoutDetails.watts,
-        cal: workoutDetails.cal
     }
 
     const detailTableData = [summaryRow, {}]
@@ -44,11 +42,9 @@ export default function WorkoutDetails(){
             meter: subworkouts[i].distance,
             split: subworkouts[i].split,
             rate: subworkouts[i].strokeRate,
-            watts: subworkouts[i].watts,
-            cals: subworkouts[i].cals,
         }
         detailTableData.push(row)
-        console.log(detailTableData)
+        console.log('detailTableData',detailTableData)
     }
 
 
@@ -57,7 +53,7 @@ export default function WorkoutDetails(){
         {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
         {field: 'split'},
-        {field: 'rate'}
+        {field: 'rate'},
     ])
 
     const defaultColDef = useMemo( ()=> ( {
@@ -131,11 +127,10 @@ export default function WorkoutDetails(){
         <div className='wo-details-div px-6'>
             <NavLink to='/log' className='flex justify-end pt-2 text-base'><BsArrowLeftShort size={25}/>Back to Log</NavLink>
             <h1 className='text-2xl font-bold'>
-                Workout Details 
+                {workoutDetails.description}
             </h1>
-            <h2 className='text-lg pt-6 pb-1'>Date: {workoutDetails.date}</h2>
-            <h2 className='text-lg pb-6'>Workout: {workoutDetails.description}</h2>
-            <div style={{height : 300, color:'red'}}>
+            <h4>{workoutDetails.date}</h4>
+            <div style={{height : 315, color:'red', paddingTop:'10px', paddingBottom:'10px'}}>
                 <div className = "ag-theme-alpine" style={{height:'100%', width:'100%'}} >
                     <AgGridReact
                         ref = {gridRef}
@@ -146,7 +141,8 @@ export default function WorkoutDetails(){
                 </div>
             </div>
             <button ref={btnAutoSizeCols} style = {{display:'none'}} onClick={() => autoSizeAll(false)} >auto-size-cols</button>
-           
+            <h4>Average Watts: {workoutDetails.watts}</h4>
+            <h4>Total Calories: {workoutDetails.cal}</h4>
             <p className='text-lg py-4'>Comment: {workoutDetails.comment}</p>
             <div className='space-x-4'>
                 <button onClick={onEditSaveClick} className='btn small'>  {editing ? 'Save': 'Edit'}</button>
