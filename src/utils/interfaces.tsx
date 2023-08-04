@@ -81,6 +81,8 @@ export interface TypeFetchedWorkouts{
     meter: number;
     split: string;
     stroke_rate: number;
+    watts: number;
+    cal: number;
     image_hash: string | null;
     subworkouts: TypeSubWorkout[] ;
     comment: string | null
@@ -102,6 +104,8 @@ export interface TypeDetailsCols{
     meter?: number;
     split?: string;
     rate?: number;
+    watts?: number;
+    cal?: number;
 }
 
 // Profile

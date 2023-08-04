@@ -15,3 +15,7 @@ export async function checkAuth(request: Request){
     }
     return userToken
 }
+
+
+  
+  

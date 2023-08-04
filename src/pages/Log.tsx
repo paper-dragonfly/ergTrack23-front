@@ -45,9 +45,11 @@ export default function Log() {
             date: allWorkouts[i]['date'],
             workout: allWorkouts[i]['description'],
             time: allWorkouts[i]['time'],
-            meter: allWorkouts[i]['meter'],
+            meters: allWorkouts[i]['meter'],
             split: allWorkouts[i]['split'],
             rate: allWorkouts[i]['stroke_rate'],
+            watts: allWorkouts[i]['watts'],
+            cal: allWorkouts[i]['cal'],
             comment: allWorkouts[i]['comment']
         }
         summaryData.push(rowArray)
@@ -59,9 +61,11 @@ export default function Log() {
         {field: 'date', filter: true, sortable: true},
         {field: 'workout', filter: true},
         {field: 'time', filter: true},
-        {field: 'meter', filter: 'agNumberColumnFilter'},
+        {field: 'meters', filter: 'agNumberColumnFilter'},
         {field: 'split', filter: true},
         {field: 'rate', filter: 'agNumberColumnFilter'},
+        {field: 'watts', filter: true},
+        {field: 'cal', filter: true},
         {field: 'comment', filter: true},
     ])
 
