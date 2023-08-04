@@ -141,8 +141,9 @@ export default function WorkoutDetails(){
                 </div>
             </div>
             <button ref={btnAutoSizeCols} style = {{display:'none'}} onClick={() => autoSizeAll(false)} >auto-size-cols</button>
-            <h4>Average Watts: {workoutDetails.watts}</h4>
-            <h4>Total Calories: {workoutDetails.cal}</h4>
+            {/* take out conditional in future, this is to accomodate old data that doesn't have watts and cals calculated*/}
+            {workoutDetails.watts ? <h4>Average Watts: {workoutDetails.watts}</h4> : null}
+            {workoutDetails.cal ? <h4>Total Calories: {workoutDetails.cal}</h4> : null}
             <p className='text-lg py-4'>Comment: {workoutDetails.comment}</p>
             <div className='space-x-4'>
                 <button onClick={onEditSaveClick} className='btn small'>  {editing ? 'Save': 'Edit'}</button>
