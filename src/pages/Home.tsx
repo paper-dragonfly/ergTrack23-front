@@ -16,7 +16,7 @@ export default function Home(){
                     width:'100vw',
                     height:'auto'
                   }}> */}
-            {/* <img src={bgHero} alt="woman on erg machine" className='w-full max-h-screen '/> */}
+            <img src={bgHero} alt="woman on erg machine" className='w-full max-h-screen '/>
             {/* <h1 className="text-xl font-bold text-center text-textWhite pt-6 md:text-2xl"
                 >Welcome to ergTrack </h1> */}
              {/* </section> */}
