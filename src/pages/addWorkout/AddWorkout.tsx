@@ -77,6 +77,7 @@ export default function AddWorkout(){
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
         const {name, type, value,files} = e.target
         console.log('handlechange begins', fmImgSelected)
+        setShowEditableResults(false)
         setWorkoutInfo(oldWorkoutInfo => {
             if(type === 'file' && files){
                 setShowError(false)
