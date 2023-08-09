@@ -1,8 +1,6 @@
 # Welcome to ergTrack
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Watch the [Demo Video](https://www.canva.com/design/DAFq-5T_Wns/TNjxCZ-VCIgUY8LpwlFUjg/watch?utm_content=DAFq-5T_Wns&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
 ## Available Scripts
 

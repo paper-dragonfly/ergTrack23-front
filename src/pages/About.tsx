@@ -40,9 +40,8 @@ export default function About(){
                 <h2 className='text-2xl font-bold  pb-4'>FAQ</h2>
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="How do I use ergTrack?" key='1'>
-                    <p>{"Complete a workout on your Concept 2 indoor rower. Use the monitor buttons to navigate to the memory screen [Menu >  Memory > Select by Date> your-workout ] . Upload a photo of your memory screen to the ‘Add Workout’ page of ergTrack. Edit extracted data as needed. Save. Voila, that’s it. Check out Log to view your workouts"}</p>
+                    <p>{"Complete a workout on your Concept 2 indoor rower. Use the monitor buttons to navigate to the memory screen [Menu >  Memory > Select by Date> your-workout ] . Upload a photo of your memory screen to the ‘Add Workout’ page of ergTrack. Edit extracted data as needed. Save. Voila, that’s it. Check out Log to view your workouts."}</p>
                     </Panel>
-                
 
                     <Panel header="What kind of  machine do I need?" key='2'>
                     <p>ergTrack is designed to work with a Concept 2 indoor rower with a PM5 monitor. It will not work with other indoor rowing machines or earlier monitor versions</p>
@@ -61,14 +60,15 @@ export default function About(){
                     </Panel>
 
                     <Panel header="What metrics does ergTrack record?" key='5'>
-                    <p>Date, description, distance, time, split (pace), stroke rate, comment (optional)</p>
+                    <p>Date, workout description, distance, time, split (pace), stroke rate, watts, calories, comment (optional). 
+                        Note: watts and calories are calculated from split and time data. Uploading a photo contianing watts or calories will cause an error.</p>
                     </Panel>
                 </Collapse>
             </section>
             <section className='bg-bgGrey px-10 mt-4 py-6 md:pr-20'>
                 <h2 className='text-2xl font-bold py-6'>Coming in Version 2</h2>
                 <h4 className='text-xl font-bold'>More Metrics</h4>
-                <p className='pb-6'>Currently ergTrack does not support recording calories, watts or heart rate</p>
+                <p className='pb-6'>Currently ergTrack does not support recording heart rate</p>
                 <h4 className='text-xl font-bold'>Team Log</h4>
                 <p className='pb-6'>Be part of a team and see how you stack up. In addition to your individual Log you will have access to your Team Log where you can view all the workouts submitted by team members</p>
                 <h4 className='text-xl font-bold'>More Intervals/Sub-Workouts</h4>
