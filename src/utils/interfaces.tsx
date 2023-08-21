@@ -6,6 +6,7 @@ export interface TypesWorkoutInfo {
     customLength: string;
     rest:string;
     subWorkouts: string;
+    showHR: boolean;
     ergImg: File | null; 
 }
 
@@ -13,9 +14,9 @@ export interface TypesWorkoutMetrics {
     workoutName: string;
     workoutDate: string;
     time:string[];
-    meter: string[],
-    split:  string[],
-    sr: string[],
+    meter: string[];
+    split:  string[];
+    sr: string[];
     hr: string[]
 }
 

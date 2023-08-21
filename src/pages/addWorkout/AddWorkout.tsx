@@ -35,6 +35,7 @@ export default function AddWorkout(){
             customLength:"",
             rest:"",
             subWorkouts: "4",
+            showHR: false,
             ergImg: null, 
         }
     )
@@ -75,7 +76,7 @@ export default function AddWorkout(){
       }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
-        const {name, type, value,files} = e.target
+        const {name, type, value,files, checked} = e.target
         console.log('handlechange begins', fmImgSelected)
         setShowEditableResults(false)
         setWorkoutInfo(oldWorkoutInfo => {
@@ -97,6 +98,11 @@ export default function AddWorkout(){
                 setFmImgSelected(true) 
             }else if (name === 'workoutType'){
                 setSelectedWorkoutType(value)
+            }else if (name == 'showHR'){
+                return{
+                    ...oldWorkoutInfo,
+                    showHR: !workoutInfo.showHR
+                }
             }
             return{
                 ...oldWorkoutInfo,
@@ -138,7 +144,7 @@ export default function AddWorkout(){
                                 meter: data.body.workout_data.meter,
                                 split:  data.body.workout_data.split,
                                 sr: data.body.workout_data.sr,
-                                hr: [], //hr not considered at this point
+                                hr: data.body.workout_data.hr[0] ? data.body.workout_data.hr: []
                             })
                             setShowEditableResults(true)
                         }else{
@@ -168,7 +174,7 @@ export default function AddWorkout(){
                     meter: emptyCol,
                     split:  emptyCol,
                     sr: emptyCol,
-                    hr: [],
+                    hr: workoutInfo.showHR? emptyCol: [],
                 })
                 console.log('workoutInfo', workoutInfo)
                 console.log('manualInputWorkoutMetrics', workoutMetrics)
@@ -283,6 +289,18 @@ export default function AddWorkout(){
                                     type='number'
                                     name='subWorkouts'
                                     value={workoutInfo.subWorkouts}
+                                    onChange= {handleChange}
+                                    className='editable-input sub'
+                                />
+                            </label>
+                        </fieldset>
+                        <fieldset className="visible-on-manual">
+                            <label>
+                                Include Heart Rate
+                                <input
+                                    type='checkbox'
+                                    name='showHR'
+                                    checked= {workoutInfo.showHR}
                                     onChange= {handleChange}
                                     className='editable-input sub'
                                 />
