@@ -82,6 +82,7 @@ export interface TypeFetchedWorkouts{
     meter: number;
     split: string;
     stroke_rate: number;
+    heart_rate: number | null;
     watts: number;
     cal: number;
     image_hash: string | null;
@@ -105,6 +106,7 @@ export interface TypeDetailsCols{
     meter?: number;
     split?: string;
     rate?: number;
+    hr?: number;
     watts?: number;
     cal?: number;
 }

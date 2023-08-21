@@ -18,7 +18,7 @@ export async function loader(){
 export default function WorkoutDetails(){
     const userToken = useLoaderData() 
     const location  = useLocation()
-    const workoutDetails = location.state 
+    const workoutDetails = location.state  
     console.log(workoutDetails)
     const gridRef = useRef<AgGridReact<TypeDetailsCols>>(null);
     const btnAutoSizeCols = useRef<HTMLButtonElement>(null)
@@ -31,6 +31,7 @@ export default function WorkoutDetails(){
         meter: workoutDetails.meter,
         split: workoutDetails.split,
         rate: workoutDetails.stroke_rate,
+        hr: workoutDetails.heart_rate
     }
 
     const detailTableData = [summaryRow, {}]
@@ -42,6 +43,7 @@ export default function WorkoutDetails(){
             meter: subworkouts[i].distance,
             split: subworkouts[i].split,
             rate: subworkouts[i].strokeRate,
+            hr: subworkouts[i].heartRate
         }
         detailTableData.push(row)
         console.log('detailTableData',detailTableData)
@@ -53,8 +55,10 @@ export default function WorkoutDetails(){
         {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
         {field: 'split'},
-        {field: 'rate'},
+        {field: 'rate', headerName:'S/M'},
+        {field: 'hr', headerName:'♡'}
     ])
+
 
     const defaultColDef = useMemo( ()=> ( {
         flex: 1,

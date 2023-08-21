@@ -48,6 +48,7 @@ export default function Log() {
             meters: allWorkouts[i]['meter'],
             split: allWorkouts[i]['split'],
             rate: allWorkouts[i]['stroke_rate'],
+            HR: allWorkouts[i]['heart_rate'],
             watts: allWorkouts[i]['watts'],
             cal: allWorkouts[i]['cal'],
             comment: allWorkouts[i]['comment']
@@ -63,7 +64,8 @@ export default function Log() {
         {field: 'time', filter: true},
         {field: 'meters', filter: 'agNumberColumnFilter'},
         {field: 'split', filter: true},
-        {field: 'rate', filter: 'agNumberColumnFilter'},
+        {field: 'rate', headerName:'S/M', filter: 'agNumberColumnFilter'},
+        {field: 'HR', headerName:"♡", filter: true},
         {field: 'watts', filter: true},
         {field: 'cal', filter: true},
         {field: 'comment', filter: true},
