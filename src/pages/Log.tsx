@@ -49,6 +49,7 @@ export default function Log() {
             split: allWorkouts[i]['split'],
             rate: allWorkouts[i]['stroke_rate'],
             HR: allWorkouts[i]['heart_rate'],
+            variance: allWorkouts[i]['split_variance'],
             watts: allWorkouts[i]['watts'],
             cal: allWorkouts[i]['cal'],
             comment: allWorkouts[i]['comment']
@@ -63,7 +64,8 @@ export default function Log() {
         {field: 'workout', filter: true},
         {field: 'time', filter: true},
         {field: 'meters', filter: 'agNumberColumnFilter'},
-        {field: 'split', filter: true},
+        {field: 'split', filter: true, sortable: true},
+        {field: 'variance', filter: true, sortable:true},
         {field: 'rate', headerName:'S/M', filter: 'agNumberColumnFilter'},
         {field: 'HR', headerName:"♡", filter: true},
         {field: 'watts', filter: true},

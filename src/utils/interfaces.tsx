@@ -83,6 +83,7 @@ export interface TypeFetchedWorkouts{
     split: string;
     stroke_rate: number;
     heart_rate: number | null;
+    split_variance: number;
     watts: number;
     cal: number;
     image_hash: string | null;
