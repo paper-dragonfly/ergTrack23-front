@@ -15,6 +15,8 @@ export default function EditableResults(props: ERProps) {
 
   const {handleSubmit, formState} = useForm() 
   const { isSubmitting } = formState; 
+  
+  const [manualShowHR, setManualShowHR] = useState<boolean>(metrics.hr.length ? true : false)
 
   const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false)
   const [viewSaveError, setViewSaveError] = useState<boolean>(false)
@@ -39,6 +41,7 @@ export default function EditableResults(props: ERProps) {
         const rowData = { id: nanoid(), time: newMetrics.time[i], distance: parseInt(newMetrics.meter[i]), split: newMetrics.split[i], strokeRate: parseInt(newMetrics.sr[i]), heartRate: parseInt(newMetrics.hr[i]) }
         ergTable.push(rowData) 
       }
+      console.log('view WorkoutTableMetrics', ergTable)
       return ergTable
     })
     
@@ -150,6 +153,7 @@ export default function EditableResults(props: ERProps) {
                       <th>Meter</th>
                       <th>Split</th>
                       <th>S/M</th>
+                      {workoutTableMetrics[0].heartRate || manualShowHR? <th>HR</th> : null}
                   </tr>
                   </thead>
                   <tbody>
@@ -188,11 +192,11 @@ export default function EditableResults(props: ERProps) {
                           className='editable-row'
                           />
                       </td>
-                      {row.heartRate? 
+                      {row.heartRate || manualShowHR? 
                           <td>
                               <input
                               type="number"
-                              value={row.heartRate}
+                              value={row.heartRate ? row.heartRate : ""}
                               onChange={(e) => handleMetricsChange(e, row.id, 'heartRate')}
                               className='editable-row'
                               />

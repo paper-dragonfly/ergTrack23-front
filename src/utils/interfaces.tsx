@@ -6,6 +6,7 @@ export interface TypesWorkoutInfo {
     customLength: string;
     rest:string;
     subWorkouts: string;
+    showHR: boolean;
     ergImg: File | null; 
 }
 
@@ -13,9 +14,9 @@ export interface TypesWorkoutMetrics {
     workoutName: string;
     workoutDate: string;
     time:string[];
-    meter: string[],
-    split:  string[],
-    sr: string[],
+    meter: string[];
+    split:  string[];
+    sr: string[];
     hr: string[]
 }
 
@@ -81,6 +82,8 @@ export interface TypeFetchedWorkouts{
     meter: number;
     split: string;
     stroke_rate: number;
+    heart_rate: number | null;
+    split_variance: number;
     watts: number;
     cal: number;
     image_hash: string | null;
@@ -104,6 +107,7 @@ export interface TypeDetailsCols{
     meter?: number;
     split?: string;
     rate?: number;
+    hr?: number;
     watts?: number;
     cal?: number;
 }
