@@ -26,6 +26,8 @@ import Deleted from './pages/Deleted';
 import ProfileView, {loader as profileViewLoader} from './pages/ProfileView';
 import ProfileEdit, {action as profileEditAction} from './pages/ProfileEdit';
 import Sandbox from './pages/Sandbox';
+import AddTeam, {loader as addTeamLoader} from './pages/team/AddTeam';
+import TeamLog, {loader as teamLogLoader} from './pages/team/TeamLog';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,6 +51,8 @@ const router = createBrowserRouter(
         <Route path='log/details' element={<WorkoutDetails />} loader = {detailsLoader}/>
         <Route path='addworkout/submitted' element={<Submitted />} />
         <Route path='log/deleted' element={<Deleted />} />
+        <Route path='team/add' element={<AddTeam />} loader = {addTeamLoader} />
+        <Route path='team/log' element={<TeamLog />} loader = {teamLogLoader} />
       </Route>
     </Route>
   )

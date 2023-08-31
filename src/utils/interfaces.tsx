@@ -143,6 +143,9 @@ export interface TypeProfileEdit{
 }
 
 // Team
+export interface TypeAddTeamLoaded{
+    userToken: string;
+}
 export interface TypeTeamLoaded{
     userToken: string;
     userTeamInfo: {
@@ -166,6 +169,8 @@ export interface TeamChildProps {
 export interface TeamLogProps {
     userToken: string;
 }
+
+
 
 
 

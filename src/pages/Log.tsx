@@ -10,6 +10,7 @@ import { TypeFetchedWorkouts, TypeLogCols } from '../utils/interfaces'
 
 
 export async function loader(){
+    console.log('running log loader')
     const userToken = sessionStorage.getItem('userToken')
     const url = API_URL+'/workout'
     return fetch(url, {
@@ -24,7 +25,7 @@ export async function loader(){
             console.log(data)
             console.log(data['body']['workouts'])
             return data['body']['workouts']}) 
-        .catch(error => console.error(error(error)))
+        .catch(error => console.error(error))
 }
 
 
