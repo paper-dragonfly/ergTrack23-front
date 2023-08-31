@@ -47,6 +47,7 @@ export default function NavHeader () {
                     <div className='flex flex-col pt-28 items-center absolute top-0 left-0 w-full h-screen bg-bgGrey text-4xl font-bold gap-8 z-10'>
                         <NavLink to='/addWorkout' onClick={() => setNav(!nav)}>Add Workout</NavLink>
                         <NavLink to='/log' onClick={() => setNav(!nav)}>View Log</NavLink>
+                        <NavLink to='/team' onClick={() => setNav(!nav)}>Team</NavLink>
                         <NavLink to='/dashboard' onClick={() => setNav(!nav)}>Dashboard</NavLink>
                         <NavLink to='/about' onClick={() => setNav(!nav)}>About</NavLink>
                         <NavLink to='/profile' onClick={() => setNav(!nav)}>Profile</NavLink>

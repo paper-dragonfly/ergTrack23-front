@@ -12,7 +12,7 @@ export async function action({request}:{request: Request}){
     console.log('FORM DATA OBJ',  formDataObj)
     const url = API_URL+'/user'
     const patchData = {
-        method:  'PATCH',
+        method:  'PUT',
         headers: {
             'Authorization': `Bearer ${userToken}`,
             'Content-Type': 'application/json'

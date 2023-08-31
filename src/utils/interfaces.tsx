@@ -141,3 +141,32 @@ export interface TypeProfileEdit{
     setUserInfo: React.Dispatch<React.SetStateAction<TypeUserInfo>>
     setEditting: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+// Team
+export interface TypeTeamLoaded{
+    userToken: string;
+    userTeamInfo: {
+        team_member: boolean;
+        team_info?: TypeTeamInfo;
+        team_admin?: boolean
+    }
+}
+
+export interface TypeTeamInfo{
+    team_id: number;
+    team_name: string;
+    team_code: string;
+}
+
+export interface TeamChildProps {
+    userToken: string;
+    toggleTeamMember: () => void;
+}
+
+export interface TeamLogProps {
+    userToken: string;
+}
+
+
+
+

@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import AuthRequiredLayout from './components/AuthRequiredLayout';
 import Log, {loader as logLoader} from './pages/Log';
 import About from './pages/About';
+import Team, {loader as teamLoader} from './pages/team/Team';
 import PublicLayout from './components/PublicLayout';
 import {loader as AuthLoader} from './components/AuthRequiredLayout'
 import { checkAuth } from './utils/helper';
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
         <Route path='dashboard' element={<Dashboard />} />
         <Route path="addworkout" element={<AddWorkout />} loader = {addWorkoutloader} />
         <Route path="log" element={<Log />} loader = {logLoader}/>
+        <Route path="team" element={<Team />} loader={teamLoader}/>
         <Route path="profile" element={<ProfileView />} loader = {profileViewLoader} />
         <Route path="about" element={<About />} />
         
