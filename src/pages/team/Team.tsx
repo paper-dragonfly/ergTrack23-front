@@ -1,10 +1,9 @@
 import React, {useState} from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, Link, redirect, useNavigate } from 'react-router-dom'
 import { API_URL } from '../../config'
 import { TypeTeamInfo, TypeTeamLoaded } from '../../utils/interfaces'
 import AddTeam from './AddTeam'
 import TeamLog from './TeamLog'
-import { Outlet, redirect, Link, useNavigate } from 'react-router-dom'
 
 
 //load - get if user info includees team name 
@@ -34,6 +33,7 @@ export default function Team(){
     const loaderData = useLoaderData() as TypeTeamLoaded
     const teamInfo = loaderData.userTeamInfo.team_info as TypeTeamInfo
     const userToken = loaderData.userToken
+    const navigate  = useNavigate()
 
     const handlePatchRequest = () => {
         const url = API_URL+'/user'
@@ -50,7 +50,7 @@ export default function Team(){
           .then(data => {
             console.log(data)
             if(data.status_code == 200){
-                throw redirect('/team/add')
+                navigate('/team/add')
             }
           })
           .catch(error => {

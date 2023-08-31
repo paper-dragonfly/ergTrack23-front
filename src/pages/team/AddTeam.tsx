@@ -38,6 +38,7 @@ export async function loader(){
 export default function AddTeam( ){
     const loaderData = useLoaderData() as TypeAddTeamLoaded
     const userToken = loaderData.userToken
+    const navigate = useNavigate()
 
     const [createOrJoin, setCreateOrJoin] = useState<string>('join');
     const [teamInfo, setTeamInfo] = useState({
@@ -85,7 +86,7 @@ export default function AddTeam( ){
                     .then((data)=> {
                         console.log(data)
                         if(data.status_code == 200){
-                            throw redirect('/team')
+                            navigate('/team')
                         }
                     })
                 )  
@@ -106,7 +107,7 @@ export default function AddTeam( ){
                     .then((data)=> {
                         console.log(data)
                         if(data.status_code == 200){
-                            throw redirect('/team')
+                            navigate('/team')
                         }else if(data.status_code == 404){
                             setDisplayedError(data.error_message)
                         }
