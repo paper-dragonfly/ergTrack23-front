@@ -2,14 +2,42 @@ import { SelectCellEditor } from 'ag-grid-community';
 import React, {useState} from 'react'
 import {Link } from 'react-router-dom'
 import {useForm} from 'react-hook-form'
+import { useLoaderData, redirect, useNavigate } from 'react-router-dom';
 
 import { API_URL } from '../../config';
 import { TeamChildProps } from '../../utils/interfaces';
+import { TypeAddTeamLoaded } from '../../utils/interfaces';
 
+export async function loader(){
+    console.log('hit addTeeam')
 
+    //get user token 
+    const userToken = sessionStorage.getItem('userToken')
+    const url = API_URL+'/team'
 
-export default function AddTeam(props:TeamChildProps ){
-    const userToken = props.userToken
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${userToken}`,
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data['body'])
+            if(data['body']['team_member']){
+                return redirect('/team')
+            }
+            return {userToken: userToken}
+        }) 
+        .catch(error => console.error(error))
+}
+    // check if on team
+    // if on team - redirect to team home page
+
+export default function AddTeam( ){
+    const loaderData = useLoaderData() as TypeAddTeamLoaded
+    const userToken = loaderData.userToken
 
     const [createOrJoin, setCreateOrJoin] = useState<string>('join');
     const [teamInfo, setTeamInfo] = useState({
@@ -57,7 +85,7 @@ export default function AddTeam(props:TeamChildProps ){
                     .then((data)=> {
                         console.log(data)
                         if(data.status_code == 200){
-                            props.toggleTeamMember()
+                            throw redirect('/team')
                         }
                     })
                 )  
@@ -78,7 +106,7 @@ export default function AddTeam(props:TeamChildProps ){
                     .then((data)=> {
                         console.log(data)
                         if(data.status_code == 200){
-                            props.toggleTeamMember()
+                            throw redirect('/team')
                         }else if(data.status_code == 404){
                             setDisplayedError(data.error_message)
                         }

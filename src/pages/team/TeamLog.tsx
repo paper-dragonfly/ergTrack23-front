@@ -1,38 +1,38 @@
 import React from 'react'
 
 import { API_URL } from '../../config';
-import { TeamChildProps } from '../../utils/interfaces';
+import { TypeFetchedWorkouts } from '../../utils/interfaces';
+import { useLoaderData } from 'react-router-dom';
 
+export async function loader(){
+    console.log('hit log')
 
-export default function TeamLog(props: TeamChildProps){
-    const handlePatchRequest = () => {
-        const url = API_URL+'/user'
-    
-        fetch(url, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `Bearer ${props.userToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ team: null, team_admin: false }), 
-        })
-          .then(response => response.json())
-          .then(data => {
+    const userToken = sessionStorage.getItem('userToken')
+    const url = API_URL+'/teamlog'
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${userToken}`,
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(resp => resp.json())
+        .then(data => {
             console.log(data)
-            if(data.status_code == 200){
-                props.toggleTeamMember()
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-      };
+            console.log(data['body']['team_workouts'])
+            return data['body']['team_workouts']}) 
+        .catch(error => console.error(error(error)))
+}
+
+export default function TeamLog(){
+    const teamWorkouts = useLoaderData() as TypeFetchedWorkouts 
+
     
-      return (
-        <div>
-            <h2>Team Log</h2>
-            <button onClick={handlePatchRequest} className='btn self-start my-10'>Leave Team - Send PATCH Request</button>
-        </div>
-      );
-    }
+    return (
+    <div>
+        <h2>Team Log</h2>
+        
+    </div>
+    );
+}
     
