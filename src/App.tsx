@@ -28,6 +28,7 @@ import ProfileEdit, {action as profileEditAction} from './pages/ProfileEdit';
 import Sandbox from './pages/Sandbox';
 import AddTeam, {loader as addTeamLoader} from './pages/team/AddTeam';
 import TeamLog, {loader as teamLogLoader} from './pages/team/TeamLog';
+import TeamResults from './pages/team/TeamResults';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,6 +54,7 @@ const router = createBrowserRouter(
         <Route path='log/deleted' element={<Deleted />} />
         <Route path='team/add' element={<AddTeam />} loader = {addTeamLoader} />
         <Route path='team/log' element={<TeamLog />} loader = {teamLogLoader} />
+        <Route path='team/results' element={<TeamResults />} />
       </Route>
     </Route>
   )

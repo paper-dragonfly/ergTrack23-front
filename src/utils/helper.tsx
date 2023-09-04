@@ -1,5 +1,6 @@
 import React from 'react'
 import { redirect } from 'react-router-dom'
+import { TypeFetchedTeamWorkouts } from './interfaces'
 
 export async function checkAuth(request: Request){
     console.log('running checkAuth')
@@ -14,6 +15,16 @@ export async function checkAuth(request: Request){
         throw redirect(`/login?redirectTo=${pathname}`)
     }
     return userToken
+}
+
+export function filterResults(teamWorkouts: TypeFetchedTeamWorkouts[], selected:TypeFetchedTeamWorkouts){
+    const teamWoData = new Array
+    for(let i=0;i<teamWorkouts.length;i++){
+        if(teamWorkouts[i].date === selected.date && teamWorkouts[i].description === selected.description){
+            teamWoData.push(teamWorkouts[i])
+        }
+    }
+    return teamWoData
 }
 
 
