@@ -13,6 +13,8 @@ export async function loader(){
 
     //get user token 
     const userToken = sessionStorage.getItem('userToken')
+    const teamId = sessionStorage.getItem('userTeamId')
+
     const url = API_URL+'/team'
 
     return fetch(url, {
@@ -85,7 +87,9 @@ export default function AddTeam( ){
                     .then((response) => response.json())
                     .then((data)=> {
                         console.log(data)
-                        if(data.status_code == 200){
+                        if(data.status_code === 200){
+                            const userTeamId = data.body.team_info.team_id
+                            sessionStorage.setItem('userTeamId',userTeamId)
                             navigate('/team')
                         }
                     })
@@ -107,6 +111,9 @@ export default function AddTeam( ){
                     .then((data)=> {
                         console.log(data)
                         if(data.status_code == 200){
+                            const userTeamId = data.body.team_id
+                            console.log('userTeamId', userTeamId)
+                            sessionStorage.setItem('userTeamId',userTeamId)
                             navigate('/team')
                         }else if(data.status_code == 404){
                             setDisplayedError(data.error_message)

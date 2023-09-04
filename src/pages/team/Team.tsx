@@ -10,6 +10,10 @@ import TeamLog from './TeamLog'
 export function loader(){
     console.log('hit Team')
     const userToken = sessionStorage.getItem('userToken')
+    const teamId = sessionStorage.getItem('userTeamId')
+    if(!teamId){
+        return redirect('/team/add')
+    }
     const url = API_URL+'/team'
     return fetch(url, {
         method: 'GET',
@@ -21,6 +25,7 @@ export function loader(){
         .then(resp => resp.json())
         .then(data => {
             console.log(data['body'])
+            //line below redundant 
             if(!data['body']['team_member']){
                 return redirect('/team/add')
             }
@@ -50,6 +55,7 @@ export default function Team(){
           .then(data => {
             console.log(data)
             if(data.status_code == 200){
+                sessionStorage.setItem('userTeamId', JSON.stringify(null))
                 navigate('/team/add')
             }
           })

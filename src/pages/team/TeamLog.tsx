@@ -5,7 +5,7 @@ import { TypeFetchedWorkouts } from '../../utils/interfaces';
 import { useLoaderData } from 'react-router-dom';
 
 export async function loader(){
-    console.log('hit log')
+    console.log('hit teamlog')
 
     const userToken = sessionStorage.getItem('userToken')
     const url = API_URL+'/teamlog'

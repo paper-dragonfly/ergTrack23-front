@@ -46,6 +46,7 @@ export interface TypesWoMetaData{
     workoutName: string;
     workoutDate: string;
     comment: string; 
+    postToTeam: boolean;
 }
 
 export interface TypesWorkoutTableMetrics{
