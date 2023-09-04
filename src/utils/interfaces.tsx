@@ -171,7 +171,26 @@ export interface TeamLogProps {
     userToken: string;
 }
 
-
+export interface TypeFetchedTeamWorkouts{
+    workout_id: number;
+    user_id: number;
+    description: string | null;
+    date: Date;
+    time: string;
+    meter: number;
+    split: string;
+    stroke_rate: number;
+    heart_rate: number | null;
+    split_variance: number;
+    watts: number;
+    cal: number;
+    image_hash: string | null;
+    subworkouts: TypeSubWorkout[] ;
+    comment: string | null;
+    user_name: string;
+    sex: string | null;
+    age: number | null;
+}
 
 
 

@@ -128,6 +128,7 @@ export default function Log() {
         }
         navigate('details', {state: selectedRowData})
     }
+    
     const clearRowSelection = () => {
         setSelectedRowId(null)
         gridRef.current!.api.deselectAll() 
