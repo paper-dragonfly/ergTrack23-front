@@ -126,7 +126,7 @@ export interface TypeUserInfo{
     joined: Date;
     country: string | null;
     sex: string | null;
-    age: number | null; 
+    dob: Date | null; 
     weight_class: string | null;
     para_class: string | null;
 

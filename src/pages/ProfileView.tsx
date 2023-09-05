@@ -32,7 +32,7 @@ export default function ProfileView(){
             <h1 className='profile-header text-2xl font-bold'>Profile</h1>
             <p><b>Name:</b> {userInfo.user_name}</p>
             {userInfo.email? <p><b>Email:</b> {userInfo.email}</p>:null}
-            {userInfo.age? <p><b>Age:</b> {userInfo.age}</p>:null}
+            {userInfo.dob? <p><b>Date of Birth:</b> {userInfo.dob.toLocaleString()}</p>:null}
             {userInfo.sex? <p><b>Sex:</b> {userInfo.sex}</p>:null}
             {userInfo.country? <p><b>Country:</b> {userInfo.country}</p>:null}
             {userInfo.weight_class? <p><b>Weight Class:</b> {userInfo.weight_class}</p>:null}
