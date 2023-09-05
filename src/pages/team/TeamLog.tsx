@@ -8,7 +8,7 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
 
 import { TypeFetchedTeamWorkouts, TypeLogCols } from '../../utils/interfaces';
-import { filterResults } from '../../utils/helper';
+import { filterResults, get_age_category } from '../../utils/helper';
 
 export async function loader(){
     console.log('hit teamlog')
@@ -37,7 +37,7 @@ export default function TeamLog(){
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
     const btnWideDisplay = useRef<HTMLButtonElement>(null) 
-
+    const ageCategory = get_age_category(teamWorkouts)
 
     for(let i=0; i<teamWorkouts.length; i++){
         const rowArray = {
@@ -55,7 +55,7 @@ export default function TeamLog(){
             comment: teamWorkouts[i]['comment'],
             athlete: teamWorkouts[i]['user_name'],
             sex: teamWorkouts[i]['sex'],
-            age: teamWorkouts[i]['age']
+            ageCat: ageCategory[i]
         }
         summaryData.push(rowArray)
     }
@@ -67,7 +67,7 @@ export default function TeamLog(){
         {field: 'workout', filter: true},
         {field: 'athlete', filter: true},
         {field: 'sex', filter: true},
-        {field: 'age', filter: true, sortable: true},
+        {field: 'ageCat', headerName:'Age Class', filter: true},
         {field: 'time', filter: true},
         {field: 'meters', filter: 'agNumberColumnFilter'},
         {field: 'split', filter: true, sortable: true},

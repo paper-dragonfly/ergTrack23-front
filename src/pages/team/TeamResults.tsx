@@ -57,7 +57,7 @@ export default function TeamResults(){
             comment: teamResults[i]['comment'],
             athlete: teamResults[i]['user_name'],
             sex: teamResults[i]['sex'],
-            age: teamResults[i]['age']
+            dob: teamResults[i]['dob']
         }
         summaryData.push(rowArray)
     }

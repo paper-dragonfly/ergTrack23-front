@@ -189,7 +189,7 @@ export interface TypeFetchedTeamWorkouts{
     comment: string | null;
     user_name: string;
     sex: string | null;
-    age: number | null;
+    dob: string | null;
 }
 
 export interface TypeFilterableTeamWorkouts{
@@ -205,7 +205,7 @@ export interface TypeFilterableTeamWorkouts{
     comment: string | null;
     user_name: string;
     sex: string | null;
-    age: number | null;
+    dob: string | null;
 }
 
 
