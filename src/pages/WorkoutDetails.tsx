@@ -24,6 +24,7 @@ export default function WorkoutDetails(){
     const btnAutoSizeCols = useRef<HTMLButtonElement>(null)
     const navigate = useNavigate()
 
+    const [goingBack, setGoingBack] = useState<boolean>(false)
     const [editing, setEditing] = useState(false)
     const [deleted, setDeleted] = useState<boolean>(false)
     
@@ -128,19 +129,24 @@ export default function WorkoutDetails(){
         )
     }
 
-    const handleGoBack = useCallback(() => {
-        navigate(-1);
-      }, []);
-    // const handleGoBack = () => {
-    //     navigate(-1)
-    //     return null 
-    // }
+    // const handleGoBack = useCallback(() => {
+    //     navigate(-1);
+    //   }, []);
+    const handleGoBack = () => {
+        setGoingBack(true)
+        navigate(-1)
+        return null 
+    }
 
     return (
         <div className='wo-details-div px-6'>
             <div className="flex justify-end items-center">
-                <button onClick={handleGoBack} className="flex items-center pt-2 text-base">
+            <button onClick={handleGoBack} className="flex items-center pt-2 text-base">
+                    {goingBack ? "Loading..." : 
+                    <>
                     <BsArrowLeftShort size={25} className="mr-1" /> Back to Log
+                    </>
+                    }           
                 </button>
             </div>
             <h1 className='text-2xl font-bold'>

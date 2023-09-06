@@ -20,6 +20,7 @@ export default function TeamResults(){
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
     const btnWideDisplay = useRef<HTMLButtonElement>(null) 
     
+    const [goingBack, setGoingBack] = useState<boolean>(false)
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     const [teamResults, setTeamResults] = useState<TypeFetchedTeamWorkouts[]>([])
     const [filters, setFilters] = useState<{sex: string, ageCat:string}>({
@@ -98,9 +99,14 @@ export default function TeamResults(){
     setSelectedRowId(selectedRow.length > 0 ? selectedRow[0].workoutId : null);
     };
     
-    const handleGoBack = useCallback(() => {
-        navigate(-1);
-      }, []);
+    // const handleGoBack = useCallback(() => {
+    //     setGoingBack(true)
+    //     navigate(-1);
+    //   }, []);
+    const handleGoBack = () => {
+        setGoingBack(true)
+        navigate('/team/log')
+    }
 
     const navigateToDetails = () => {
         let selectedRowData
@@ -122,7 +128,11 @@ export default function TeamResults(){
         <div className='log-div px-6'>
             <div className="flex justify-end items-center">
                 <button onClick={handleGoBack} className="flex items-center pt-2 text-base">
+                    {goingBack ? "Loading..." : 
+                    <>
                     <BsArrowLeftShort size={25} className="mr-1" /> Back to Log
+                    </>
+}
                 </button>
             </div>
             <h2 className='text-2xl font-bold'>{fullTeamResults[0]['description']}</h2>
