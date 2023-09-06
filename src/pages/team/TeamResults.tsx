@@ -132,7 +132,7 @@ export default function TeamResults(){
                     <>
                     <BsArrowLeftShort size={25} className="mr-1" /> Back to Log
                     </>
-}
+                    }
                 </button>
             </div>
             <h2 className='text-2xl font-bold'>{fullTeamResults[0]['description']}</h2>

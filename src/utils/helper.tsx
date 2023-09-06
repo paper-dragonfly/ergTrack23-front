@@ -104,4 +104,6 @@ export function get_filtered_results(fullTeamResults: TypeFetchedTeamWorkouts[],
     }
     return result 
 }
+
+
   

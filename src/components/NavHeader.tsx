@@ -77,6 +77,10 @@ export default function NavHeader () {
                             style={({isActive}) => isActive ? activeStyles : {}}
                         >View Log</NavLink></li>
                         <li><NavLink 
+                        to='/team' 
+                        style={({isActive}) => isActive ? activeStyles : {}}
+                       >Team</NavLink></li>
+                        <li><NavLink 
                         to='/about' 
                         style={({isActive}) => isActive ? activeStyles : {}}
                        >About</NavLink></li>

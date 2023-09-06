@@ -239,7 +239,9 @@ export default function EditableResults(props: ERProps) {
               </label> : null}
           </fieldset>
           {viewSaveError? <><h4>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all feilds and try again</p></>: null}
-          <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
+          {/* Use top button in prod 8/}
+          {/* <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button> */}
+          <button className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
       </form>
       {submitSuccessful ? <Navigate to='/addworkout/submitted' /> : null}
     </div>

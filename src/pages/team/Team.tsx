@@ -40,6 +40,8 @@ export default function Team(){
     const userToken = loaderData.userToken
     const navigate  = useNavigate()
 
+    const [teamMeters, setTeamMeters] = useState<number>(0)
+
     const handlePatchRequest = () => {
         const url = API_URL+'/user'
     
@@ -64,30 +66,20 @@ export default function Team(){
           });
       };
 
+
     return (
-        <>
-           <h1>TEAM CENTRAL</h1>
-           <h2>You are on team {teamInfo.team_name} </h2>
-           <Link to='log'>Team Log</Link>
+      <div className='flex flex-col ml-4 mr-4 mt-2 gap-4 '>
+          <div className="flex justify-end items-center">
+                <button onClick={handlePatchRequest} className="flex items-center pt-2 text-base"> 
+                  Leave Team
+                </button>
+            </div>
+           <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{teamInfo.team_name.toUpperCase()} </h1>
+           <Link to='log' className='btn  self-center'>Team Log</Link>
            <br />
-           <button onClick={handlePatchRequest} className='btn self-start my-10'>Leave Team - Send PATCH Request</button>
-        </>
+           
+        </div>
     )
 }
 
-// export default function Team(){
-//     const loadData = useLoaderData() as TypeTeamLoaded
-//     console.log('loaded data team', loadData)
-//     const [isTeamMember, setIsTeamMember] = useState<boolean>(loadData.userTeamInfo.team_member)
-    
-//     const toggleIsTeamMember = () => {
-//         setIsTeamMember((oldVal) => !oldVal);
-//       }
-        
-//     return(
-//         <div>
-//             <h2>Team Central</h2>
-//             {isTeamMember ? <TeamLog userToken={loadData.userToken} toggleTeamMember={toggleIsTeamMember} /> : <AddTeam userToken={loadData.userToken} toggleTeamMember={toggleIsTeamMember} />}
-//         </div>
-//     )
-// }
+
