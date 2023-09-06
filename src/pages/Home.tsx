@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useOutletContext } from 'react-router-dom'
 import bgHero from "../assets/hero.png"
+import desktopHero from "../assets/heroDesktop2.png"
+import fmJosh from '../assets/fmJosh.png'
 import { BsCamera, BsUpload, BsPencil, BsCheck2 } from "react-icons/bs"
 import { GrTable } from "react-icons/gr"
 
 
 export default function Home(){
     console.log('running Home')
+    const screenWidth = window.innerWidth
     return(
         <div>
         {/* <section style={{ 
@@ -16,7 +19,7 @@ export default function Home(){
                     width:'100vw',
                     height:'auto'
                   }}> */}
-            <img src={bgHero} alt="woman on erg machine" className='w-full max-h-screen '/>
+            {screenWidth <= 768? <img src={fmJosh} alt="woman on erg machine" className='w-full max-h-screen '/> :<img src={desktopHero} alt="woman on erg machine" className='w-full max-h-screen '/>}
             {/* <h1 className="text-xl font-bold text-center text-textWhite pt-6 md:text-2xl"
                 >Welcome to ergTrack </h1> */}
              {/* </section> */}
