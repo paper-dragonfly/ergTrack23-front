@@ -6,63 +6,28 @@ import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 import { BsArrowLeftShort } from "react-icons/bs"
 
-import { TypeLogCols, TypeFilterableTeamWorkouts, TypeFetchedTeamWorkouts } from '../../utils/interfaces';
+import { TypeLogCols, TypeFilterableTeamWorkouts, TypeFetchedTeamWorkouts, TypeSummaryData } from '../../utils/interfaces';
+import { get_filtered_results } from '../../utils/helper';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 
 export default function TeamResults(){
     const location = useLocation()
-    const teamResults:TypeFetchedTeamWorkouts[] = location.state
-    console.log('TEAM RESULTS', teamResults)
-
     const navigate = useNavigate()
-    const summaryData = new Array
-    const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
+    const fullTeamResults:TypeFetchedTeamWorkouts[] = location.state.teamResults 
+    const ageCategories: String[] = location.state.ageCats
+    
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
     const btnWideDisplay = useRef<HTMLButtonElement>(null) 
-
-    const initialVisible = teamResults.filter(workout => workout.sex === 'female')
-    const [visibleWorkouts, setVisibleWorkouts] = useState<TypeFetchedTeamWorkouts[]>(initialVisible)
-
-    const [filters, setFilters] = useState<{sex: string}>({
-        'sex': 'women'
+    
+    const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
+    const [teamResults, setTeamResults] = useState<TypeFetchedTeamWorkouts[]>([])
+    const [filters, setFilters] = useState<{sex: string, ageCat:string}>({
+        'sex': 'all',
+        'ageCat' : 'all'
     }) 
-
-    const handleFiltersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target
-        setFilters(oldData => {
-            return {
-                ...oldData,
-                [name] : value
-            }
-        })
-    }
-
-    useEffect(() => {
-
-    })
-
-    for(let i=0; i<teamResults.length; i++){
-        const rowArray = {
-            workoutId: teamResults[i]['workout_id'],
-            date: teamResults[i]['date'],
-            workout: teamResults[i]['description'],
-            time: teamResults[i]['time'],
-            meters: teamResults[i]['meter'],
-            split: teamResults[i]['split'],
-            rate: teamResults[i]['stroke_rate'],
-            HR: teamResults[i]['heart_rate'],
-            variance: teamResults[i]['split_variance'],
-            watts: teamResults[i]['watts'],
-            cal: teamResults[i]['cal'],
-            comment: teamResults[i]['comment'],
-            athlete: teamResults[i]['user_name'],
-            sex: teamResults[i]['sex'],
-            dob: teamResults[i]['dob']
-        }
-        summaryData.push(rowArray)
-    }
-
-    const [rowData, setRowData] = useState<any[]>(summaryData)
+    console.log('FILTERS', filters)
+    const [rowData, setRowData] = useState<any[]>([])
     const [columnDefs] = useState<ColDef[]>([
         // { headerName: 'Row ID', valueGetter: 'node.id' },
         {field: 'athlete', filter: true},
@@ -75,6 +40,25 @@ export default function TeamResults(){
         {field: 'watts', filter: true},
         {field: 'comment', filter: true},
     ])
+    
+    useEffect(() => {
+        const visibleResults = get_filtered_results(fullTeamResults, ageCategories, filters)
+        console.log('VISIBLE', visibleResults)
+        setRowData(visibleResults)
+    }, [filters])
+
+    
+    const handleFiltersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target
+        setFilters(oldData => {
+            return {
+                ...oldData,
+                [name] : value
+            }
+        })
+    }
+
+    
 
     const getRowId = useMemo<GetRowIdFunc>(() => {
         return (params: GetRowIdParams) => params.data.workoutId;
@@ -120,9 +104,9 @@ export default function TeamResults(){
 
     const navigateToDetails = () => {
         let selectedRowData
-        for(let i=0;i<teamResults.length;i++){
-            if(teamResults[i]['workout_id'] ===  selectedRowId){
-                selectedRowData = teamResults[i]
+        for(let i=0;i<fullTeamResults.length;i++){
+            if(fullTeamResults[i]['workout_id'] ===  selectedRowId){
+                selectedRowData = fullTeamResults[i]
                 break;
             }
         }
@@ -141,8 +125,8 @@ export default function TeamResults(){
                     <BsArrowLeftShort size={25} className="mr-1" /> Back to Log
                 </button>
             </div>
-            <h2 className='text-2xl font-bold'>{teamResults[0]['description']}</h2>
-            <h4>{teamResults[0]['date'].toLocaleString()}</h4>
+            <h2 className='text-2xl font-bold'>{fullTeamResults[0]['description']}</h2>
+            <h4>{fullTeamResults[0]['date'].toLocaleString()}</h4>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'>  
                 <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
@@ -155,33 +139,100 @@ export default function TeamResults(){
                         Filters
                     </legend>
                     <label
-                    style={filters.sex === 'women'? {backgroundColor: "#DDE691"}:{}}
+                    style={filters.sex === 'all'? {backgroundColor: "#DDE691"}:{}}
                     >
-                        Women
+                        All
                         <input
                             type='radio'
-                            id='women'
+                            id='allsexes'
                             name='sex'
-                            value='women'
-                            checked = {filters.sex==='women'}
+                            value='all'
+                            checked = {filters.sex==='all'}
                             onChange={handleFiltersChange}
                         />
                     </label>
                     <label
-                    style={filters.sex === 'men'? {backgroundColor: "#DDE691"}:{}}
+                    style={filters.sex === 'female'? {backgroundColor: "#DDE691"}:{}}
+                    >
+                        Women
+                        <input
+                            type='radio'
+                            id='female'
+                            name='sex'
+                            value='female'
+                            checked = {filters.sex==='female'}
+                            onChange={handleFiltersChange}
+                        />
+                    </label>
+                    <label
+                    style={filters.sex === 'male'? {backgroundColor: "#DDE691"}:{}}
                     >
                         Men
                         <input
                             type='radio'
-                            id='men'
+                            id='male'
                             name='sex'
-                            value = 'men'
-                            checked={filters.sex === 'men'}
+                            value = 'male'
+                            checked={filters.sex === 'male'}
+                            onChange={handleFiltersChange}
+                        />
+                    </label>
+                    <br />
+                    <label
+                    style={filters.ageCat === 'all'? {backgroundColor: "#DDE691"}:{}}
+                    >
+                        All
+                        <input
+                            type='radio'
+                            id='allAges'
+                            name='ageCat'
+                            value = 'all'
+                            checked={filters.ageCat === 'all'}
+                            onChange={handleFiltersChange}
+                        />
+                    </label>
+                    <label
+                    style={filters.ageCat === 'U15'? {backgroundColor: "#DDE691"}:{}}
+                    >
+                        U15
+                        <input
+                            type='radio'
+                            id='U15'
+                            name='ageCat'
+                            value = 'U15'
+                            checked={filters.ageCat === 'U15'}
+                            onChange={handleFiltersChange}
+                        />
+                    </label>
+                    <label
+                    style={filters.ageCat === 'U16'? {backgroundColor: "#DDE691"}:{}}
+                    >
+                        U16
+                        <input
+                            type='radio'
+                            id='U16'
+                            name='ageCat'
+                            value = 'U16'
+                            checked={filters.ageCat === 'U16'}
+                            onChange={handleFiltersChange}
+                        />
+                    </label>
+                    <label
+                    style={filters.ageCat === 'U17'? {backgroundColor: "#DDE691"}:{}}
+                    >
+                        U17
+                        <input
+                            type='radio'
+                            id='U17'
+                            name='ageCat'
+                            value = 'U17'
+                            checked={filters.ageCat === 'U17'}
                             onChange={handleFiltersChange}
                         />
                     </label>
                     <br /> 
                 </fieldset>
+            
             </div>
             <div style={{height : 500, color:'red'}}>
                 <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >

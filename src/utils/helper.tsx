@@ -42,12 +42,13 @@ export function get_age_category(workouts: TypeFetchedTeamWorkouts[]){
             const rowingAge = currentYear - birthYear
         
             const ageCats: {[key: string] : number[]} = {
-                U15 : [0, 15],
-                U17 : [16,17], 
-                U19 : [18,19], 
-                U21 : [20, 21], 
-                U23 : [22,23], 
-                AA: [24,26],
+                U15 : [0, 14],
+                U16: [15,15],
+                U17 : [16,16], 
+                U19 : [17,18], 
+                U21 : [19, 20], 
+                U23 : [21,22], 
+                AA: [23,26],
                 A: [27,35],
                 B : [36,42],
                 C : [43,49],
@@ -63,7 +64,7 @@ export function get_age_category(workouts: TypeFetchedTeamWorkouts[]){
         
             for(const key in ageCats){
                 const [min, max] = ageCats[key]
-                if(min <= rowingAge && rowingAge < max){
+                if(min <= rowingAge && rowingAge <= max){
                     ageCategories.push(key)
                     break
                 }
@@ -73,5 +74,34 @@ export function get_age_category(workouts: TypeFetchedTeamWorkouts[]){
     return ageCategories 
 }
 
-  
+
+export function get_filtered_results(fullTeamResults: TypeFetchedTeamWorkouts[], ageCategories: String[], filters: {sex:String, ageCat:String }){
+    const result = new Array
+    for(let i=0; i<fullTeamResults.length; i++){
+        if(
+            (filters.sex === 'all' || fullTeamResults[i].sex === filters.sex) && 
+            (filters.ageCat === 'all' || ageCategories[i] === filters.ageCat)
+        ){
+            const rowArray = {
+                workoutId: fullTeamResults[i]['workout_id'],
+                date: fullTeamResults[i]['date'],
+                workout: fullTeamResults[i]['description'],
+                time: fullTeamResults[i]['time'],
+                meters: fullTeamResults[i]['meter'],
+                split: fullTeamResults[i]['split'],
+                rate: fullTeamResults[i]['stroke_rate'],
+                HR: fullTeamResults[i]['heart_rate'],
+                variance: fullTeamResults[i]['split_variance'],
+                watts: fullTeamResults[i]['watts'],
+                cal: fullTeamResults[i]['cal'],
+                comment: fullTeamResults[i]['comment'],
+                athlete: fullTeamResults[i]['user_name'],
+                sex: fullTeamResults[i]['sex'],
+                dob: fullTeamResults[i]['dob']
+            }
+            result.push(rowArray)
+        }
+    }
+    return result 
+}
   

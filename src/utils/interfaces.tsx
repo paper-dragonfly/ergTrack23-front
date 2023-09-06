@@ -192,6 +192,24 @@ export interface TypeFetchedTeamWorkouts{
     dob: string | null;
 }
 
+export interface TypeSummaryData{
+    workoutId: number;
+    date: Date | string;
+    workout: string | null;
+    time: string;
+    meters: number;
+    split: string;
+    rate: number;
+    HR: number | null;
+    variance: number;
+    watts: number;
+    cal: number;
+    comment: string | null;
+    athlete: string;
+    sex: string | null;
+    dob: string | null;
+}
+
 export interface TypeFilterableTeamWorkouts{
     workout_id: number;
     time: string;

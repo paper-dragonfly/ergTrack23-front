@@ -122,7 +122,7 @@ export default function TeamLog(){
             if(teamWorkouts[i]['workout_id'] ===  selectedRowId){
                 const selectedRowData = teamWorkouts[i]
                 const teamResults = filterResults(teamWorkouts, selectedRowData)
-                navigate('/team/results', {state : teamResults})
+                navigate('/team/results', {state : {teamResults: teamResults, ageCats: ageCategory}})
             }
         }
     }
