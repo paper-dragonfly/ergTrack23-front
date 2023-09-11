@@ -133,29 +133,35 @@ export default function AddTeam( ){
         // send back success message - redirect to team home page 
 
     return (
-        <div>
-            <h1> Team</h1>
+        <div className='flex flex-col p-10 gap-6 md:items-center md:p-14'>
+            <h1 className='text-2xl font-bold'>Join Team</h1>
             <p>Looks like you're not on a team</p>
-            <label style={createOrJoin === 'join'? {backgroundColor: "#DDE691"}:{}}>
-                <input
-                    type="radio"
-                    value="join"
-                    checked={createOrJoin === 'join'}
-                    onChange={handleCreateOrJoinChange}
-                />
-                Join Team
-            </label>
-            <label style={createOrJoin === 'create'? {backgroundColor: "#DDE691"}:{}}>
-                <input
-                    type="radio"
-                    value="create"
-                    checked={createOrJoin === 'create'}
-                    onChange={handleCreateOrJoinChange}
-                />
-                Create Team
-            </label>
+            <div className='flex gap-6'>
+                <label 
+                    className={createOrJoin === 'join'? 'btn selected-btn' : 'btn'}
+                    >
+                    <input
+                        type="radio"
+                        value="join"
+                        checked={createOrJoin === 'join'}
+                        onChange={handleCreateOrJoinChange}
+                    />
+                    Join Team
+                </label>
+                <label
+                    className={createOrJoin === 'create'? 'btn selected-btn' : 'btn'}
+                    >
+                    <input
+                        type="radio"
+                        value="create"
+                        checked={createOrJoin === 'create'}
+                        onChange={handleCreateOrJoinChange}
+                    />
+                    Create Team
+                </label>
+            </div>
             <form onSubmit={handleSubmit(submitForm)}>
-                <fieldset>
+                <fieldset className='md:flex md:flex-col md:items-center'>
                     <label>
                         Team Name
                         <input
@@ -163,21 +169,23 @@ export default function AddTeam( ){
                             name = 'teamName'
                             value={teamInfo.teamName}
                             onChange={handleTeamInfoChange}
+                            className='team-input'
                         />
                     </label>
                     <br />
                     <label>
-                        Team Code 
+                        Team Code {'\u00A0'}
                         <input
                             type='text'
                             name='teamCode'
                             value = {teamInfo.teamCode}
                             onChange={handleTeamInfoChange}
+                            className='team-input'
                         />
                     </label>
                     <br />
                     <p>{displayedError}</p>
-                    <button type='submit' className='btn self-start my-10'>{createOrJoin==='create'?'Create Team':'Join Team'}</button>
+                    <button type='submit' className='btn my-10'>{createOrJoin==='create'?'Create Team':'Join Team'}</button>
                 </fieldset>
             </form> 
 
