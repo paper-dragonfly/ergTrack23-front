@@ -47,6 +47,10 @@ input::file-selector-button,
 .btn.grey{
   background-color: #D9D9D9;
 }
+.selected-btn{
+    background-color: #FAF7F7;
+    box-shadow: 5px 5px 5px #D9D9D9;
+}
 
 /* Remove "no file chosen" text */
 input[type='file'] {
@@ -90,7 +94,8 @@ input[type='file'] {
    text-align: center;
 }
 
-.editable-input {
+.editable-input,
+.team-input {
   border: 1px solid #767171;
   border-radius: 5px;
   width: 200px;
