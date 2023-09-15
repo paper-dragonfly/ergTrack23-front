@@ -147,10 +147,10 @@ export default function TeamLog(){
         <div className='log-div px-6'>
             <h3 className='text-2xl font-bold pt-6 pb-3'>Team Log</h3>
             { selectedRowId ?
-            <div className='text-xl py-4 space-x-4'> 
-                <button onClick= {navigateToTeamDetails} className='btn small'>View Team Results</button> 
-                <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
-                <button onClick={clearRowSelection} className='btn small coral'>Clear Selection</button>
+            <div className='text-xl py-4'> 
+                <button onClick= {navigateToTeamDetails} className='btn small mr-4'>View Team Results</button> 
+                <button onClick = {navigateToDetails} className='btn small mr-4 mt-2 md:mt-0'>View Details</button> 
+                <button onClick={clearRowSelection} className='btn small coral mt-2 md:pt-0'>Clear Selection</button>
             </div> : <br />
             }
             <div style={{height : 500, color:'red'}}>
