@@ -145,11 +145,12 @@ export default function TeamResults(){
             }
             <div>
                 <fieldset>
-                    <legend>
+                    <legend className='text-xl mb-4'>
                         Filters
                     </legend>
+                    <div>
                     <label
-                    style={filters.sex === 'all'? {backgroundColor: "#DDE691"}:{}}
+                    className={`${filters.sex === 'all'? 'filter-selected' : ''} filter-btn`}                  
                     >
                         All
                         <input
@@ -162,8 +163,7 @@ export default function TeamResults(){
                         />
                     </label>
                     <label
-                    style={filters.sex === 'female'? {backgroundColor: "#DDE691"}:{}}
-                    >
+                    className={`${filters.sex === 'female'? 'filter-selected' : ''} filter-btn`}                   >
                         Women
                         <input
                             type='radio'
@@ -175,8 +175,8 @@ export default function TeamResults(){
                         />
                     </label>
                     <label
-                    style={filters.sex === 'male'? {backgroundColor: "#DDE691"}:{}}
-                    >
+                    className={`${filters.sex === 'male'? 'filter-selected' : ''} filter-btn`}
+                   >
                         Men
                         <input
                             type='radio'
@@ -187,9 +187,11 @@ export default function TeamResults(){
                             onChange={handleFiltersChange}
                         />
                     </label>
+                    </div>
                     <br />
+                    <div className='-mt-2 mb-4'>
                     <label
-                    style={filters.ageCat === 'all'? {backgroundColor: "#DDE691"}:{}}
+                    className={`${filters.ageCat === 'all'? 'filter-selected' : ''} filter-btn filter-age`}
                     >
                         All
                         <input
@@ -201,8 +203,8 @@ export default function TeamResults(){
                             onChange={handleFiltersChange}
                         />
                     </label>
-                    <label
-                    style={filters.ageCat === 'U15'? {backgroundColor: "#DDE691"}:{}}
+                    <label     
+                       className={`${filters.ageCat === 'U15'? 'filter-selected' : ''} filter-btn filter-age`}
                     >
                         U15
                         <input
@@ -214,8 +216,8 @@ export default function TeamResults(){
                             onChange={handleFiltersChange}
                         />
                     </label>
-                    <label
-                    style={filters.ageCat === 'U16'? {backgroundColor: "#DDE691"}:{}}
+                    <label                 
+                    className={`${filters.ageCat === 'U16'? 'filter-selected' : ''} filter-btn filter-age`}
                     >
                         U16
                         <input
@@ -227,8 +229,8 @@ export default function TeamResults(){
                             onChange={handleFiltersChange}
                         />
                     </label>
-                    <label
-                    style={filters.ageCat === 'U17'? {backgroundColor: "#DDE691"}:{}}
+                    <label                  
+                    className={`${filters.ageCat === 'U17'? 'filter-selected' : ''} filter-btn filter-age`}
                     >
                         U17
                         <input
@@ -240,7 +242,8 @@ export default function TeamResults(){
                             onChange={handleFiltersChange}
                         />
                     </label>
-                    <br /> 
+                    
+</div>
                 </fieldset>
             
             </div>

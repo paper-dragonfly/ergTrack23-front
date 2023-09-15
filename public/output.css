@@ -621,6 +621,14 @@ html{
   margin-bottom: 1.5rem;
 }
 
+.-mt-2{
+  margin-top: -0.5rem;
+}
+
+.mb-4{
+  margin-bottom: 1rem;
+}
+
 .mb-6{
   margin-bottom: 1.5rem;
 }
@@ -663,10 +671,6 @@ html{
 
 .mt-8{
   margin-top: 2rem;
-}
-
-.mr-2{
-  margin-right: 0.5rem;
 }
 
 .block{
@@ -817,16 +821,12 @@ html{
   background-color: rgb(250 247 247 / var(--tw-bg-opacity));
 }
 
-.p-14{
-  padding: 3.5rem;
+.p-10{
+  padding: 2.5rem;
 }
 
 .p-4{
   padding: 1rem;
-}
-
-.p-10{
-  padding: 2.5rem;
 }
 
 .px-10{
@@ -884,14 +884,6 @@ html{
 
 .pt-6{
   padding-top: 1.5rem;
-}
-
-.pr-1{
-  padding-right: 0.25rem;
-}
-
-.pr-2{
-  padding-right: 0.5rem;
 }
 
 .text-center{
@@ -1004,9 +996,36 @@ input::file-selector-button,
   background-color: #D9D9D9;
 }
 
-.selected-btn{
+.selected-btn {
   background-color: #FAF7F7;
   box-shadow: 5px 5px 5px #D9D9D9;
+}
+
+.filter-btn {
+  background-color: #DDE691;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  margin-right: 8px;
+  width: 75px;
+  text-align: center;
+  display: inline-block;
+  @media only screen and (min-width: 409px){
+    margin-right: 20px;
+  }
+}
+
+.filter-btn.filter-selected{
+  background-color: #FAF7F7;
+  box-shadow: 3px 3px 3px #D9D9D9;
+}
+
+.filter-btn:last-child {
+  margin-right: 0;
+  @media only screen and (max-width: 370px) {
+    margin-top: 1rem;
+  }
 }
 
 /* Remove "no file chosen" text */
@@ -1098,13 +1117,12 @@ input[type='file'] {
 }
 
 @media (min-width: 768px){
-  .md\:my-4{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
   .md\:ml-40{
     margin-left: 10rem;
+  }
+
+  .md\:mt-0{
+    margin-top: 0px;
   }
 
   .md\:mt-10{
@@ -1193,10 +1211,6 @@ input[type='file'] {
     margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  .md\:self-center{
-    align-self: center;
-  }
-
   .md\:rounded-xl{
     border-radius: 0.75rem;
   }
@@ -1223,16 +1237,16 @@ input[type='file'] {
     padding-right: 5rem;
   }
 
+  .md\:pt-0{
+    padding-top: 0px;
+  }
+
   .md\:pt-6{
     padding-top: 1.5rem;
   }
 
   .md\:text-left{
     text-align: left;
-  }
-
-  .md\:text-center{
-    text-align: center;
   }
 
   .md\:text-2xl{
