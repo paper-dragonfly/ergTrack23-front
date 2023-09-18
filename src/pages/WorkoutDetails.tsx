@@ -53,13 +53,29 @@ export default function WorkoutDetails(){
 
 
     const [rowData, setRowData] = useState<TypeDetailsCols[]>(detailTableData)
-    const [columnDefs] = useState<ColDef[]>([
+    
+    const cDefs = subworkouts[0].heartRate? [
         {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
         {field: 'split'},
         {field: 'rate', headerName:'S/M'},
         {field: 'hr', headerName:'♡'}
-    ])
+    ]: [
+        {field: 'time', cellClass: "text-bold"},
+        {field: 'meter'},
+        {field: 'split'},
+        {field: 'rate', headerName:'S/M'},
+    ]
+
+    const [columnDefs] = useState<ColDef[]>(cDefs)
+
+    // const [columnDefs] = useState<ColDef[]>([
+    //     {field: 'time', cellClass: "text-bold"},
+    //     {field: 'meter'},
+    //     {field: 'split'},
+    //     {field: 'rate', headerName:'S/M'},
+    //     {field: 'hr', headerName:'♡'}
+    // ])
 
 
     const defaultColDef = useMemo( ()=> ( {
