@@ -88,7 +88,7 @@ export default function AddTeam( ){
                     .then((data)=> {
                         console.log(data)
                         if(data.status_code === 200){
-                            const userTeamId = data.body.team_info.team_id
+                            const userTeamId = data.body.team_id
                             sessionStorage.setItem('userTeamId',userTeamId)
                             navigate('/team')
                         }
