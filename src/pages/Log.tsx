@@ -97,7 +97,7 @@ export default function Log() {
                 console.log('useEffect running')
                 if(btnWideDisplay.current && gridRef.current){
                     btnWideDisplay.current.click()}
-                },50)
+                },100)
             }
         },[])
             

@@ -53,7 +53,7 @@ export default function WorkoutDetails(){
 
 
     const [rowData, setRowData] = useState<TypeDetailsCols[]>(detailTableData)
-    
+
     const cDefs = subworkouts[0].heartRate? [
         {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
@@ -68,15 +68,6 @@ export default function WorkoutDetails(){
     ]
 
     const [columnDefs] = useState<ColDef[]>(cDefs)
-
-    // const [columnDefs] = useState<ColDef[]>([
-    //     {field: 'time', cellClass: "text-bold"},
-    //     {field: 'meter'},
-    //     {field: 'split'},
-    //     {field: 'rate', headerName:'S/M'},
-    //     {field: 'hr', headerName:'♡'}
-    // ])
-
 
     const defaultColDef = useMemo( ()=> ( {
         flex: 1,
