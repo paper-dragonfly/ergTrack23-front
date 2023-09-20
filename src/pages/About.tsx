@@ -65,12 +65,8 @@ export default function About(){
                     </Panel>
                 </Collapse>
             </section>
-            <section className='bg-bgGrey px-10 mt-4 py-6 md:pr-20'>
+            <section className='bg-bgGrey px-10 mx-10 mt-4 py-6 md:pr-20'>
                 <h2 className='text-2xl font-bold py-6'>Coming in Version 2</h2>
-                <h4 className='text-xl font-bold'>More Metrics</h4>
-                <p className='pb-6'>Currently ergTrack does not support recording heart rate</p>
-                <h4 className='text-xl font-bold'>Team Log</h4>
-                <p className='pb-6'>Be part of a team and see how you stack up. In addition to your individual Log you will have access to your Team Log where you can view all the workouts submitted by team members</p>
                 <h4 className='text-xl font-bold'>More Intervals/Sub-Workouts</h4>
                 <p className='pb-6'>Currently you can only upload one image per workout limiting the number of intervals/sub-workouts that can be recorded to the number that can fit on a single display screen, eight. More than 8 can be recorded if using manual mode. </p>
                 <h4 className='text-xl font-bold'>Graphical Comparison</h4>

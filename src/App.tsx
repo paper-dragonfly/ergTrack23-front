@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import AuthRequiredLayout from './components/AuthRequiredLayout';
 import Log, {loader as logLoader} from './pages/Log';
 import About from './pages/About';
+import Team, {loader as teamLoader} from './pages/team/Team';
 import PublicLayout from './components/PublicLayout';
 import {loader as AuthLoader} from './components/AuthRequiredLayout'
 import { checkAuth } from './utils/helper';
@@ -25,6 +26,9 @@ import Deleted from './pages/Deleted';
 import ProfileView, {loader as profileViewLoader} from './pages/ProfileView';
 import ProfileEdit, {action as profileEditAction} from './pages/ProfileEdit';
 import Sandbox from './pages/Sandbox';
+import AddTeam, {loader as addTeamLoader} from './pages/team/AddTeam';
+import TeamLog, {loader as teamLogLoader} from './pages/team/TeamLog';
+import TeamResults from './pages/team/TeamResults';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +44,7 @@ const router = createBrowserRouter(
         <Route path='dashboard' element={<Dashboard />} />
         <Route path="addworkout" element={<AddWorkout />} loader = {addWorkoutloader} />
         <Route path="log" element={<Log />} loader = {logLoader}/>
+        <Route path="team" element={<Team />} loader={teamLoader}/>
         <Route path="profile" element={<ProfileView />} loader = {profileViewLoader} />
         <Route path="about" element={<About />} />
         
@@ -47,6 +52,9 @@ const router = createBrowserRouter(
         <Route path='log/details' element={<WorkoutDetails />} loader = {detailsLoader}/>
         <Route path='addworkout/submitted' element={<Submitted />} />
         <Route path='log/deleted' element={<Deleted />} />
+        <Route path='team/add' element={<AddTeam />} loader = {addTeamLoader} />
+        <Route path='team/log' element={<TeamLog />} loader = {teamLogLoader} />
+        <Route path='team/results' element={<TeamResults />} />
       </Route>
     </Route>
   )

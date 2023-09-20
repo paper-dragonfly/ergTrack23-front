@@ -23,8 +23,9 @@ export default function EditableResults(props: ERProps) {
   const [woMetaData, setWoMetaData] = useState<TypesWoMetaData>({
     workoutName: metrics.workoutName,
     workoutDate: metrics.workoutDate,
-    comment: ""
-  });
+    comment: "",
+    postToTeam: false
+  })
 
   useEffect(()=>{
     const newMetrics = props.workoutMetrics
@@ -65,12 +66,21 @@ export default function EditableResults(props: ERProps) {
 
   const handleWoMetaDataChange = (e: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>):void => {
     const {name, value} = e.target 
-    setWoMetaData(oldData => {
+    if(name === 'postToTeam'){
+      setWoMetaData(oldData => {
         return{
-            ...oldData,
-            [name]: value
+          ...oldData,
+          [name] : !woMetaData.postToTeam
         }
-    })
+      })
+    }else {
+      setWoMetaData(oldData => {
+          return{
+              ...oldData,
+              [name]: value
+          }
+      })
+    }
   }
 
   const handleMetricsChange = (e: React.ChangeEvent<HTMLInputElement>, id: string, field:string) => {
@@ -103,7 +113,7 @@ export default function EditableResults(props: ERProps) {
           'Authorization': `Bearer ${userToken}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
+        body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment, postToTeam: woMetaData.postToTeam}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
         }
       return(
         fetch(url, postInfo)
@@ -215,13 +225,24 @@ export default function EditableResults(props: ERProps) {
                   id='comment' 
                   name='comment'
                   onChange={handleWoMetaDataChange}
-                  className='editable-input comment'></textarea>
-                  
+                  className='editable-input comment'></textarea> 
               </label>
+              {sessionStorage.getItem('userTeamId') ?
+              <label>
+                Post to Team Log
+                <input
+                  type='checkbox'
+                  name ='postToTeam'
+                  checked = {woMetaData.postToTeam}
+                  onChange = {handleWoMetaDataChange}
+                />
+              </label> : null}
           </fieldset>
-          <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
+          {viewSaveError? <><h4>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all feilds and try again</p></>: null}
+          {/* Use top button in prod 8/}
+          {/* <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button> */}
+          <button className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
       </form>
-      {viewSaveError? <><h4>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all feilds and try again</p></>: null}
       {submitSuccessful ? <Navigate to='/addworkout/submitted' /> : null}
     </div>
   );

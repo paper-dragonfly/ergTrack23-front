@@ -40,8 +40,10 @@ export default function Login() {
           .then(data => {
             console.log(data)
             const userToken = data['body']["user_token"]
+            const userTeamId = data['body']["team_id"] ? data['body']["team_id"] : JSON.stringify(null)
             sessionStorage.setItem('userToken', userToken)
             sessionStorage.setItem('userName', userName)
+            sessionStorage.setItem('userTeamId',userTeamId)
             return userToken
           })
           .then(userToken => setUserToken(userToken))

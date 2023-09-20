@@ -1,5 +1,5 @@
 import React, {useEffect, useCallback, useState, useMemo, useRef} from 'react'
-import {useLocation, useLoaderData, Navigate, NavLink} from 'react-router-dom'
+import {useLocation, useLoaderData, Navigate, NavLink, useNavigate} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
@@ -22,7 +22,9 @@ export default function WorkoutDetails(){
     console.log(workoutDetails)
     const gridRef = useRef<AgGridReact<TypeDetailsCols>>(null);
     const btnAutoSizeCols = useRef<HTMLButtonElement>(null)
+    const navigate = useNavigate()
 
+    const [goingBack, setGoingBack] = useState<boolean>(false)
     const [editing, setEditing] = useState(false)
     const [deleted, setDeleted] = useState<boolean>(false)
     
@@ -51,14 +53,21 @@ export default function WorkoutDetails(){
 
 
     const [rowData, setRowData] = useState<TypeDetailsCols[]>(detailTableData)
-    const [columnDefs] = useState<ColDef[]>([
+
+    const cDefs = subworkouts[0].heartRate? [
         {field: 'time', cellClass: "text-bold"},
         {field: 'meter'},
         {field: 'split'},
         {field: 'rate', headerName:'S/M'},
         {field: 'hr', headerName:'♡'}
-    ])
+    ]: [
+        {field: 'time', cellClass: "text-bold"},
+        {field: 'meter'},
+        {field: 'split'},
+        {field: 'rate', headerName:'S/M'},
+    ]
 
+    const [columnDefs] = useState<ColDef[]>(cDefs)
 
     const defaultColDef = useMemo( ()=> ( {
         flex: 1,
@@ -127,9 +136,26 @@ export default function WorkoutDetails(){
         )
     }
 
+    // const handleGoBack = useCallback(() => {
+    //     navigate(-1);
+    //   }, []);
+    const handleGoBack = () => {
+        setGoingBack(true)
+        navigate(-1)
+        return null 
+    }
+
     return (
         <div className='wo-details-div px-6'>
-            <NavLink to='/log' className='flex justify-end pt-2 text-base'><BsArrowLeftShort size={25}/>Back to Log</NavLink>
+            <div className="flex justify-end items-center">
+            <button onClick={handleGoBack} className="flex items-center pt-2 text-base">
+                    {goingBack ? "Loading..." : 
+                    <>
+                    <BsArrowLeftShort size={25} className="mr-1" /> Back to Log
+                    </>
+                    }           
+                </button>
+            </div>
             <h1 className='text-2xl font-bold'>
                 {workoutDetails.description}
             </h1>

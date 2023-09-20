@@ -47,6 +47,36 @@ input::file-selector-button,
 .btn.grey{
   background-color: #D9D9D9;
 }
+.selected-btn {
+    background-color: #FAF7F7;
+    box-shadow: 5px 5px 5px #D9D9D9;
+}
+.filter-btn {
+  background-color: #DDE691;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  margin-right: 8px;
+  width: 75px;
+  text-align: center;
+  display: inline-block;
+
+  @media only screen and (min-width: 409px){
+    margin-right: 20px;
+  }
+}
+.filter-btn.filter-selected{
+  background-color: #FAF7F7;
+  box-shadow: 3px 3px 3px #D9D9D9;
+}
+.filter-btn:last-child {
+  margin-right: 0;
+
+  @media only screen and (max-width: 370px) {
+    margin-top: 1rem;
+  }
+}
 
 /* Remove "no file chosen" text */
 input[type='file'] {
@@ -90,7 +120,8 @@ input[type='file'] {
    text-align: center;
 }
 
-.editable-input {
+.editable-input,
+.team-input {
   border: 1px solid #767171;
   border-radius: 5px;
   width: 200px;

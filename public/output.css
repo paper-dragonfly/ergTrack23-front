@@ -601,6 +601,11 @@ html{
   z-index: 20;
 }
 
+.mx-10{
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
 .my-10{
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
@@ -616,12 +621,32 @@ html{
   margin-bottom: 1.5rem;
 }
 
+.-mt-2{
+  margin-top: -0.5rem;
+}
+
+.mb-4{
+  margin-bottom: 1rem;
+}
+
 .mb-6{
   margin-bottom: 1.5rem;
 }
 
+.ml-4{
+  margin-left: 1rem;
+}
+
 .ml-8{
   margin-left: 2rem;
+}
+
+.mr-1{
+  margin-right: 0.25rem;
+}
+
+.mr-4{
+  margin-right: 1rem;
 }
 
 .mr-6{
@@ -796,6 +821,10 @@ html{
   background-color: rgb(250 247 247 / var(--tw-bg-opacity));
 }
 
+.p-10{
+  padding: 2.5rem;
+}
+
 .p-4{
   padding: 1rem;
 }
@@ -810,6 +839,11 @@ html{
   padding-right: 1.5rem;
 }
 
+.py-2{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .py-4{
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -818,19 +852,6 @@ html{
 .py-6{
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-
-.py-2{
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.pb-1{
-  padding-bottom: 0.25rem;
-}
-
-.pb-2{
-  padding-bottom: 0.5rem;
 }
 
 .pb-3{
@@ -847,14 +868,6 @@ html{
 
 .pl-1{
   padding-left: 0.25rem;
-}
-
-.pl-10{
-  padding-left: 2.5rem;
-}
-
-.pr-20{
-  padding-right: 5rem;
 }
 
 .pt-14{
@@ -983,6 +996,38 @@ input::file-selector-button,
   background-color: #D9D9D9;
 }
 
+.selected-btn {
+  background-color: #FAF7F7;
+  box-shadow: 5px 5px 5px #D9D9D9;
+}
+
+.filter-btn {
+  background-color: #DDE691;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  margin-right: 8px;
+  width: 75px;
+  text-align: center;
+  display: inline-block;
+  @media only screen and (min-width: 409px){
+    margin-right: 20px;
+  }
+}
+
+.filter-btn.filter-selected{
+  background-color: #FAF7F7;
+  box-shadow: 3px 3px 3px #D9D9D9;
+}
+
+.filter-btn:last-child {
+  margin-right: 0;
+  @media only screen and (max-width: 370px) {
+    margin-top: 1rem;
+  }
+}
+
 /* Remove "no file chosen" text */
 
 input[type='file'] {
@@ -1028,7 +1073,8 @@ input[type='file'] {
   text-align: center;
 }
 
-.editable-input {
+.editable-input,
+.team-input {
   border: 1px solid #767171;
   border-radius: 5px;
   width: 200px;
@@ -1073,6 +1119,10 @@ input[type='file'] {
 @media (min-width: 768px){
   .md\:ml-40{
     margin-left: 10rem;
+  }
+
+  .md\:mt-0{
+    margin-top: 0px;
   }
 
   .md\:mt-10{
@@ -1183,16 +1233,16 @@ input[type='file'] {
     padding-right: 2.5rem;
   }
 
-  .md\:pb-2{
-    padding-bottom: 0.5rem;
+  .md\:pr-20{
+    padding-right: 5rem;
+  }
+
+  .md\:pt-0{
+    padding-top: 0px;
   }
 
   .md\:pt-6{
     padding-top: 1.5rem;
-  }
-
-  .md\:pr-20{
-    padding-right: 5rem;
   }
 
   .md\:text-left{

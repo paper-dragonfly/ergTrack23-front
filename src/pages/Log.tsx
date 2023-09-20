@@ -10,6 +10,7 @@ import { TypeFetchedWorkouts, TypeLogCols } from '../utils/interfaces'
 
 
 export async function loader(){
+    console.log('running log loader')
     const userToken = sessionStorage.getItem('userToken')
     const url = API_URL+'/workout'
     return fetch(url, {
@@ -24,7 +25,7 @@ export async function loader(){
             console.log(data)
             console.log(data['body']['workouts'])
             return data['body']['workouts']}) 
-        .catch(error => console.error(error(error)))
+        .catch(error => console.error(error))
 }
 
 
@@ -96,7 +97,7 @@ export default function Log() {
                 console.log('useEffect running')
                 if(btnWideDisplay.current && gridRef.current){
                     btnWideDisplay.current.click()}
-                },50)
+                },100)
             }
         },[])
             
@@ -127,6 +128,7 @@ export default function Log() {
         }
         navigate('details', {state: selectedRowData})
     }
+    
     const clearRowSelection = () => {
         setSelectedRowId(null)
         gridRef.current!.api.deselectAll() 

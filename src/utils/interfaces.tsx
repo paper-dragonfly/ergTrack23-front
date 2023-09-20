@@ -46,6 +46,7 @@ export interface TypesWoMetaData{
     workoutName: string;
     workoutDate: string;
     comment: string; 
+    postToTeam: boolean;
 }
 
 export interface TypesWorkoutTableMetrics{
@@ -125,7 +126,7 @@ export interface TypeUserInfo{
     joined: Date;
     country: string | null;
     sex: string | null;
-    age: number | null; 
+    dob: Date | null; 
     weight_class: string | null;
     para_class: string | null;
 
@@ -141,3 +142,90 @@ export interface TypeProfileEdit{
     setUserInfo: React.Dispatch<React.SetStateAction<TypeUserInfo>>
     setEditting: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+// Team
+export interface TypeAddTeamLoaded{
+    userToken: string;
+}
+export interface TypeTeamLoaded{
+    userToken: string;
+    userTeamInfo: {
+        team_member: boolean;
+        team_info?: TypeTeamInfo;
+        team_admin?: boolean
+    }
+}
+
+export interface TypeTeamInfo{
+    team_id: number;
+    team_name: string;
+    team_code: string;
+}
+
+export interface TeamChildProps {
+    userToken: string;
+    toggleTeamMember: () => void;
+}
+
+export interface TeamLogProps {
+    userToken: string;
+}
+
+export interface TypeFetchedTeamWorkouts{
+    workout_id: number;
+    user_id: number;
+    description: string | null;
+    date: Date | string;
+    time: string;
+    meter: number;
+    split: string;
+    stroke_rate: number;
+    heart_rate: number | null;
+    split_variance: number;
+    watts: number;
+    cal: number;
+    image_hash: string | null;
+    subworkouts: TypeSubWorkout[] ;
+    comment: string | null;
+    user_name: string;
+    sex: string | null;
+    dob: string | null;
+}
+
+export interface TypeSummaryData{
+    workoutId: number;
+    date: Date | string;
+    workout: string | null;
+    time: string;
+    meters: number;
+    split: string;
+    rate: number;
+    HR: number | null;
+    variance: number;
+    watts: number;
+    cal: number;
+    comment: string | null;
+    athlete: string;
+    sex: string | null;
+    dob: string | null;
+}
+
+export interface TypeFilterableTeamWorkouts{
+    workout_id: number;
+    time: string;
+    meter: number;
+    split: string;
+    stroke_rate: number;
+    heart_rate?: number | null;
+    split_variance: number;
+    watts: number;
+    cal?: number;
+    comment: string | null;
+    user_name: string;
+    sex: string | null;
+    dob: string | null;
+}
+
+
+
+

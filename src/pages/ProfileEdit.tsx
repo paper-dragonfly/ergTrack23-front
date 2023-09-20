@@ -12,7 +12,7 @@ export async function action({request}:{request: Request}){
     console.log('FORM DATA OBJ',  formDataObj)
     const url = API_URL+'/user'
     const patchData = {
-        method:  'PATCH',
+        method:  'PUT',
         headers: {
             'Authorization': `Bearer ${userToken}`,
             'Content-Type': 'application/json'
@@ -30,26 +30,9 @@ export async function action({request}:{request: Request}){
 export default function ProfileEdit(){
     const { state }  = useLocation() 
     const userInfo = state.userInfo as TypeUserInfo 
+    console.log('userInfo', userInfo)
     const userToken = state.userToken
-    // create form with input fields 
-    // mostly text input except for classes which should be dropdown/radio
-    //onSubmit: call setUserInfo, send UPDATE to API  (frm parent pg?), use useEffect to update fields 
-        //userInfo state should livee in Profile parent page 
     
-    // function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
-    //     const {name, value} = e.target
-    //     setUserInfo((oldInfo) =>{
-    //         return{
-    //         ...oldInfo,
-    //         [name]:value
-    //         }
-    //     })
-    // }
-
-    // function handleSubmit(e: React.FormEvent<HTMLFormElement>){
-    //     e.preventDefault() //prevent immediate submittion 
-        
-    // }
     const [selectedGender, setSelectedGender] = useState(userInfo.sex? userInfo.sex:'gender-none')
     const [selectedClass, setSelectedClass] = useState(userInfo.weight_class ? userInfo.weight_class: "none")
     const [selectedPara, setSelectedPara] = useState(userInfo.para_class? userInfo.para_class:"na")
@@ -92,12 +75,13 @@ export default function ProfileEdit(){
                     />
                 </label>
                 <label >
-                    <b>Age</b>
+                    <b>Date of Birth</b>
                     <input 
                         className='editable-input'
-                        type='number'
-                        name='age'
-                        defaultValue={userInfo.age? userInfo.age: ""}
+                        type='date'
+                        name='dob'
+                        defaultValue={userInfo.dob? userInfo.dob.toString():""}
+                        placeholder='mm/dd/yyyy'
                     />
                 </label>
                 <legend><b>Sex</b></legend>
