@@ -47,12 +47,9 @@ input::file-selector-button,
 .btn.grey{
   background-color: #D9D9D9;
 }
-.selected-btn {
-  background-color: #FAF7F7;
-  box-shadow: 5px 5px 5px #D9D9D9;
-}
+
 .filter-btn {
-  background-color: #FAF7F7;
+  background-color: #D9D9D9;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
@@ -66,6 +63,7 @@ input::file-selector-button,
     margin-right: 20px;
   }
 }
+.selected-btn,
 .filter-btn.filter-selected{
   background-color: #DDE691;
   box-shadow: 3px 3px 3px #D9D9D9;
