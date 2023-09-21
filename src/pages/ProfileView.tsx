@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { useLoaderData, Link } from 'react-router-dom'
 import { API_URL } from '../config'
 import { TypeUserInfo, TypeProfileInfo, TypeProfileLoaded } from '../utils/interfaces'
+import { BiEditAlt } from 'react-icons/bi'
 
 //add loader that gets info from user table 
 export function loader(){
@@ -37,7 +38,7 @@ export default function ProfileView(){
             {userInfo.country? <p><b>Country:</b> {userInfo.country}</p>:null}
             {userInfo.weight_class? <p><b>Weight Class:</b> {userInfo.weight_class}</p>:null}
             {userInfo.para_class? <p><b>Para Class:</b> {userInfo.para_class}</p>:null}
-            <Link to='edit' state={{userToken:userToken, userInfo:userInfo}} className='btn coral self-start'>Edit</Link>
+            <Link to='edit' state={{userToken:userToken, userInfo:userInfo}}><BiEditAlt size={30} />Edit</Link>
         </div>
     )
 }

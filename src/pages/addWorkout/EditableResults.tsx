@@ -229,7 +229,7 @@ export default function EditableResults(props: ERProps) {
               </label>
               {sessionStorage.getItem('userTeamId') ?
               <label>
-                Post to Team Log
+                Post to Team Log {' '}
                 <input
                   type='checkbox'
                   name ='postToTeam'
