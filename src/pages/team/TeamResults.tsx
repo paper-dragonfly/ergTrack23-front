@@ -191,7 +191,7 @@ export default function TeamResults(){
                     <br />
                     <div className='-mt-2 mb-4'>
                     <label
-                    className={`${filters.ageCat === 'all'? 'filter-selected' : ''} filter-btn filter-age`}
+                    className={`${filters.ageCat === 'all'? 'filter-selected' : ''} filter-btn`}
                     >
                         All
                         <input
@@ -204,7 +204,7 @@ export default function TeamResults(){
                         />
                     </label>
                     <label     
-                       className={`${filters.ageCat === 'U15'? 'filter-selected' : ''} filter-btn filter-age`}
+                       className={`${filters.ageCat === 'U15'? 'filter-selected' : ''} filter-btn`}
                     >
                         U15
                         <input
@@ -217,7 +217,7 @@ export default function TeamResults(){
                         />
                     </label>
                     <label                 
-                    className={`${filters.ageCat === 'U16'? 'filter-selected' : ''} filter-btn filter-age`}
+                    className={`${filters.ageCat === 'U16'? 'filter-selected' : ''} filter-btn`}
                     >
                         U16
                         <input
@@ -230,7 +230,7 @@ export default function TeamResults(){
                         />
                     </label>
                     <label                  
-                    className={`${filters.ageCat === 'U17'? 'filter-selected' : ''} filter-btn filter-age`}
+                    className={`${filters.ageCat === 'U17'? 'filter-selected' : ''} filter-btn`}
                     >
                         U17
                         <input

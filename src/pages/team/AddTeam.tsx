@@ -138,7 +138,7 @@ export default function AddTeam( ){
             <p>Looks like you're not on a team</p>
             <div className='flex gap-6'>
                 <label 
-                    className={createOrJoin === 'join'? 'btn selected-btn' : 'btn'}
+                    className={createOrJoin === 'join'? 'btn selected-btn' : 'btn grey'}
                     >
                     <input
                         type="radio"
@@ -149,7 +149,7 @@ export default function AddTeam( ){
                     Join Team
                 </label>
                 <label
-                    className={createOrJoin === 'create'? 'btn selected-btn' : 'btn'}
+                    className={createOrJoin === 'create'? 'btn selected-btn' : 'btn grey'}
                     >
                     <input
                         type="radio"
