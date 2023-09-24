@@ -184,11 +184,11 @@ export default function AddWorkout(){
     }       
  
     return(
-        <div className='add-workout-div flex flex-col items-center overflow-hidden md:flex-row md:justify-evenly md:items-end md:gap-6 md:p-14'>
+        <div className='add-workout-div flex flex-col items-center overflow-hidden md:flex-row  md:items-start md:p-14 md:place-content-evenly'>
             <form onSubmit={handleSubmit(submitForm)} 
             className=''>
-                <fieldset className='flex flex-wrap gap-10 my-10'>
-                    <legend className='text-2xl font-bold pl-1 my-10'> Entry Method</legend>
+                <fieldset className='flex flex-wrap gap-10 mb-10'>
+                    <legend className='text-2xl font-bold pl-1 mb-6'> Entry Method</legend>
                     <label 
                     style={fmImgSelected ? selectedStyle : {} }
                     className='flex flex-col justify-center items-center text-center text-xl rounded-lg w-24 h-24'>
@@ -337,7 +337,7 @@ export default function AddWorkout(){
             <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
             style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>
-            <div ref={resultsTableRef}>
+            <div ref={resultsTableRef} className='flex justify-center'>
                 {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} /> : null}
             </div>
         </div>

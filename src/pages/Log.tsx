@@ -135,8 +135,8 @@ export default function Log() {
     }
 
     return(
-        <div className='log-div px-6'>
-            <h3 className='text-2xl font-bold pt-6 pb-3'>Workout Log</h3>
+        <div className='log-div px-6 md:px-20 '>
+            <h3 className='text-2xl font-bold pt-8'>Workout Log</h3>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
                 <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
