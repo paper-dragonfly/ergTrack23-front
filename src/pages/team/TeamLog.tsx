@@ -144,8 +144,8 @@ export default function TeamLog(){
     }
     
     return (
-        <div className='log-div px-6'>
-            <h3 className='text-2xl font-bold pt-6 pb-3'>Team Log</h3>
+        <div className='log-div px-6 md:px-20'>
+            <h3 className='text-2xl font-bold pt-8 pb-3'>Team Log</h3>
             { selectedRowId ?
             <div className='text-xl py-4'> 
                 <button onClick= {navigateToTeamDetails} className='btn small mr-4'>View Team Results</button> 
