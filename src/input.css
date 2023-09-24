@@ -99,6 +99,13 @@ input[type='file'] {
   height: 60px; 
 }
 
+add-workout-div{
+  display: flex;
+  justify-content: center !important;
+  max-height: 100vh;
+  text-align: center;
+}
+
 /* Workout results editable table */
 .editable-table {
     table-layout: auto;
@@ -143,11 +150,9 @@ input[type='file'] {
 }
 
 .editable-input.custom{
-
   margin:0;
-  width: 200px;
   height: 50px;
-  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /* Log table */
