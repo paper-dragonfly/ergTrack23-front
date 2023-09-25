@@ -146,9 +146,9 @@ export default function WorkoutDetails(){
     }
 
     return (
-        <div className='wo-details-div px-6'>
+        <div className='wo-details-div px-6 md:px-20'>
             <div className="flex justify-end items-center">
-            <button onClick={handleGoBack} className="flex items-center pt-2 text-base">
+            <button onClick={handleGoBack} className="flex items-center pt-4 text-base">
                     {goingBack ? "Loading..." : 
                     <>
                     <BsArrowLeftShort size={25} className="mr-1" /> Back to Log

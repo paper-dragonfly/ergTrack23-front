@@ -585,8 +585,20 @@ html{
   position: absolute;
 }
 
+.relative{
+  position: relative;
+}
+
+.bottom-0{
+  bottom: 0px;
+}
+
 .left-0{
   left: 0px;
+}
+
+.right-0{
+  right: 0px;
 }
 
 .top-0{
@@ -645,6 +657,10 @@ html{
   margin-right: 0.25rem;
 }
 
+.mr-2{
+  margin-right: 0.5rem;
+}
+
 .mr-4{
   margin-right: 1rem;
 }
@@ -671,6 +687,10 @@ html{
 
 .mt-8{
   margin-top: 2rem;
+}
+
+.mb-10{
+  margin-bottom: 2.5rem;
 }
 
 .block{
@@ -735,6 +755,14 @@ html{
 
 .max-w-sm{
   max-width: 24rem;
+}
+
+.max-w-2xl{
+  max-width: 42rem;
+}
+
+.max-w-lg{
+  max-width: 32rem;
 }
 
 .flex-col{
@@ -854,6 +882,10 @@ html{
   padding-bottom: 1.5rem;
 }
 
+.pb-16{
+  padding-bottom: 4rem;
+}
+
 .pb-3{
   padding-bottom: 0.75rem;
 }
@@ -886,8 +918,24 @@ html{
   padding-top: 1.5rem;
 }
 
+.pt-8{
+  padding-top: 2rem;
+}
+
+.pt-4{
+  padding-top: 1rem;
+}
+
 .text-center{
   text-align: center;
+}
+
+.text-right{
+  text-align: right;
+}
+
+.text-end{
+  text-align: end;
 }
 
 .text-2xl{
@@ -1049,6 +1097,13 @@ input[type='file'] {
   height: 60px;
 }
 
+add-workout-div{
+  display: flex;
+  justify-content: center !important;
+  max-height: 100vh;
+  text-align: center;
+}
+
 /* Workout results editable table */
 
 .editable-table {
@@ -1096,9 +1151,8 @@ input[type='file'] {
 
 .editable-input.custom{
   margin:0;
-  width: 200px;
   height: 50px;
-  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /* Log table */
@@ -1145,12 +1199,12 @@ input[type='file'] {
     max-height: 4rem;
   }
 
-  .md\:w-1\/2{
-    width: 50%;
-  }
-
   .md\:w-10\/12{
     width: 83.333333%;
+  }
+
+  .md\:w-11\/12{
+    width: 91.666667%;
   }
 
   .md\:w-full{
@@ -1169,6 +1223,14 @@ input[type='file'] {
     flex-direction: column;
   }
 
+  .md\:place-content-evenly{
+    place-content: space-evenly;
+  }
+
+  .md\:items-start{
+    align-items: flex-start;
+  }
+
   .md\:items-end{
     align-items: flex-end;
   }
@@ -1183,10 +1245,6 @@ input[type='file'] {
 
   .md\:justify-between{
     justify-content: space-between;
-  }
-
-  .md\:justify-evenly{
-    justify-content: space-evenly;
   }
 
   .md\:gap-14{
@@ -1231,6 +1289,16 @@ input[type='file'] {
   .md\:px-10{
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+
+  .md\:px-20{
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+
+  .md\:px-14{
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
 
   .md\:pr-20{

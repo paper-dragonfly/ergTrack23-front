@@ -130,7 +130,7 @@ export default function EditableResults(props: ERProps) {
     };
 
   return (
-    <div className='editable-table text-xl w-11/12 md:w-1/2'> 
+    <div className='editable-table text-xl max-w-lg'> 
       <form onSubmit={handleSubmit(submitForm)}>
           <fieldset className=' editable-fieldset'>
               <legend className='text-2xl text-center font-bold mb-6'>Workout Metrics</legend>
@@ -229,7 +229,7 @@ export default function EditableResults(props: ERProps) {
               </label>
               {sessionStorage.getItem('userTeamId') ?
               <label>
-                Post to Team Log {' '}
+                Post to Team Log {'\u00A0'}
                 <input
                   type='checkbox'
                   name ='postToTeam'
@@ -238,7 +238,7 @@ export default function EditableResults(props: ERProps) {
                 />
               </label> : null}
           </fieldset>
-          {viewSaveError? <><h4>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all feilds and try again</p></>: null}
+          {viewSaveError? <><h4 className='font-bold text-xl'>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all fields and try again</p></>: null}
           {/* Use top button in prod 8/}
           {/* <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button> */}
           <button className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>
