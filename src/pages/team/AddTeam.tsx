@@ -54,6 +54,7 @@ export default function AddTeam( ){
     const {isSubmitting} = formState;
 
     const handleCreateOrJoinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDisplayedError("")
         const newValue = event.target.value;
         setCreateOrJoin(newValue);
     };
@@ -91,6 +92,9 @@ export default function AddTeam( ){
                             const userTeamId = data.body.team_id
                             sessionStorage.setItem('userTeamId',userTeamId)
                             navigate('/team')
+                        }else if(data.status_code === 403){
+                            console.log(data.error_message)
+                            setDisplayedError('The team you are trying to create already exists') 
                         }
                     })
                 )  

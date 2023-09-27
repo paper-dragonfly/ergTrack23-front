@@ -164,6 +164,15 @@ export interface TypeTeamInfo{
     team_code: string;
 }
 
+export interface TypeTeamAdminLoaded{
+    userToken: string;
+    teamAdminInfo: {
+        team_info: TypeTeamInfo
+        team_members: TypeUserInfo[]
+    }
+}
+ 
+
 export interface TeamChildProps {
     userToken: string;
     toggleTeamMember: () => void;
