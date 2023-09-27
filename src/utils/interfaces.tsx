@@ -123,6 +123,7 @@ export interface TypeProfileLoaded{
 
 export interface TypeUserInfo{
     auth_uid: string;
+    user_id?: number;
     user_name: string;
     email: string;
     joined: Date;
@@ -236,6 +237,14 @@ export interface TypeFilterableTeamWorkouts{
     user_name: string;
     sex: string | null;
     dob: string | null;
+}
+
+export interface TypeTeamMemberCols{
+    userId: number;
+    name?: string;
+    sex?: string;
+    dob?: Date;
+    email:string;
 }
 
 
