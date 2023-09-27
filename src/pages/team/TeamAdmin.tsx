@@ -22,7 +22,7 @@ export function loader(){
         .then(resp => resp.json())
         .then(data => {
             console.log(data['body'])
-            return {userToken: userToken, teamAdminInfo:data['body']}
+            return {userToken: userToken, teamAdminInfo:data['body'], teamId: teamId}
         }) 
         .catch(error => console.log(error(error)))
 } 
@@ -31,6 +31,7 @@ export default function TeamAdmin(){
     const loaderData = useLoaderData() as  TypeTeamAdminLoaded
     const teamInfoLoaded = loaderData.teamAdminInfo.team_info
     const userToken = loaderData.userToken
+    const teamId = loaderData.teamId
 
     const [editTeamInfo, setEditTeamInfo] = useState<boolean>(false)
     const [displayedError, setDisplayedError] = useState<string>("")
@@ -52,7 +53,7 @@ export default function TeamAdmin(){
     }
 
     const submitForm = () => {
-        const url = API_URL+'/team'
+        const url = API_URL+`/team/${teamId}`
         const postInfo = {
             method: 'PUT',
             headers: {
@@ -77,8 +78,18 @@ export default function TeamAdmin(){
             )
     }
 
+    const escapeEdit = () => {
+        setTeamInfo({
+            teamName: teamInfoLoaded.team_name,
+            teamCode: teamInfoLoaded.team_code
+        })
+        setEditTeamInfo(false)
+    }
+
     return(
         <div>
+            <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{`${teamInfoLoaded.team_name} Admin`}</h1>
+
             {editTeamInfo ? 
                 <form onSubmit={handleSubmit(submitForm)}>
                     <fieldset className='md:flex md:flex-col md:items-center'>
@@ -105,14 +116,14 @@ export default function TeamAdmin(){
                         </label>
                         <br />
                         <p>{displayedError}</p>
-                        <button type='submit' className='btn my-10'>Update</button>
+                        <button type='submit' className='btn my-10'>Save Changes</button>
+                        <button className='btn coral my-10' onClick={escapeEdit}>Ignore Changes</button>
                     </fieldset>
                 </form> 
                 :
                 <div> 
-                    <h1>{`${teamInfoLoaded.team_name} Admin`}</h1>
-                    <p>Team Name: {`${teamInfoLoaded.team_name}`}</p>
-                    <p>Team Code: {`${teamInfoLoaded.team_code}`}</p>
+                    <p>Team Name: {`${teamInfo.teamName}`}</p>
+                    <p>Team Code: {`${teamInfo.teamCode}`}</p>
                     <button onClick={() => setEditTeamInfo(true)}><BiEditAlt size={30} />Edit</button>
                 </div>
             }
