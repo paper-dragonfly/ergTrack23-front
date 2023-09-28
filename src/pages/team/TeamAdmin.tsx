@@ -1,5 +1,5 @@
 import React, {useState, useRef, useCallback, useMemo, useEffect} from  'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import { API_URL } from '../../config'
 import {useForm} from 'react-hook-form'
 import { BiEditAlt } from 'react-icons/bi'
@@ -33,10 +33,12 @@ export function loader(){
 
 export default function TeamAdmin(){
     const loaderData = useLoaderData() as  TypeTeamAdminLoaded
+    const navigate = useNavigate()
     const teamInfoLoaded = loaderData.teamAdminInfo.team_info
     const userToken = loaderData.userToken
     const teamId = loaderData.teamId
     const teamMembers = loaderData.teamAdminInfo.team_members
+    const adminsId = loaderData.teamAdminInfo.admin_uid
     const gridRef = useRef<AgGridReact<TypeTeamMemberCols>>(null)
     const btnAutoSizeCols = useRef<HTMLButtonElement>(null)
 
@@ -98,7 +100,7 @@ export default function TeamAdmin(){
 
     // ************************************
     //Table of team members
-    const teamMembersTableData = new Array
+    let teamMembersTableData = new Array
 
     
     const gridHeightMaybe = 50*teamMembers.length + 75
@@ -134,11 +136,13 @@ export default function TeamAdmin(){
     const [columnDefs] = useState<ColDef[]>(cDefs)
 
     const getRowId = useMemo<GetRowIdFunc>(() => {
-        return (params: GetRowIdParams) => params.data.workoutId;
+        return (params: GetRowIdParams) => params.data.userId;
       }, []);
     
     const onSelectionChanged = () => {
+        // setDisplayedError("")
         const selectedRow = gridRef.current!.api.getSelectedRows();
+        console.log(selectedRow)
         setSelectedRowId(selectedRow.length > 0 ? selectedRow[0].userId : null);
     };
 
@@ -168,6 +172,67 @@ export default function TeamAdmin(){
         });
         gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
         }, []);
+
+    const removeAthlete = () => { 
+        if(selectedRowId===adminsId){
+            setDisplayedError(`As admin cannot remove yourself from team. To leave the team transfer admin role to another team member then click 'Leave Team' on the ${teamInfo.teamName} home page`)
+            return null
+        }
+        console.log('removing athlete')
+        const url = API_URL+`/user?userId=${selectedRowId}`
+
+        fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${userToken}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ team: null }), 
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            if(data.status_code == 200){
+                teamMembersTableData = teamMembersTableData.filter((member) => member.userId !== selectedRowId);
+                setRowData(teamMembersTableData)
+                setDisplayedError('Athlete removed from team')
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    const transferAdmin = () => {
+        // patch user make admin true for new admin, and false  for current admin.  Redirect to team page. 
+        if(selectedRowId===adminsId){
+            setDisplayedError('You are aleady the admin')
+            return null 
+        }
+        const url = API_URL+`/transferadmin/${selectedRowId}`
+        fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${userToken}`,
+            'Content-Type': 'application/json',
+        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            if(data.status_code == 200){
+                navigate('/team')
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    const clearRowSelection = () => {
+        setSelectedRowId(null)
+        gridRef.current!.api.deselectAll() 
+    }
 
     return(
         <div>
@@ -210,7 +275,13 @@ export default function TeamAdmin(){
                     <button onClick={() => setEditTeamInfo(true)}><BiEditAlt size={30} />Edit</button>
                 </div>
             }
-
+            { editTeamInfo && selectedRowId ?
+            <div className='text-xl py-4 space-x-4'> 
+                <button onClick = {removeAthlete} className='btn small'>Remove Athlete from Team</button> 
+                <button onClick = {transferAdmin} className='btn small'>Transfer Admin Role</button> 
+                <button onClick={clearRowSelection} className='btn small coral'>Deselect</button>
+            </div> : <br />
+            }
             <div style={{height : gridHeight}}>
                 <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
                     <AgGridReact

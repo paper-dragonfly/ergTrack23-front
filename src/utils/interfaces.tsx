@@ -170,6 +170,7 @@ export interface TypeTeamAdminLoaded{
     teamAdminInfo: {
         team_info: TypeTeamInfo
         team_members: TypeUserInfo[]
+        admin_uid: number
     };
     teamId: number
 }
