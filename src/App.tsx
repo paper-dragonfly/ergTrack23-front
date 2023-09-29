@@ -30,7 +30,6 @@ import AddTeam, {loader as addTeamLoader} from './pages/team/AddTeam';
 import TeamLog, {loader as teamLogLoader} from './pages/team/TeamLog';
 import TeamResults from './pages/team/TeamResults';
 import TeamAdmin, {loader as teamAdminLoader} from './pages/team/TeamAdmin';
-import TableSandbox, {loader as tableSandboxLoader} from './components/TableSandbox';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,7 +58,6 @@ const router = createBrowserRouter(
         <Route path='team/results' element={<TeamResults />} />
         <Route path='team/admin' element={<TeamAdmin />} loader = {teamAdminLoader} />
         
-        <Route path="log/sandbox" element={<TableSandbox />} loader = {tableSandboxLoader}/>
       </Route>
     </Route>
   )

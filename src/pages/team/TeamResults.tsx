@@ -8,6 +8,7 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 import { TypeLogCols, TypeFilterableTeamWorkouts, TypeFetchedTeamWorkouts, TypeSummaryData } from '../../utils/interfaces';
 import { get_filtered_results } from '../../utils/helper';
 import BackBtn from '../../components/BackBtn';
+import TableTemplate from '../../components/TableTemplate';
 
 
 export default function TeamResults(){
@@ -17,7 +18,6 @@ export default function TeamResults(){
     const ageCategories: String[] = location.state.ageCats
     
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
-    const btnWideDisplay = useRef<HTMLButtonElement>(null) 
     
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     const [teamResults, setTeamResults] = useState<TypeFetchedTeamWorkouts[]>([])
@@ -56,46 +56,6 @@ export default function TeamResults(){
             }
         })
     }
-
-    
-
-    const getRowId = useMemo<GetRowIdFunc>(() => {
-        return (params: GetRowIdParams) => params.data.workoutId;
-      }, []);
-
-    const defaultColDef = useMemo( ()=> ( {
-        floatingFilter: true,
-        flex: 1,
-        // filterParams: {
-        //   buttons: ['apply','clear']
-        // }
-      }), []);
-    
-    
-    useEffect(()=>{
-        if(window.innerWidth < 768){ 
-            setTimeout(()=>{
-                console.log('useEffect running')
-                if(btnWideDisplay.current && gridRef.current){
-                    btnWideDisplay.current.click()}
-                },100)
-            }
-        },[])
-            
-            
-    const autoSizeAll = useCallback((skipHeader: boolean) => {
-        console.log('autosizeall is running')
-        const allColumnIds: string[] = [];
-        gridRef.current!.columnApi.getColumns()!.forEach((column) => {
-            allColumnIds.push(column.getId());
-        });
-        gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
-        }, []);
-
-    const onSelectionChanged = () => {
-    const selectedRow = gridRef.current!.api.getSelectedRows();
-    setSelectedRowId(selectedRow.length > 0 ? selectedRow[0].workoutId : null);
-    };
 
     const navigateToDetails = () => {
         let selectedRowData
@@ -222,28 +182,19 @@ export default function TeamResults(){
                             checked={filters.ageCat === 'U17'}
                             onChange={handleFiltersChange}
                         />
-                    </label>
-                    
-</div>
+                    </label>          
+                    </div>
                 </fieldset>
             
             </div>
-            <div style={{height : 500, color:'red'}}>
-                <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
-                    <AgGridReact
-                        ref = {gridRef}
-                        rowData={rowData} animateRows={true}
-                        columnDefs={columnDefs} defaultColDef={defaultColDef}
-                        getRowId={getRowId}
-                        rowSelection={'single'}
-                        onSelectionChanged={onSelectionChanged}
-                        >
-                    </AgGridReact>
-                </div>
-            </div>
-            <button ref={btnWideDisplay} style={{display:'none'}} onClick={() => autoSizeAll(false)} className='btn small grey'>
-            wide-display
-            </button>
+            <TableTemplate 
+                gridRef={gridRef}
+                rowData={rowData}
+                columnDefs={columnDefs}
+                setSelectedRowId={setSelectedRowId}
+                rowIdTitle='workoutId'
+            />
+           
         </div>
     )
 }

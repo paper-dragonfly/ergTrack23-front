@@ -7,7 +7,7 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
 import { API_URL } from '../config' 
 import { TypeFetchedWorkouts, TypeLogCols } from '../utils/interfaces'
-
+import TableTemplate from '../components/TableTemplate'
 
 export async function loader(){
     console.log('running log loader')
@@ -29,14 +29,12 @@ export async function loader(){
 }
 
 
-export default function Log() {
+export default function TableSandbox() {
     const allWorkouts = useLoaderData() as TypeFetchedWorkouts[]
     const navigate = useNavigate()
     const summaryData = new Array
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
-    // const [selectedRowData, setSelectedRowData] = useState<TypeFetchedWorkouts|null>(null)
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
-    const btnWideDisplay = useRef<HTMLButtonElement>(null) 
 
     console.log('allworkouts', allWorkouts)
     // make a new list of obj containing only the columns you want to display (move to helper file?)
@@ -73,50 +71,7 @@ export default function Log() {
         {field: 'cal', filter: true},
         {field: 'comment', filter: true},
     ])
-
-    const getRowId = useMemo<GetRowIdFunc>(() => {
-        return (params: GetRowIdParams) => params.data.workoutId;
-      }, []);
-
-    const defaultColDef = useMemo( ()=> ( {
-        floatingFilter: true,
-        flex: 1,
-        // filterParams: {
-        //   buttons: ['apply','clear']
-        // }
-      }), []);
-
-      
-    // TODO: Find a better solution, this is a hack
-    // Auto sizes the column width to show full cell content for small screens rather than fitting table to screen width
-    // does this by clicking an invisible button after 0.05 seconds.  
-    // Timeout was neccessary to allow grid to render before autoSizeAll is called
-    useEffect(()=>{
-        if(window.innerWidth < 768){ 
-            setTimeout(()=>{
-                console.log('useEffect running')
-                if(btnWideDisplay.current && gridRef.current){
-                    btnWideDisplay.current.click()}
-                },100)
-            }
-        },[])
             
-            
-    const autoSizeAll = useCallback((skipHeader: boolean) => {
-        console.log('autosizeall is running')
-        const allColumnIds: string[] = [];
-        gridRef.current!.columnApi.getColumns()!.forEach((column) => {
-            allColumnIds.push(column.getId());
-        });
-        gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
-        }, []);
-
-
-    const onSelectionChanged = () => {
-        const selectedRow = gridRef.current!.api.getSelectedRows();
-        setSelectedRowId(selectedRow.length > 0 ? selectedRow[0].workoutId : null);
-      };
-
     
     const navigateToDetails = () => {
         let selectedRowData
@@ -135,7 +90,7 @@ export default function Log() {
     }
 
     return(
-        <div className='log-div px-6 md:px-20 '>
+        <div className='log-div md:px-20 '>
             <h3 className='text-2xl font-bold pt-8'>Workout Log</h3>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
@@ -143,22 +98,13 @@ export default function Log() {
                 <button onClick={clearRowSelection} className='btn small coral'>Clear Selection</button>
             </div> : <br />
             }
-            <div style={{height : 500, color:'red'}}>
-                <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
-                    <AgGridReact
-                        ref = {gridRef}
-                        rowData={rowData} animateRows={true}
-                        columnDefs={columnDefs} defaultColDef={defaultColDef}
-                        getRowId={getRowId}
-                        rowSelection={'single'}
-                        onSelectionChanged={onSelectionChanged}
-                        >
-                    </AgGridReact>
-                </div>
-            </div>
-            <button ref={btnWideDisplay} style={{display:'none'}} onClick={() => autoSizeAll(false)} className='btn small grey'>
-            wide-display
-            </button>
+            <TableTemplate 
+                gridRef={gridRef}
+                rowData={rowData}
+                columnDefs={columnDefs}
+                setSelectedRowId={setSelectedRowId}
+                rowIdTitle='workoutId'
+            />
         </div>
     )
 }

@@ -12,8 +12,8 @@ interface TeamLogGridProps {
   gridRef: React.RefObject<AgGridReact<any>>
   rowData: any[];
   columnDefs: ColDef[];
-  setSelectedRowId: (newVal:number) => void;
-  rowIdTitle: string
+  setSelectedRowId?: (newVal:number) => void;
+  rowIdTitle?: string
 }
 
 export default function TableTemplate({
@@ -60,13 +60,18 @@ export default function TableTemplate({
     }), []);
 
     const onSelectionChanged = () => {
+      if(!rowIdTitle || !setSelectedRowId){
+        return null
+      }
       const selectedRow = gridRef.current!.api.getSelectedRows();
       setSelectedRowId(selectedRow.length > 0 ? selectedRow[0][rowIdTitle] : null);
     };
 
+    const tableHeight = 50 * rowData.length + 150
+
   return (
     <div>
-      <div style={{ height: 500, color: 'red' }}>
+      <div style={{ height: tableHeight, color: 'red' }}>
         <div className="ag-theme-alpine" style={{ height: '90%', width: '100%' }}>
           <AgGridReact
             ref={gridRef}

@@ -10,6 +10,7 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 import { API_URL } from '../../config'
 import { TypeTeamAdminLoaded, TypeTeamMemberCols } from '../../utils/interfaces'
 import BackBtn from '../../components/BackBtn'
+import TableTemplate from '../../components/TableTemplate'
 
 
 export function loader(){
@@ -41,7 +42,6 @@ export default function TeamAdmin(){
     const teamMembers = loaderData.teamAdminInfo.team_members
     const adminsId = loaderData.teamAdminInfo.admin_uid
     const gridRef = useRef<AgGridReact<TypeTeamMemberCols>>(null)
-    const btnAutoSizeCols = useRef<HTMLButtonElement>(null)
 
     //state  variables
     const [editTeamInfo, setEditTeamInfo] = useState<boolean>(false)
@@ -103,12 +103,7 @@ export default function TeamAdmin(){
     // ************************************
     //Table of team members
     let teamMembersTableData = new Array
-
     
-    const gridHeightMaybe = 50*teamMembers.length + 75
-    const gridHeight = gridHeightMaybe < 500 ? gridHeightMaybe : 500
-    
-
     for(let i=0; i<teamMembers.length; i++){
         let shortSex = null 
         if(teamMembers[i].sex === 'male'){
@@ -129,51 +124,13 @@ export default function TeamAdmin(){
     const [rowData, setRowData] = useState<any[]>(teamMembersTableData)
 
     const cDefs = [
-        {field: 'name', cellClass: "text-bold"},
-        {field: 'sex'},
-        {field: 'dob', headerName:'DOB'},
-        {field: 'email'},
+        {field: 'name', cellClass: "text-bold", filter:true},
+        {field: 'sex', filter:true},
+        {field: 'dob', headerName:'DOB', filter:true},
+        {field: 'email', filter:true},
     ]
 
     const [columnDefs] = useState<ColDef[]>(cDefs)
-
-    const getRowId = useMemo<GetRowIdFunc>(() => {
-        return (params: GetRowIdParams) => params.data.userId;
-      }, []);
-    
-    const onSelectionChanged = () => {
-        // setDisplayedError("")
-        const selectedRow = gridRef.current!.api.getSelectedRows();
-        console.log(selectedRow)
-        setSelectedRowId(selectedRow.length > 0 ? selectedRow[0].userId : null);
-    };
-
-    const defaultColDef = useMemo( ()=> ( {
-        flex: 1,
-        editable: true 
-      }), []);
-    
-    //Column auto-resizing hack
-    useEffect(()=>{
-    // // only apply to small screens
-    if(window.innerWidth < 768){ 
-        setTimeout(()=>{
-            console.log('useEffect running in workout details')
-            if(btnAutoSizeCols.current && gridRef.current){
-                btnAutoSizeCols.current.click()}
-            },500)
-        }
-    },[])
-            
-            
-    const autoSizeAll = useCallback((skipHeader: boolean) => {
-        console.log('autosizeall is running')
-        const allColumnIds: string[] = [];
-        gridRef.current!.columnApi.getColumns()!.forEach((column) => {
-            allColumnIds.push(column.getId());
-        });
-        gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
-        }, []);
 
     const removeAthlete = () => { 
         if(selectedRowId===adminsId){
@@ -241,7 +198,7 @@ export default function TeamAdmin(){
             <BackBtn navTo='/team' btnText='back'/>
 
             <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{`${teamInfoLoaded.team_name} Admin`}</h1>
-
+            {/* Top Section */}
             {editTeamInfo ? 
                 <form onSubmit={handleSubmit(submitForm)}>
                     <fieldset className='md:flex md:flex-col md:items-center'>
@@ -273,6 +230,7 @@ export default function TeamAdmin(){
                     </fieldset>
                 </form> 
                 :
+                // Top when not editing
                 <div> 
                     <button onClick={() => setEditTeamInfo(true)}><BiEditAlt size={30} />Edit</button>
                     <br /><br />
@@ -280,6 +238,8 @@ export default function TeamAdmin(){
                     <p>Team Code: {`${teamInfo.teamCode}`}</p>
                 </div>
             }
+
+            {/* Table and related buttons */}
             { editTeamInfo && selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
                 <button onClick = {removeAthlete} className='btn small'>Remove Athlete from Team</button> 
@@ -287,22 +247,13 @@ export default function TeamAdmin(){
                 <button onClick={clearRowSelection} className='btn small coral'>Deselect</button>
             </div> : <br />
             }
-            <div style={{height : gridHeight}}>
-                <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
-                    <AgGridReact
-                        ref = {gridRef}
-                        rowData={rowData} animateRows={true}
-                        columnDefs={columnDefs} defaultColDef={defaultColDef}
-                        getRowId={getRowId}
-                        rowSelection={'single'}
-                        onSelectionChanged={onSelectionChanged}
-                        >
-                    </AgGridReact>
-                </div>
-                <button ref={btnAutoSizeCols} style={{display:'none'}} onClick={() => autoSizeAll(false)} >
-                wide-display
-                </button>
-            </div>
+            <TableTemplate 
+                gridRef={gridRef}
+                rowData={rowData}
+                columnDefs={columnDefs}
+                setSelectedRowId={setSelectedRowId}
+                rowIdTitle='userId'
+            />
         </div>
     )
 }
