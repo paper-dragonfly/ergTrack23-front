@@ -9,6 +9,7 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
 import { TypeFetchedTeamWorkouts, TypeLogCols } from '../../utils/interfaces';
 import { filterResults, get_age_category } from '../../utils/helper';
+import BackBtn from '../../components/BackBtn';
 
 export async function loader(){
     console.log('hit teamlog')
@@ -144,7 +145,8 @@ export default function TeamLog(){
     }
     
     return (
-        <div className='log-div px-6 md:px-20'>
+        <div className='log-div px-6 md:px-20'>  
+            <BackBtn navTo='/team' btnText='back' />
             <h3 className='text-2xl font-bold pt-8 pb-3'>Team Log</h3>
             { selectedRowId ?
             <div className='text-xl py-4'> 

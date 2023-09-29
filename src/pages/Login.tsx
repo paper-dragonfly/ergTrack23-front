@@ -12,6 +12,7 @@ export default function Login() {
 
   const [userToken, setUserToken] = useState("")
   const [loading, setLoading] = useState(false)
+  const [loading2,  setLoading2] = useState(false) 
   const [userEmail, setUserEmail] = useState("")
   const [userPassword, setUserPassword] = useState("")
   const [newUser, setNewUser] = useState(false)
@@ -34,8 +35,9 @@ export default function Login() {
   }
 
   function emailPasswordSignIn() {
+    setLoading2(true)
     const action = newUser ? 'create new user with user and PW' : 'signing in with user and PW';
-  
+    
     const authFunction = newUser ? createUserWithEmailAndPassword : signInWithEmailAndPassword;
   
     console.log(action);
@@ -111,45 +113,49 @@ export default function Login() {
   }
 
   return (
-    <div className="App"> 
+    <div className="flex flex-col items-center justify-center"> 
         {userToken && <Navigate to={pathname} />}
         <br />
-        <h3>{newUser? "Sign Up" : "Log In"} </h3>
+        <h1 className='text-2xl font-bold'>{newUser? "Sign Up" : "Log In"} </h1>
         <form onSubmit={handleSubmit(emailPasswordSignIn)} className = 'login-form'>
-          <label>
-            <span><b>Email</b></span>
-              <input 
-                  type='text'
-                  name='email'
-                  value ={userEmail}
-                  onChange={handleChange}
-                  placeholder='email'
-                  required
-              />
-          </label>
-          <br />
-          <label>
-            <span><b>Password</b></span> 
-              <input 
-                  type='password'
-                  name='password'
-                  value ={userPassword}
-                  onChange={handleChange}
-                  className='form-login'
-                  placeholder='pw'
-                  required
-              />
-          </label>
-          <br />
-          <button type='submit'>Submit</button>
+          <fieldset className='flex flex-col items-center'>
+            <label>
+              <span><b>Email</b></span>
+                <input 
+                    type='text'
+                    name='email'
+                    value ={userEmail}
+                    onChange={handleChange}
+                    placeholder='email'
+                    className='team-input'
+                    required
+                />
+            </label>
+            <br />
+            <label>
+              <span><b>Password</b></span> 
+                <input 
+                    type='password'
+                    name='password'
+                    value ={userPassword}
+                    onChange={handleChange}
+                    className='team-input'
+                    placeholder='pw'
+                    required
+                />
+            </label>
+            <br />
+            <button type='submit' className='btn small grey my-4 justify-center'>{loading2 ? 'Logging in...': "Submit"}</button>
+          </fieldset>
         </form>
         {newUser? 
           <div> 
-            <p>Already have an account? </p> <button onClick={handleClickNewUser}>Sign In</button>
+            <p>Already have an account? </p> 
+            <button className="underline" onClick={handleClickNewUser}>Sign In</button>
           </div> 
           : 
           <div>
-            <p>New to this app? </p> <button onClick={handleClickNewUser}>Sign Up</button>
+            <p>New to this app? </p> <button className="underline" onClick={handleClickNewUser}>Sign Up</button>
           </div>
         }
         

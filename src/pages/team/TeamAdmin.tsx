@@ -1,6 +1,5 @@
 import React, {useState, useRef, useCallback, useMemo, useEffect} from  'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { API_URL } from '../../config'
 import {useForm} from 'react-hook-form'
 import { BiEditAlt } from 'react-icons/bi'
 import { AgGridReact } from 'ag-grid-react'
@@ -8,7 +7,9 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
+import { API_URL } from '../../config'
 import { TypeTeamAdminLoaded, TypeTeamMemberCols } from '../../utils/interfaces'
+import BackBtn from '../../components/BackBtn'
 
 
 export function loader(){
@@ -50,6 +51,7 @@ export default function TeamAdmin(){
         teamCode: teamInfoLoaded.team_code
     })    
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
+
     
     // Change Team Info
     const {handleSubmit, formState} = useForm()
@@ -235,7 +237,9 @@ export default function TeamAdmin(){
     }
 
     return(
-        <div>
+        <div className='px-6 md:px-20'>
+            <BackBtn navTo='/team' btnText='back'/>
+
             <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{`${teamInfoLoaded.team_name} Admin`}</h1>
 
             {editTeamInfo ? 
@@ -264,15 +268,16 @@ export default function TeamAdmin(){
                         </label>
                         <br />
                         <p>{displayedError}</p>
-                        <button type='submit' className='btn my-10'>Save Changes</button>
-                        <button className='btn coral my-10' onClick={escapeEdit}>Ignore Changes</button>
+                        <button type='submit' className='btn small my-10'>Save Changes</button>
+                        <button className='btn small coral my-10' onClick={escapeEdit}>Ignore Changes</button>
                     </fieldset>
                 </form> 
                 :
                 <div> 
+                    <button onClick={() => setEditTeamInfo(true)}><BiEditAlt size={30} />Edit</button>
+                    <br /><br />
                     <p>Team Name: {`${teamInfo.teamName}`}</p>
                     <p>Team Code: {`${teamInfo.teamCode}`}</p>
-                    <button onClick={() => setEditTeamInfo(true)}><BiEditAlt size={30} />Edit</button>
                 </div>
             }
             { editTeamInfo && selectedRowId ?

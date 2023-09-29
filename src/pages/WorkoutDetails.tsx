@@ -1,5 +1,5 @@
 import React, {useEffect, useCallback, useState, useMemo, useRef} from 'react'
-import {useLocation, useLoaderData, Navigate, NavLink, useNavigate} from 'react-router-dom'
+import {useLocation, useLoaderData, Navigate} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
@@ -7,7 +7,7 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
 import { TypeDetailsCols } from '../utils/interfaces'
 import { API_URL } from '../config'
-import { BsArrowLeftShort } from "react-icons/bs"
+import BackBtn from '../components/BackBtn'
 
 
 export async function loader(){
@@ -22,9 +22,7 @@ export default function WorkoutDetails(){
     console.log(workoutDetails)
     const gridRef = useRef<AgGridReact<TypeDetailsCols>>(null);
     const btnAutoSizeCols = useRef<HTMLButtonElement>(null)
-    const navigate = useNavigate()
 
-    const [goingBack, setGoingBack] = useState<boolean>(false)
     const [editing, setEditing] = useState(false)
     const [deleted, setDeleted] = useState<boolean>(false)
     
@@ -136,26 +134,10 @@ export default function WorkoutDetails(){
         )
     }
 
-    // const handleGoBack = useCallback(() => {
-    //     navigate(-1);
-    //   }, []);
-    const handleGoBack = () => {
-        setGoingBack(true)
-        navigate(-1)
-        return null 
-    }
 
     return (
         <div className='wo-details-div px-6 md:px-20'>
-            <div className="flex justify-end items-center">
-            <button onClick={handleGoBack} className="flex items-center pt-4 text-base">
-                    {goingBack ? "Loading..." : 
-                    <>
-                    <BsArrowLeftShort size={25} className="mr-1" /> Back to Log
-                    </>
-                    }           
-                </button>
-            </div>
+            <BackBtn navTo='-1' btnText='Back to Log'/>
             <h1 className='text-2xl font-bold'>
                 {workoutDetails.description}
             </h1>
