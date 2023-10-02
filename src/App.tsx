@@ -30,6 +30,8 @@ import AddTeam, {loader as addTeamLoader} from './pages/team/AddTeam';
 import TeamLog, {loader as teamLogLoader} from './pages/team/TeamLog';
 import TeamResults from './pages/team/TeamResults';
 import TeamAdmin, {loader as teamAdminLoader} from './pages/team/TeamAdmin';
+import Feedback, {action as feedbackAction} from './pages/feedback/Feedback';
+import SuccessFdbk from './pages/SuccessFdbk';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +50,8 @@ const router = createBrowserRouter(
         <Route path="team" element={<Team />} loader={teamLoader}/>
         <Route path="profile" element={<ProfileView />} loader = {profileViewLoader} />
         <Route path="about" element={<About />} />
+        <Route path="feedback" element={<Feedback />} action={feedbackAction}/>
+
         
         <Route path="profile/edit" element={<ProfileEdit />} action={profileEditAction}/>
         <Route path='log/details' element={<WorkoutDetails />} loader = {detailsLoader}/>
@@ -57,6 +61,8 @@ const router = createBrowserRouter(
         <Route path='team/log' element={<TeamLog />} loader = {teamLogLoader} />
         <Route path='team/results' element={<TeamResults />} />
         <Route path='team/admin' element={<TeamAdmin />} loader = {teamAdminLoader} />
+        <Route path='feedback/success' element={<SuccessFdbk />} />
+
         
       </Route>
     </Route>

@@ -91,7 +91,7 @@ export default function TableSandbox() {
 
     return(
         <div className='log-div md:px-20 '>
-            <h3 className='text-2xl font-bold pt-8'>Workout Log</h3>
+            <h1 className='text-2xl font-bold pt-8'>Workout Log</h1>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
                 <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
