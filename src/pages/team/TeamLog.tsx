@@ -9,6 +9,8 @@ import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
 
 import { TypeFetchedTeamWorkouts, TypeLogCols } from '../../utils/interfaces';
 import { filterResults, get_age_category } from '../../utils/helper';
+import BackBtn from '../../components/BackBtn';
+import TableTemplate from '../../components/TableTemplate';
 
 export async function loader(){
     console.log('hit teamlog')
@@ -33,11 +35,10 @@ export async function loader(){
 export default function TeamLog(){
     const teamWorkouts = useLoaderData() as TypeFetchedTeamWorkouts[]
     const navigate = useNavigate()
+    const ageCategory = get_age_category(teamWorkouts)
     const summaryData = new Array
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
-    const btnWideDisplay = useRef<HTMLButtonElement>(null) 
-    const ageCategory = get_age_category(teamWorkouts)
 
     for(let i=0; i<teamWorkouts.length; i++){
         const rowArray = {
@@ -79,43 +80,6 @@ export default function TeamLog(){
         {field: 'comment', filter: true},
     ])
 
-    const getRowId = useMemo<GetRowIdFunc>(() => {
-        return (params: GetRowIdParams) => params.data.workoutId;
-      }, []);
-
-    const defaultColDef = useMemo( ()=> ( {
-        floatingFilter: true,
-        flex: 1,
-        // filterParams: {
-        //   buttons: ['apply','clear']
-        // }
-      }), []);
-    
-    
-    useEffect(()=>{
-        if(window.innerWidth < 768){ 
-            setTimeout(()=>{
-                console.log('useEffect running')
-                if(btnWideDisplay.current && gridRef.current){
-                    btnWideDisplay.current.click()}
-                },100)
-            }
-        },[])
-            
-            
-    const autoSizeAll = useCallback((skipHeader: boolean) => {
-        console.log('autosizeall is running')
-        const allColumnIds: string[] = [];
-        gridRef.current!.columnApi.getColumns()!.forEach((column) => {
-            allColumnIds.push(column.getId());
-        });
-        gridRef.current!.columnApi.autoSizeColumns(allColumnIds, skipHeader);
-        }, []);
-
-    const onSelectionChanged = () => {
-    const selectedRow = gridRef.current!.api.getSelectedRows();
-    setSelectedRowId(selectedRow.length > 0 ? selectedRow[0].workoutId : null);
-    };
     
     const navigateToTeamDetails = () => {
         for(let i=0;i<teamWorkouts.length;i++){
@@ -144,7 +108,8 @@ export default function TeamLog(){
     }
     
     return (
-        <div className='log-div px-6 md:px-20'>
+        <div className='log-div px-6 md:px-20'>  
+            <BackBtn navTo='/team' btnText='back' />
             <h3 className='text-2xl font-bold pt-8 pb-3'>Team Log</h3>
             { selectedRowId ?
             <div className='text-xl py-4'> 
@@ -153,22 +118,13 @@ export default function TeamLog(){
                 <button onClick={clearRowSelection} className='btn small coral mt-2 md:pt-0'>Clear Selection</button>
             </div> : <br />
             }
-            <div style={{height : 500, color:'red'}}>
-                <div className = "ag-theme-alpine" style={{height:'90%', width:'100%'}} >
-                    <AgGridReact
-                        ref = {gridRef}
-                        rowData={rowData} animateRows={true}
-                        columnDefs={columnDefs} defaultColDef={defaultColDef}
-                        getRowId={getRowId}
-                        rowSelection={'single'}
-                        onSelectionChanged={onSelectionChanged}
-                        >
-                    </AgGridReact>
-                </div>
-            </div>
-            <button ref={btnWideDisplay} style={{display:'none'}} onClick={() => autoSizeAll(false)} className='btn small grey'>
-            wide-display
-            </button>
+            <TableTemplate 
+                gridRef={gridRef}
+                rowData={rowData}
+                columnDefs={columnDefs}
+                setSelectedRowId={setSelectedRowId}
+                rowIdTitle='workoutId'
+            />
         </div>
     )
 }

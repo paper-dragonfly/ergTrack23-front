@@ -51,6 +51,7 @@ export default function NavHeader () {
                         <NavLink to='/dashboard' onClick={() => setNav(!nav)}>Dashboard</NavLink>
                         <NavLink to='/about' onClick={() => setNav(!nav)}>About</NavLink>
                         <NavLink to='/profile' onClick={() => setNav(!nav)}>Profile</NavLink>
+                        <NavLink to='/feedback' onClick={() => setNav(!nav)}>Give Feedback</NavLink>
                     </div>
                     ) }
                                     
@@ -88,6 +89,10 @@ export default function NavHeader () {
                             to='/profile' 
                             style={({isActive}) => isActive ? activeStyles : {}}
                             >Profile</NavLink></li>
+                        <li><NavLink 
+                            to='/feedback' 
+                            style={({isActive}) => isActive ? activeStyles : {}}
+                            >Give Feedback</NavLink></li>
                         <li><button onClick={signOut}>Log Out</button></li>
                     </ul>
                 </nav>

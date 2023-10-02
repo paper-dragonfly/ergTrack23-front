@@ -1,3 +1,5 @@
+
+ 
  // Shared
 export interface TypesWorkoutInfo {
     entryMethod: string;
@@ -121,6 +123,7 @@ export interface TypeProfileLoaded{
 
 export interface TypeUserInfo{
     auth_uid: string;
+    user_id?: number;
     user_name: string;
     email: string;
     joined: Date;
@@ -161,6 +164,17 @@ export interface TypeTeamInfo{
     team_name: string;
     team_code: string;
 }
+
+export interface TypeTeamAdminLoaded{
+    userToken: string;
+    teamAdminInfo: {
+        team_info: TypeTeamInfo
+        team_members: TypeUserInfo[]
+        admin_uid: number
+    };
+    teamId: number
+}
+ 
 
 export interface TeamChildProps {
     userToken: string;
@@ -224,6 +238,14 @@ export interface TypeFilterableTeamWorkouts{
     user_name: string;
     sex: string | null;
     dob: string | null;
+}
+
+export interface TypeTeamMemberCols{
+    userId: number;
+    name?: string;
+    sex?: string;
+    dob?: Date;
+    email:string;
 }
 
 
