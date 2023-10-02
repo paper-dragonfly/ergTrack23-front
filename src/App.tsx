@@ -31,7 +31,7 @@ import TeamLog, {loader as teamLogLoader} from './pages/team/TeamLog';
 import TeamResults from './pages/team/TeamResults';
 import TeamAdmin, {loader as teamAdminLoader} from './pages/team/TeamAdmin';
 import Feedback, {action as feedbackAction} from './pages/feedback/Feedback';
-import SuccessFdbk from './pages/SuccessFdbk';
+import SuccessFdbk from './pages/feedback/SuccessFdbk';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
