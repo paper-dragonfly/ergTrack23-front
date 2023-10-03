@@ -32,6 +32,8 @@ import TeamResults from './pages/team/TeamResults';
 import TeamAdmin, {loader as teamAdminLoader} from './pages/team/TeamAdmin';
 import Feedback, {action as feedbackAction} from './pages/feedback/Feedback';
 import SuccessFdbk from './pages/feedback/SuccessFdbk';
+import MultiPhoto from './pages/addWorkout/MultiPhoto';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -62,6 +64,9 @@ const router = createBrowserRouter(
         <Route path='team/results' element={<TeamResults />} />
         <Route path='team/admin' element={<TeamAdmin />} loader = {teamAdminLoader} />
         <Route path='feedback/success' element={<SuccessFdbk />} />
+        
+        <Route path='addworkout/multiphoto' element={<MultiPhoto />} />
+
 
         
       </Route>
