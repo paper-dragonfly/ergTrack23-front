@@ -3,14 +3,24 @@ import { API_URL } from '../../config';
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 const PhotoUploader: React.FC = () => {
+  const userToken = sessionStorage.getItem('userToken')
+
   const [numPhotos, setNumPhotos] = useState<number>(1);
   const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
+  const [numSubs, setNumSubs] = useState<number>(8)
+
+  // TODO: add input for num subs,  test  api  call
 
   const handleNumPhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const num = parseInt(e.target.value, 10);
     setNumPhotos(num);
     setSelectedPhotos([]);
   };
+
+  const handleNumSubsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const num = parseInt(e.target.value, 10)
+    setNumSubs(num)  
+  }
 
   const handlePhotoSelection = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const files = e.target.files;
@@ -40,24 +50,27 @@ const PhotoUploader: React.FC = () => {
     console.log(selectedPhotos)
     logFormData(formData)  
 
-    // try {
-    //   const url = API_URL+'/ergIamge'
-    //   const response = await fetch(url, {
-    //     method: 'POST',
-    //     body: formData,
-    //   });
+    try {
+      // post data to API
+      const url = API_URL+`/ergImage?numSubs=${numSubs}`
+      const postInfo = {
+          method: "POST",
+          headers: {'Authorization': `Bearer ${userToken}`},
+          body: formData
+          }
+      const response = await fetch(url, postInfo)
 
-    //   if (response.ok) {
-    //     // Handle success
-    //     console.log('Upload successful');
-    //   } else {
-    //     // Handle error
-    //     console.error('Upload failed');
-    //   }
-    // } catch (error) {
-    //   // Handle network error
-    //   console.error('Network error:', error);
-    // }
+      if (response.ok) {
+        // Handle success
+        console.log('Upload successful', response.json());
+      } else {
+        // Handle error
+        console.error('Upload failed');
+      }
+    } catch (error) {
+      // Handle network error
+      console.error('Network error:', error);
+    }
   };
 
   return (
@@ -69,6 +82,16 @@ const PhotoUploader: React.FC = () => {
           min="1"
           value={numPhotos}
           onChange={handleNumPhotosChange}
+        />
+      </label>
+
+      <label>
+        Number of SubWorkouts:
+        <input
+          type="number"
+          min="1"
+          value={numSubs}
+          onChange={handleNumSubsChange}
         />
       </label>
 
