@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { API_URL } from '../../config';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 const PhotoUploader: React.FC = () => {
   const userToken = sessionStorage.getItem('userToken')
 
   const [numPhotos, setNumPhotos] = useState<number>(1);
-  const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
   const [numSubs, setNumSubs] = useState<number>(8)
+  const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
 
   // TODO: add input for num subs,  test  api  call
 
@@ -84,7 +83,7 @@ const PhotoUploader: React.FC = () => {
           onChange={handleNumPhotosChange}
         />
       </label>
-
+      <br />
       <label>
         Number of SubWorkouts:
         <input

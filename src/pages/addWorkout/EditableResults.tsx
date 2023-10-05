@@ -119,8 +119,12 @@ export default function EditableResults(props: ERProps) {
         fetch(url, postInfo)
           .then((response) => response.json())
           .then((data)=> {
-            console.log(data)
-            setSubmitSuccessful(true)
+            if(data.status_code === 200){
+              console.log(data)
+              setSubmitSuccessful(true)
+            }else{
+              setViewSaveError(true)
+            }
           })
       )
     } catch (error){

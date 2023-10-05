@@ -36,7 +36,7 @@ export default function AddWorkout(){
             rest:"",
             subWorkouts: "4",
             showHR: false,
-            ergImg: null, 
+            ergImg: [], 
         }
     )
 
@@ -53,10 +53,14 @@ export default function AddWorkout(){
         }
     )
     
-    const [photoHash, setPhotoHash] = useState("")
+    const [photoHash, setPhotoHash] = useState<string[]>([])
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
     const [fmImgSelected, setFmImgSelected] = useState(true)
+    const [multiPhoto,  setMultiPhoto] = useState<boolean>(false)
+    const [selectedMultiPhotos,  setSelectedMultiPhotos] = useState<File[]>([])
+    const [numSubs, setNumSubs] = useState<number>(8)
+
     const [selectedWorkoutType, setSelectedWorkoutType] = useState('singleDist')
     
     const { handleSubmit, formState }  = useForm() 
@@ -84,7 +88,7 @@ export default function AddWorkout(){
                 setShowError(false)
                 return{
                     ...oldWorkoutInfo,
-                    [name]:files[0]
+                    [name]:[files[0]]
                 }
             }else if(name === 'entryMethod' && value ===  'manual'){
                 setShowError(false)
@@ -92,7 +96,7 @@ export default function AddWorkout(){
                 return {
                     ...oldWorkoutInfo,
                     entryMethod: 'manual',
-                    ergImg: null
+                    ergImg: []
                 }
             }else if (name === 'entryMethod' && value === 'fmImg'){
                 setFmImgSelected(true) 
@@ -116,19 +120,22 @@ export default function AddWorkout(){
         // e.preventDefault() //prevent immediate submittion 
         
         //if entryMethod === 'fmImg' & img selected -> create form, add image file, POST to API -> process resp 
-        if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg){
+        if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg.length > 0){
             console.log('running submit for fmImg')
             const formData = new FormData()
-            formData.append('ergImg', workoutInfo.ergImg)
+            workoutInfo.ergImg.forEach((photo, index) => {
+                formData.append(`photo${index + 1}`, photo);
+            });
+            console.log(workoutInfo.ergImg)
         
             // post data to API
-            const url = API_URL+"/ergImage"
+            const endpoint = numSubs === 0 ? '/ergImage' : `/ergImage?numSubs=${numSubs}`
+            const url = API_URL+endpoint
             const postInfo = {
                 method: "POST",
                 headers: {'Authorization': `Bearer ${userToken}`},
                 body: formData
                 }
-            
             return(
                 fetch(url, postInfo)
                     .then((response) => response.json()) 
@@ -155,7 +162,7 @@ export default function AddWorkout(){
                         console.log('after scoll') 
                 })
             )
-            // if entryMethod = 'manual'
+        // if entryMethod = 'manual'
         }else if(workoutInfo.entryMethod === 'manual'){
             console.log('running submit for manual')
             // if entryMethod === 'manual' -> use workoutInfo to update workoutMetrics 
@@ -187,6 +194,7 @@ export default function AddWorkout(){
         <div className='add-workout-div flex flex-col items-center overflow-hidden md:flex-row  md:items-start md:p-14 md:place-content-evenly'>
             <form onSubmit={handleSubmit(submitForm)} 
             className=''>
+                {/* Radio select: Image or Manual*/}
                 <fieldset className='flex flex-wrap gap-10 mb-10'>
                     <legend className='text-2xl font-bold pl-1 mb-6'> Entry Method</legend>
                     <label 
@@ -324,7 +332,7 @@ export default function AddWorkout(){
                         <br /> 
                     </div>
                     : // From Image
-                    <UploadAndDisplayImage workoutInfo={workoutInfo} handleChange={handleChange}/>
+                    <UploadAndDisplayImage workoutInfo={workoutInfo} setWorkoutInfo={setWorkoutInfo} numSubs={numSubs} setNumSubs={setNumSubs}/>
             }
             {showError && 
             <div> 
