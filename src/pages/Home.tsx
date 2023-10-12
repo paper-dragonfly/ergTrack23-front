@@ -1,6 +1,4 @@
-import React, {useState} from 'react'
-import { useOutletContext } from 'react-router-dom'
-import bgHero from "../assets/hero.png"
+import React from 'react'
 import desktopHero from "../assets/heroDesktop2.jpg"
 import fmJosh from '../assets/fmJosh.jpg'
 import { BsCamera, BsUpload, BsPencil, BsCheck2 } from "react-icons/bs"

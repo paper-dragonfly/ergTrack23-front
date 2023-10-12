@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
-import {Form, useLocation, Link, redirect} from 'react-router-dom'
-import { TypeProfileInfo, TypeUserInfo, TypeProfileEdit, TypeProfileLoaded } from '../utils/interfaces'
+import React, {useState} from 'react'
+import {Form, useLocation, redirect} from 'react-router-dom'
+import { TypeUserInfo } from '../utils/interfaces'
 import { API_URL } from '../config'
 
 export async function action({request}:{request: Request}){

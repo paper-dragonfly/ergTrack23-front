@@ -1,5 +1,5 @@
 import React from "react"
-import { Outlet, Navigate, useLoaderData, redirect } from 'react-router-dom'
+import { Outlet, useLoaderData } from 'react-router-dom'
 import NavHeader from './NavHeader'
 import { checkAuth } from "../utils/helper"
 

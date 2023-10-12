@@ -1,9 +1,9 @@
-import React, { useState, useLayoutEffect, useRef, useCallback, useMemo, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import {useLoaderData, useNavigate} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
-import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
+import {ColDef} from 'ag-grid-community'
 
 import { API_URL } from '../config' 
 import { TypeFetchedWorkouts, TypeLogCols } from '../utils/interfaces'
@@ -32,7 +32,7 @@ export async function loader(){
 export default function TableSandbox() {
     const allWorkouts = useLoaderData() as TypeFetchedWorkouts[]
     const navigate = useNavigate()
-    const summaryData = new Array
+    const summaryData = []
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
 

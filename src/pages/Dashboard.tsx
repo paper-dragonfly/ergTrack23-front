@@ -1,7 +1,5 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import ergWelcome from '../assets/ergWelcome.png'
-import erg_cartoon from '../assets/erg_cartoon.png'
 
 
 export default function Dashboard(){

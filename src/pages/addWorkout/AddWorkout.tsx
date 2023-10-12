@@ -1,7 +1,7 @@
 
 import React, {useState, useRef} from 'react'
 import {nanoid} from 'nanoid'
-import { useLoaderData, useOutletContext } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 
@@ -57,8 +57,6 @@ export default function AddWorkout(){
     const [showEditableResults,  setShowEditableResults] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
     const [fmImgSelected, setFmImgSelected] = useState(true)
-    const [multiPhoto,  setMultiPhoto] = useState<boolean>(false)
-    const [selectedMultiPhotos,  setSelectedMultiPhotos] = useState<File[]>([])
     const [numSubs, setNumSubs] = useState<number>(8)
 
     const [selectedWorkoutType, setSelectedWorkoutType] = useState('singleDist')
@@ -80,7 +78,7 @@ export default function AddWorkout(){
       }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void{
-        const {name, type, value,files, checked} = e.target
+        const {name, type, value,files} = e.target
         console.log('handlechange begins', fmImgSelected)
         setShowEditableResults(false)
         setWorkoutInfo(oldWorkoutInfo => {
@@ -102,7 +100,7 @@ export default function AddWorkout(){
                 setFmImgSelected(true) 
             }else if (name === 'workoutType'){
                 setSelectedWorkoutType(value)
-            }else if (name == 'showHR'){
+            }else if (name === 'showHR'){
                 return{
                     ...oldWorkoutInfo,
                     showHR: !workoutInfo.showHR

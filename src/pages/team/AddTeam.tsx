@@ -1,11 +1,8 @@
-import { SelectCellEditor } from 'ag-grid-community';
 import React, {useState} from 'react'
-import {Link } from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import { useLoaderData, redirect, useNavigate } from 'react-router-dom';
 
 import { API_URL } from '../../config';
-import { TeamChildProps } from '../../utils/interfaces';
 import { TypeAddTeamLoaded } from '../../utils/interfaces';
 
 export async function loader(){
@@ -13,7 +10,6 @@ export async function loader(){
 
     //get user token 
     const userToken = sessionStorage.getItem('userToken')
-    const teamId = sessionStorage.getItem('userTeamId')
 
     const url = API_URL+'/team'
 
@@ -114,12 +110,12 @@ export default function AddTeam( ){
                     .then((response) => response.json())
                     .then((data)=> {
                         console.log(data)
-                        if(data.status_code == 200){
+                        if(data.status_code === 200){
                             const userTeamId = data.body.team_id
                             console.log('userTeamId', userTeamId)
                             sessionStorage.setItem('userTeamId',userTeamId)
                             navigate('/team')
-                        }else if(data.status_code == 404){
+                        }else if(data.status_code === 404){
                             setDisplayedError(data.error_message)
                         }
                     })
@@ -189,7 +185,9 @@ export default function AddTeam( ){
                     </label>
                     <br />
                     <p>{displayedError}</p>
-                    <button type='submit' className='btn my-10'>{createOrJoin==='create'?'Create Team':'Join Team'}</button>
+                    <button disabled={isSubmitting} type='submit' className={isSubmitting?'btn grey my-6':'btn my-6'}>
+                        {createOrJoin==='create'?'Create Team':'Join Team'}
+                    </button>
                 </fieldset>
             </form> 
 

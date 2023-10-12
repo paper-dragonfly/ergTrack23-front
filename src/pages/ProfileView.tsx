@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { useLoaderData, Link } from 'react-router-dom'
 import { API_URL } from '../config'
-import { TypeUserInfo, TypeProfileInfo, TypeProfileLoaded } from '../utils/interfaces'
+import { TypeProfileLoaded } from '../utils/interfaces'
 import { BiEditAlt } from 'react-icons/bi'
 
 //add loader that gets info from user table 

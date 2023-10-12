@@ -19,7 +19,6 @@ import About from './pages/About';
 import Team, {loader as teamLoader} from './pages/team/Team';
 import PublicLayout from './components/PublicLayout';
 import {loader as AuthLoader} from './components/AuthRequiredLayout'
-import { checkAuth } from './utils/helper';
 import WorkoutDetails, {loader as detailsLoader} from './pages/WorkoutDetails';
 import Submitted from './pages/addWorkout/Submitted';
 import Deleted from './pages/Deleted';

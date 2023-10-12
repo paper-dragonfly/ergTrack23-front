@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import {useForm} from 'react-hook-form'
 
-import { TypesWoMetaData, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from '../../utils/interfaces';
+import { TypesWoMetaData, TypesWorkoutTableMetrics, ERProps } from '../../utils/interfaces';
 import { reformat_date } from './helperFunctions';
 import { nanoid } from 'nanoid'
 import { API_URL } from '../../config';

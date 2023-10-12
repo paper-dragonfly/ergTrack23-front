@@ -22,9 +22,6 @@ export default function UploadAndDisplayImage(props: UADIProps){
         }
       };
 
-    // if (props.workoutInfo.ergImg){ 
-    //     console.log(URL.createObjectURL(props.workoutInfo.ergImg[0]))
-    //     }
     
     function handleMultiChange(){
         if(multiPhoto){
@@ -56,7 +53,7 @@ export default function UploadAndDisplayImage(props: UADIProps){
     return(
         <div className= 'visible-on-from-img'>
             <label>
-                Add multiple photos for this workout {'\u00A0'}
+                Multi photo workout {'\u00A0'}
                 <input
                   type='checkbox'
                   name ='multi-photo'
@@ -68,7 +65,6 @@ export default function UploadAndDisplayImage(props: UADIProps){
             <br />
             {multiPhoto ? 
                 <div>
-                    
                     <label>
                     Number of Photos (max 3):
                     <input
@@ -121,21 +117,3 @@ export default function UploadAndDisplayImage(props: UADIProps){
     )
 }
 
-
-
-{/* <input
-    id='choose-file'
-    type="file"
-    name = 'ergImg'
-    onChange = {props.handleChange}
-/>
-{props.workoutInfo.ergImg && (
-    <div>
-        <img
-            className='uploaded-img w-5/6  mt-6 md:max-w-xl '
-            // className='uploaded-img max-w-sm  mt-6'
-            alt='erg photo' 
-            src={URL.createObjectURL(props.workoutInfo.ergImg[0])}
-        />
-    </div> 
-)} */}

@@ -1,11 +1,11 @@
-import React, {useState, useRef, useCallback, useMemo, useEffect} from  'react'
+import React, {useState, useRef} from  'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import { BiEditAlt } from 'react-icons/bi'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
-import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
+import {ColDef} from 'ag-grid-community'
 
 import { API_URL } from '../../config'
 import { TypeTeamAdminLoaded, TypeTeamMemberCols } from '../../utils/interfaces'
@@ -102,7 +102,7 @@ export default function TeamAdmin(){
 
     // ************************************
     //Table of team members
-    let teamMembersTableData = new Array
+    let teamMembersTableData = new Array()
     
     for(let i=0; i<teamMembers.length; i++){
         let shortSex = null 
@@ -151,7 +151,7 @@ export default function TeamAdmin(){
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            if(data.status_code == 200){
+            if(data.status_code === 200){
                 teamMembersTableData = teamMembersTableData.filter((member) => member.userId !== selectedRowId);
                 setRowData(teamMembersTableData)
                 setDisplayedError('Athlete removed from team')
@@ -179,7 +179,7 @@ export default function TeamAdmin(){
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            if(data.status_code == 200){
+            if(data.status_code === 200){
                 navigate('/team')
             }
         })
@@ -225,8 +225,8 @@ export default function TeamAdmin(){
                         </label>
                         <br />
                         <p>{displayedError}</p>
-                        <button type='submit' className='btn small my-10'>Save Changes</button>
-                        <button className='btn small coral my-10' onClick={escapeEdit}>Ignore Changes</button>
+                        <button type='submit' className='btn small my-4 mr-4'>Save Changes</button>
+                        <button className='btn small grey my-4' onClick={escapeEdit}>Ignore Changes</button>
                     </fieldset>
                 </form> 
                 :
@@ -242,9 +242,9 @@ export default function TeamAdmin(){
             {/* Table and related buttons */}
             { editTeamInfo && selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
-                <button onClick = {removeAthlete} className='btn small'>Remove Athlete from Team</button> 
-                <button onClick = {transferAdmin} className='btn small'>Transfer Admin Role</button> 
-                <button onClick={clearRowSelection} className='btn small coral'>Deselect</button>
+                <button onClick = {transferAdmin} className='btn small mt-4'>Transfer Admin Role</button> 
+                <button onClick = {removeAthlete} className='btn small coral mt-4'>Remove Athlete from Team</button> 
+                <button onClick={clearRowSelection} className='btn small grey mt-4'>Deselect</button>
             </div> : <br />
             }
             <TableTemplate 
