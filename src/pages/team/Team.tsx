@@ -2,8 +2,6 @@ import React, {useState} from 'react'
 import { useLoaderData, Link, redirect, useNavigate } from 'react-router-dom'
 import { API_URL } from '../../config'
 import { TypeTeamInfo, TypeTeamLoaded } from '../../utils/interfaces'
-import AddTeam from './AddTeam'
-import TeamLog from './TeamLog'
 
 
 //load - get if user info includees team name 
@@ -41,6 +39,7 @@ export default function Team(){
     const admin = loaderData.userTeamInfo.team_admin 
     const navigate  = useNavigate()
 
+    //TODO
     const [teamMeters, setTeamMeters] = useState<number>(0)
 
     const handlePatchRequest = () => {
@@ -57,7 +56,7 @@ export default function Team(){
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            if(data.status_code == 200){
+            if(data.status_code === 200){
                 sessionStorage.setItem('userTeamId', JSON.stringify(null))
                 navigate('/team/add')
             }

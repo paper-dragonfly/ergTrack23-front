@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs 
 import { initializeApp } from "firebase/app";
-import {getAuth, GoogleAuthProvider, signInWithPopup, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth' 
+import {getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth' 
 import 'firebase/auth'
 import { firebaseConfig } from "../config";
 

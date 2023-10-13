@@ -1,11 +1,11 @@
-import React, { useState, useLayoutEffect, useRef, useCallback, useMemo, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
-import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
+import {ColDef} from 'ag-grid-community'
 
-import { TypeLogCols, TypeFilterableTeamWorkouts, TypeFetchedTeamWorkouts, TypeSummaryData } from '../../utils/interfaces';
+import { TypeLogCols, TypeFetchedTeamWorkouts } from '../../utils/interfaces';
 import { get_filtered_results } from '../../utils/helper';
 import BackBtn from '../../components/BackBtn';
 import TableTemplate from '../../components/TableTemplate';
@@ -20,7 +20,6 @@ export default function TeamResults(){
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
     
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
-    const [teamResults, setTeamResults] = useState<TypeFetchedTeamWorkouts[]>([])
     const [filters, setFilters] = useState<{sex: string, ageCat:string}>({
         'sex': 'all',
         'ageCat' : 'all'

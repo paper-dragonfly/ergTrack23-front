@@ -18,7 +18,7 @@ export async function checkAuth(request: Request){
 }
 
 export function filterResults(teamWorkouts: TypeFetchedTeamWorkouts[], selected:TypeFetchedTeamWorkouts){
-    const teamWoData = new Array
+    const teamWoData = new Array()
     for(let i=0;i<teamWorkouts.length;i++){
         if(teamWorkouts[i].date === selected.date && teamWorkouts[i].description === selected.description){
             teamWoData.push(teamWorkouts[i])
@@ -30,7 +30,7 @@ export function filterResults(teamWorkouts: TypeFetchedTeamWorkouts[], selected:
 export function get_age_category(workouts: TypeFetchedTeamWorkouts[]){
     const currentDate = new Date()
     const currentYear = currentDate.getFullYear()
-    const ageCategories: String[] = new Array
+    const ageCategories: String[] = new Array()
 
     for(let i=0; i<workouts.length; i++){
         const dob = workouts[i].dob? workouts[i].dob : null
@@ -76,7 +76,7 @@ export function get_age_category(workouts: TypeFetchedTeamWorkouts[]){
 
 
 export function get_filtered_results(fullTeamResults: TypeFetchedTeamWorkouts[], ageCategories: String[], filters: {sex:String, ageCat:String }){
-    const result = new Array
+    const result = new Array()
     for(let i=0; i<fullTeamResults.length; i++){
         if(
             (filters.sex === 'all' || fullTeamResults[i].sex === filters.sex) && 

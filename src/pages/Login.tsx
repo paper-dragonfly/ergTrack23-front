@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {Navigate, useLoaderData, useSearchParams} from 'react-router-dom'
+import {useState} from 'react';
+import {Navigate, useSearchParams} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth' 
 
@@ -145,7 +145,7 @@ export default function Login() {
                 />
             </label>
             <br />
-            <button type='submit' className='btn small grey my-4 justify-center'>{loading2 ? 'Logging in...': "Submit"}</button>
+            <button type='submit' className='btn small my-4 justify-center'>{loading2 ? 'Logging in...': "Submit"}</button>
           </fieldset>
         </form>
         {newUser? 

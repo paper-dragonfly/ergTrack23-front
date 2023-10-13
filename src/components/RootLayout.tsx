@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from "react"
-import { Outlet, Navigate, useOutletContext, useLoaderData, Params, LoaderFunctionArgs } from 'react-router-dom'
-import { checkAuth } from "../utils/helper"
-
+import React from "react"
+import { Outlet } from 'react-router-dom'
 
 
 export default function RootLayout(){

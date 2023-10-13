@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TypesWorkoutInfo, TypesLengthOptions, LOProps } from '../../utils/interfaces' 
+import { TypesLengthOptions, LOProps } from '../../utils/interfaces' 
 
 export default function LengthOptions(props: LOProps){
     const [selectedOption, setSelectedOption] = useState("lengthOption1");
@@ -12,7 +12,7 @@ export default function LengthOptions(props: LOProps){
         intervalTime: ['1:00', '15:00','30:00','other']
     }
     
-    let displayedType:string[] = new Array
+    let displayedType:string[] = []
     let legendKey;
     if(props.workoutInfo.workoutType === 'singleDist'){
         displayedType = workoutLengthOptions.singleDist

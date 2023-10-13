@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { NavLink, redirect, Navigate } from "react-router-dom"
+import { NavLink, Navigate } from "react-router-dom"
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { firebaseSignOut } from '../utils/firebase';
 import ergTrack from "../assets/ergTrack.png"

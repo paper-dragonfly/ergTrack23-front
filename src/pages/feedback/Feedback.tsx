@@ -34,16 +34,10 @@ export async function action({request}:{request: Request}){
 export default function Feedback(){
 
   const [selectedCategory, setSelectedCategory] = useState<string>('issue');
-  const [feedbackText, setFeedbackText] = useState<string>('');
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedCategory(event.target.id);
   };
-
-  const handleFeedbackTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFeedbackText(event.target.id);
-  };
-
 
   return (
     <div className='flex flex-col'>
@@ -96,7 +90,6 @@ export default function Feedback(){
             <textarea 
                 id='feedback-comment' 
                 name='comment'
-                onChange={handleFeedbackTextChange}
                 className='editable-input comment'>
             </textarea> 
         </label>

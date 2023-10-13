@@ -1,4 +1,4 @@
-
+import React from 'react'
  
  // Shared
 export interface TypesWorkoutInfo {
@@ -9,7 +9,7 @@ export interface TypesWorkoutInfo {
     rest:string;
     subWorkouts: string;
     showHR: boolean;
-    ergImg: File | null; 
+    ergImg: File[]; 
 }
 
 export interface TypesWorkoutMetrics {
@@ -39,8 +39,10 @@ export interface LOProps {
 
 // UploadAndDisplayImage
 export interface UADIProps {
-    workoutInfo: TypesWorkoutInfo;
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    workoutInfo: TypesWorkoutInfo 
+    setWorkoutInfo: React.Dispatch<React.SetStateAction<any>>;
+    numSubs: number;
+    setNumSubs: React.Dispatch<React.SetStateAction<any>>;
 }
 
 // WorkoutTable
@@ -63,7 +65,7 @@ export interface TypesWorkoutTableMetrics{
 export interface ERProps {
     workoutMetrics: TypesWorkoutMetrics;
     userToken: unknown;
-    photoHash: string;
+    photoHash: string[];
 }
 
 // Workout Log

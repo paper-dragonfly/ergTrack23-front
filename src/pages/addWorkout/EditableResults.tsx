@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import {useForm} from 'react-hook-form'
 
-import { TypesWoMetaData, TypesWorkoutTableMetrics, TypesWorkoutMetrics, ERProps } from '../../utils/interfaces';
+import { TypesWoMetaData, TypesWorkoutTableMetrics, ERProps } from '../../utils/interfaces';
 import { reformat_date } from './helperFunctions';
 import { nanoid } from 'nanoid'
 import { API_URL } from '../../config';
@@ -119,8 +119,12 @@ export default function EditableResults(props: ERProps) {
         fetch(url, postInfo)
           .then((response) => response.json())
           .then((data)=> {
-            console.log(data)
-            setSubmitSuccessful(true)
+            if(data.status_code === 200){
+              console.log(data)
+              setSubmitSuccessful(true)
+            }else{
+              setViewSaveError(true)
+            }
           })
       )
     } catch (error){

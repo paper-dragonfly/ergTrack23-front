@@ -3,7 +3,7 @@ import {useLocation, useLoaderData, Navigate} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
-import {ColDef, GetRowIdFunc, GetRowIdParams} from 'ag-grid-community'
+import {ColDef} from 'ag-grid-community'
 
 import { TypeDetailsCols } from '../utils/interfaces'
 import { API_URL } from '../config'
@@ -159,7 +159,7 @@ export default function WorkoutDetails(){
             {workoutDetails.cal ? <h4>Total Calories: {workoutDetails.cal}</h4> : null}
             <p className='text-lg py-4'>Comment: {workoutDetails.comment}</p>
             <div className='space-x-4'>
-                <button onClick={onEditSaveClick} className='btn small'>  {editing ? 'Save': 'Edit'}</button>
+                {/* <button onClick={onEditSaveClick} className='btn small'>  {editing ? 'Save': 'Edit'}</button> */}
                 <button onClick={onDeleteClick} className='btn small coral'>Delete  Workout</button>
                 {deleted ? <Navigate to='/log/deleted' /> : null }
             </div>

@@ -1,26 +1,6 @@
-import { stringify } from 'querystring';
 import React from 'react'
-import { TypesWorkoutInfo, TypesWorkoutMetrics } from '../../utils/interfaces';
+import { TypesWorkoutInfo } from '../../utils/interfaces';
 
-
-const d = {
-    workoutName: "",
-    workoutDate: "",
-    time: [],
-    meter: [],
-    split:  [],
-    sr: [],
-    hr: [], 
-}
-
-const  info ={
-    entryMethod: "manual",
-    workoutType:"singleDist",
-    workoutLength:"2000m",
-    customLength:"",
-    subWorkouts: "",
-    ergImg: null, 
-}
 
 export function generateWorkoutName(workoutInfo: TypesWorkoutInfo): string{
     let workoutName = "";
