@@ -89,19 +89,33 @@ export default function Login() {
         console.log(result)
         const idToken = result.user.getIdToken()
         console.log('idToken', idToken)
-        return idToken
+        const userEmail = result.user.email 
+        return {idToken, userEmail}
       })
       // authenticate user with ergTrack server, get user_token 
-      .then((idToken) => {
+      .then(({idToken, userEmail}) => {
         const url = API_URL + '/login/'
-        fetch(
-          url,
-          {
-            headers: {
-              'Authorization': `Bearer ${idToken}`,
-              'Content-Type': 'application/json'
-            }
+        const postInfo = {
+          method: "POST",
+          headers: {
+            'Authorization': `Bearer ${idToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: userEmail,
           })
+        }
+        fetch(url, postInfo)
+
+        // const url = API_URL + '/login/'
+        // fetch(
+        //   url,
+        //   {
+        //     headers: {
+        //       'Authorization': `Bearer ${idToken}`,
+        //       'Content-Type': 'application/json'
+        //     }
+        //   })
           .then(response => response.json())
           .then(data => {
             console.log(data)
