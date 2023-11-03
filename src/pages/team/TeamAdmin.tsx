@@ -27,8 +27,8 @@ export function loader(){
     })
         .then(resp => resp.json())
         .then(data => {
-            console.log(data['body'])
-            return {userToken: userToken, teamAdminInfo:data['body'], teamId: teamId}
+            console.log(data)
+            return {userToken: userToken, teamAdminInfo:data, teamId: teamId}
         }) 
         .catch(error => console.log(error(error)))
 } 

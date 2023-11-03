@@ -22,8 +22,8 @@ export async function loader(){
     })
         .then(resp => resp.json())
         .then(data => {
-            console.log(data['body'])
-            if(data['body']['team_member']){
+            console.log(data)
+            if(data['team_member']){
                 return redirect('/team')
             }
             return {userToken: userToken}
@@ -81,11 +81,19 @@ export default function AddTeam( ){
                     }
                 return(
                     fetch(url, postInfo)
+                    .then((response) => {
+                        if(response.status === 200){
+                            return response.json()
+                        } else {
+                            setShowError(true)
+                            throw new Error('non-200 response')
+                        }
+                    })
                     .then((response) => response.json())
                     .then((data)=> {
                         console.log(data)
                         if(data.status_code === 200){
-                            const userTeamId = data.body.team_id
+                            const userTeamId = data.team_id
                             sessionStorage.setItem('userTeamId',userTeamId)
                             navigate('/team')
                         }else if(data.status_code === 403){
@@ -110,13 +118,14 @@ export default function AddTeam( ){
                     .then((response) => response.json())
                     .then((data)=> {
                         console.log(data)
-                        if(data.status_code === 200){
-                            const userTeamId = data.body.team_id
+                        // same idea as: if(response.status_code === 200)
+                        if(data.error_message){
+                            setDisplayedError(data.error_message)
+                        } else {
+                            const userTeamId = data.team_id
                             console.log('userTeamId', userTeamId)
                             sessionStorage.setItem('userTeamId',userTeamId)
                             navigate('/team')
-                        }else if(data.status_code === 404){
-                            setDisplayedError(data.error_message)
                         }
                     })
                 )  

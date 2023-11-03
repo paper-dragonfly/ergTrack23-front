@@ -67,8 +67,8 @@ export default function Login() {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            const userToken = data['body']["user_token"]
-            const userTeamId = data['body']["team_id"] ? data['body']["team_id"] : JSON.stringify(null)
+            const userToken = data["user_token"]
+            const userTeamId = data["team_id"] ? data["team_id"] : JSON.stringify(null)
             sessionStorage.setItem('userToken', userToken)
             sessionStorage.setItem('userTeamId', userTeamId)
             return userToken
@@ -106,21 +106,11 @@ export default function Login() {
           })
         }
         fetch(url, postInfo)
-
-        // const url = API_URL + '/login/'
-        // fetch(
-        //   url,
-        //   {
-        //     headers: {
-        //       'Authorization': `Bearer ${idToken}`,
-        //       'Content-Type': 'application/json'
-        //     }
-        //   })
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            const userToken = data['body']["user_token"]
-            const userTeamId = data['body']["team_id"] ? data['body']["team_id"] : JSON.stringify(null)
+            const userToken = data["user_token"]
+            const userTeamId = data["team_id"] ? data["team_id"] : JSON.stringify(null)
             sessionStorage.setItem('userToken', userToken)
             sessionStorage.setItem('userTeamId', userTeamId)
             return userToken

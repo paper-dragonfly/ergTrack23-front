@@ -27,8 +27,8 @@ export async function loader(){
         .then(resp => resp.json())
         .then(data => {
             console.log(data)
-            console.log(data['body']['team_workouts'])
-            return data['body']['team_workouts']}) 
+            console.log(data['team_workouts'])
+            return data['team_workouts']}) 
         .catch(error => console.error(error(error)))
 }
 

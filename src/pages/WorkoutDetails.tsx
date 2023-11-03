@@ -127,7 +127,7 @@ export default function WorkoutDetails(){
             .then((response) => response.json())
             .then((data)=> {
                 console.log(data)
-                if(data.body.message === 'delete successful'){
+                if(data.message === 'delete successful'){
                     setDeleted(true)
                 }
             })

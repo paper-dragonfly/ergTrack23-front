@@ -120,6 +120,7 @@ export default function AddWorkout(){
         //if entryMethod === 'fmImg' & img selected -> create form, add image file, POST to API -> process resp 
         if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg.length > 0){
             console.log('running submit for fmImg')
+            setShowError(false) 
             const formData = new FormData()
             workoutInfo.ergImg.forEach((photo, index) => {
                 formData.append(`photo${index + 1}`, photo);
@@ -136,25 +137,28 @@ export default function AddWorkout(){
                 }
             return(
                 fetch(url, postInfo)
-                    .then((response) => response.json()) 
+                    .then((response) => {
+                        if(response.status === 200){
+                            return response.json()
+                        } else {
+                            setShowError(true)
+                            throw new Error('non-200 response')
+                        }
+                    })
                     .then((data) => {
                         console.log(data)
-                        if(data.status_code === 200){ 
-                            setPhotoHash(data.body.photo_hash)
-                            console.log(photoHash)
-                            setWorkoutMetrics({
-                                workoutName: data.body.workout_meta.wo_name,
-                                workoutDate: data.body.workout_meta.wo_date,
-                                time: data.body.workout_data.time,
-                                meter: data.body.workout_data.meter,
-                                split:  data.body.workout_data.split,
-                                sr: data.body.workout_data.sr,
-                                hr: data.body.workout_data.hr[0] ? data.body.workout_data.hr: []
-                            })
-                            setShowEditableResults(true)
-                        }else{
-                            setShowError(true) 
-                        }
+                        setPhotoHash(data.photo_hash)
+                        console.log(photoHash)
+                        setWorkoutMetrics({
+                            workoutName: data.workout_meta.wo_name,
+                            workoutDate: data.workout_meta.wo_date,
+                            time: data.workout_data.time,
+                            meter: data.workout_data.meter,
+                            split:  data.workout_data.split,
+                            sr: data.workout_data.sr,
+                            hr: data.workout_data.hr[0] ? data.workout_data.hr: []
+                        })
+                        setShowEditableResults(true)
                         console.log('before scoll')
                         scrollToTable() 
                         console.log('after scoll') 

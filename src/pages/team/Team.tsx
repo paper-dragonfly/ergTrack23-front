@@ -22,12 +22,12 @@ export function loader(){
     })
         .then(resp => resp.json())
         .then(data => {
-            console.log(data['body'])
+            console.log(data)
             //line below redundant 
-            if(!data['body']['team_member']){
+            if(!data['team_member']){
                 return redirect('/team/add')
             }
-            return {userToken: userToken, userTeamInfo:data['body']}
+            return {userToken: userToken, userTeamInfo:data}
         }) 
         .catch(error => console.log(error(error)))
 }
