@@ -53,13 +53,17 @@ export default function Team(){
           },
           body: JSON.stringify({ team: null, team_admin: false }), 
         })
-          .then(response => response.json())
+          .then(response => {
+            if(response.status === 200){
+              return response.json()
+            }else{
+              throw new Error('non-200 response')
+            }
+          })
           .then(data => {
             console.log(data)
-            if(data.status_code === 200){
-                sessionStorage.setItem('userTeamId', JSON.stringify(null))
-                navigate('/team/add')
-            }
+            sessionStorage.setItem('userTeamId', JSON.stringify(null))
+            navigate('/team/add')
           })
           .catch(error => {
             console.error('Error:', error);

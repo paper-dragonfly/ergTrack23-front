@@ -85,21 +85,16 @@ export default function AddTeam( ){
                         if(response.status === 200){
                             return response.json()
                         } else {
-                            setShowError(true)
+                            setDisplayedError('The team you are trying to create already exists')
                             throw new Error('non-200 response')
                         }
                     })
                     .then((response) => response.json())
                     .then((data)=> {
                         console.log(data)
-                        if(data.status_code === 200){
-                            const userTeamId = data.team_id
-                            sessionStorage.setItem('userTeamId',userTeamId)
-                            navigate('/team')
-                        }else if(data.status_code === 403){
-                            console.log(data.error_message)
-                            setDisplayedError('The team you are trying to create already exists') 
-                        }
+                        const userTeamId = data.team_id
+                        sessionStorage.setItem('userTeamId',userTeamId)
+                        navigate('/team')
                     })
                 )  
             }else{

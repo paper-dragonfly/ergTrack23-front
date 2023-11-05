@@ -79,12 +79,15 @@ export default function TeamAdmin(){
             //BREAK FOR ROWING: continue working on this function when i  get back. PATCHor PUT? need to write API endpoint for  this AND for loadeer. Also need to add this component to the React  Routere system with loader
             return(
                 fetch(url, postInfo)
-                .then((response) => response.json())
+                .then((response) => {
+                    if(response.status === 200){
+                        setEditTeamInfo(false)
+                    }
+                    return response.json()
+                })
                 .then((data)=> {
                     console.log(data)
-                    if(data.status_code === 200){
-                        setEditTeamInfo(false)
-                    }else{
+                    if(data.error_message){
                         console.log(data.error_message)
                         setDisplayedError(data.error_message) 
                     }
@@ -176,10 +179,8 @@ export default function TeamAdmin(){
             'Content-Type': 'application/json',
         }
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            if(data.status_code === 200){
+        .then((response) => {
+            if(response.status === 200){
                 navigate('/team')
             }
         })
