@@ -20,7 +20,16 @@ export async function loader(){
             'Content-Type': 'application/json'
         },
     })
-        .then(resp => resp.json())
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('error on: GET /team');
+                })
+          }})
         .then(data => {
             console.log(data)
             if(data['team_member']){
@@ -89,7 +98,6 @@ export default function AddTeam( ){
                             throw new Error('non-200 response')
                         }
                     })
-                    .then((response) => response.json())
                     .then((data)=> {
                         console.log(data)
                         const userTeamId = data.team_id

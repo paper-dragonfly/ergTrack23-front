@@ -25,12 +25,21 @@ export function loader(){
             'Content-Type': 'application/json'
         },
     })
-        .then(resp => resp.json())
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on: GET teamadmin');
+                })
+          }})
         .then(data => {
             console.log(data)
             return {userToken: userToken, teamAdminInfo:data, teamId: teamId}
         }) 
-        .catch(error => console.log(error(error)))
+        .catch(error => console.log(error.message))
 } 
 
 export default function TeamAdmin(){
@@ -151,18 +160,26 @@ export default function TeamAdmin(){
         },
         body: JSON.stringify({ team: null }), 
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('error on: PATCH user - remove athlete fm team');
+                })
+          }})
         .then(data => {
             console.log(data)
-            if(data.status_code === 200){
-                teamMembersTableData = teamMembersTableData.filter((member) => member.userId !== selectedRowId);
-                setRowData(teamMembersTableData)
-                setDisplayedError('Athlete removed from team')
-            }
+            // create a dataset of all team members except the deleted member
+            return teamMembersTableData.filter((member) => member.userId !== selectedRowId);
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        .then(newTeamData => {
+            setRowData(newTeamData)
+            setDisplayedError('Athlete removed from team')
+        })
+        .catch(error => console.error(error.message));
     }
 
     const transferAdmin = () => {
@@ -179,14 +196,17 @@ export default function TeamAdmin(){
             'Content-Type': 'application/json',
         }
         })
-        .then((response) => {
-            if(response.status === 200){
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
                 navigate('/team')
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on: PATCH transferadmin');
+                })
+          }})
+        .catch(error => console.error('Error:', error));
     }
 
     const clearRowSelection = () => {

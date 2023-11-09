@@ -9,6 +9,7 @@ export default function UploadAndDisplayImage(props: UADIProps){
 
     const handlePhotoSelection = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const files = e.target.files;
+        props.setShowError(false)
         if (files && files.length > 0) {
             const selected = Array.from(files);
             props.setWorkoutInfo((oldWorkoutInfo: TypesWorkoutInfo) => {

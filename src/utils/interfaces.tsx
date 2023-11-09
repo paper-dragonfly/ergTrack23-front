@@ -43,6 +43,7 @@ export interface UADIProps {
     setWorkoutInfo: React.Dispatch<React.SetStateAction<any>>;
     numSubs: number;
     setNumSubs: React.Dispatch<React.SetStateAction<any>>;
+    setShowError: React.Dispatch<React.SetStateAction<any>>;
 }
 
 // WorkoutTable

@@ -20,7 +20,16 @@ export function loader(){
             'Content-Type': 'application/json'
         },
     })
-        .then(resp => resp.json())
+        .then(response => {
+          if (response.status >= 200 && response.status < 300) {
+              return response.json()
+          }else{
+              console.error('Error code:', response.status)
+              return response.json().then((errorData) => {
+                  console.error('Error details:', errorData);
+                  throw new Error('Error on: GET /team');
+              })
+        }})
         .then(data => {
             console.log(data)
             //line below redundant 
@@ -29,7 +38,7 @@ export function loader(){
             }
             return {userToken: userToken, userTeamInfo:data}
         }) 
-        .catch(error => console.log(error(error)))
+        .catch(error => console.log(error.message))
 }
 
 export default function Team(){
@@ -54,20 +63,21 @@ export default function Team(){
           body: JSON.stringify({ team: null, team_admin: false }), 
         })
           .then(response => {
-            if(response.status === 200){
-              return response.json()
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
             }else{
-              throw new Error('non-200 response')
-            }
-          })
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on: PATCH user');
+                })
+          }})
           .then(data => {
             console.log(data)
             sessionStorage.setItem('userTeamId', JSON.stringify(null))
             navigate('/team/add')
           })
-          .catch(error => {
-            console.error('Error:', error);
-          });
+          .catch(error => console.error(error.message));
       };
 
 

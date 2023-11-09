@@ -64,7 +64,16 @@ export default function Login() {
           })
         }
         fetch(url, postInfo)
-          .then(response => response.json())
+          .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on func: emailPasswordSignIn');
+                })
+          }})
           .then(data => {
             console.log(data)
             const userToken = data["user_token"]
@@ -74,8 +83,7 @@ export default function Login() {
             return userToken
           })
           .then(userToken => setUserToken(userToken))
-          .catch(error => console.error(error))
-
+          .catch(error => console.error(error.message))
       })
   }
 
@@ -106,7 +114,16 @@ export default function Login() {
           })
         }
         fetch(url, postInfo)
-          .then(response => response.json())
+          .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on func: signInWithGoogle');
+                })
+          }})
           .then(data => {
             console.log(data)
             const userToken = data["user_token"]
@@ -116,7 +133,7 @@ export default function Login() {
             return userToken
           })
           .then(userToken => setUserToken(userToken))
-          .catch(error => console.error(error))
+          .catch(error => console.error(error.message))
 
       })
   }

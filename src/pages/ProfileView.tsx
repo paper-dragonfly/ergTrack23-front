@@ -15,12 +15,21 @@ export function loader(){
             'Content-Type': 'application/json'
         },
     })
-        .then(resp => resp.json())
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on: GET /user');
+                })
+          }})
         .then(data => {
             console.log(data)
             return {userToken: userToken, userInfo:data}
         }) 
-        .catch(error => console.log(error(error)))
+        .catch(error => console.log(error.message))
 }
 
 export default function ProfileView(){

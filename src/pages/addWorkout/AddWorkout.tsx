@@ -121,12 +121,13 @@ export default function AddWorkout(){
         if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg.length > 0){
             console.log('running submit for fmImg')
             setShowError(false) 
+            setShowEditableResults(false) 
             const formData = new FormData()
             workoutInfo.ergImg.forEach((photo, index) => {
                 formData.append(`photo${index + 1}`, photo);
             });
             console.log(workoutInfo.ergImg)
-        
+            
             // post data to API
             const endpoint = numSubs === 0 ? '/ergImage' : `/ergImage?numSubs=${numSubs}`
             const url = API_URL+endpoint
@@ -137,14 +138,16 @@ export default function AddWorkout(){
                 }
             return(
                 fetch(url, postInfo)
-                    .then((response) => {
-                        if(response.status === 200){
+                    .then(response => {
+                        if (response.status >= 200 && response.status < 300) {
                             return response.json()
-                        } else {
-                            setShowError(true)
-                            throw new Error('non-200 response')
-                        }
-                    })
+                        }else{
+                            console.error('Error code:', response.status)
+                            return response.json().then((errorData) => {
+                                console.error('Error details:', errorData);
+                                throw new Error('Error on: POST ergImage');
+                            })
+                    }})
                     .then((data) => {
                         console.log(data)
                         setPhotoHash(data.photo_hash)
@@ -162,7 +165,11 @@ export default function AddWorkout(){
                         console.log('before scoll')
                         scrollToTable() 
                         console.log('after scoll') 
-                })
+                    })
+                    .catch((error) => {
+                        setShowError(true)
+                        console.log(error.message)
+                    })
             )
         // if entryMethod = 'manual'
         }else if(workoutInfo.entryMethod === 'manual'){
@@ -230,6 +237,7 @@ export default function AddWorkout(){
                         Manual
                     </label>
                 </fieldset>
+                {/* MANUAL */}
                 {
                     workoutInfo.entryMethod === "manual"?
                     <div className='visible-on-manual text-lg md:flex md:flex-col'>
@@ -333,8 +341,8 @@ export default function AddWorkout(){
                         }
                         <br /> 
                     </div>
-                    : // From Image
-                    <UploadAndDisplayImage workoutInfo={workoutInfo} setWorkoutInfo={setWorkoutInfo} numSubs={numSubs} setNumSubs={setNumSubs}/>
+                    : // IMAGE
+                    <UploadAndDisplayImage workoutInfo={workoutInfo} setWorkoutInfo={setWorkoutInfo} numSubs={numSubs} setNumSubs={setNumSubs} setShowError={setShowError}/>
             }
             {showError && 
             <div> 
