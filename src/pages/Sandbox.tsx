@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import NavHeader from '../components/NavHeader'
 import { API_URL } from '../config';   
-import Loading from '../components/Loading';
+import ExtractingPhotoData from '../components/ExtractingPhotoData';
 
 export default function Sandbox() {
 //   const [formData, setFormData] = useState(new FormData());

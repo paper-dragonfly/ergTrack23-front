@@ -16,7 +16,7 @@ import EditableResults from './EditableResults'
 
 import { BsImage } from "react-icons/bs"
 import { SlNote } from "react-icons/sl"
-import Loading from '../../components/Loading'
+import ExtractingPhotoData from '../../components/ExtractingPhotoData'
 
 export function loader(){
     const userToken = sessionStorage.getItem('userToken')
@@ -351,7 +351,7 @@ export default function AddWorkout(){
                 </div>
                 }
             <br />
-            {isSubmitting? <Loading />: null}
+            {isSubmitting? <ExtractingPhotoData />: null}
             <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
             style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>

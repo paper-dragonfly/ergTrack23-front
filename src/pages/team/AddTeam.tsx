@@ -90,20 +90,26 @@ export default function AddTeam( ){
                     }
                 return(
                     fetch(url, postInfo)
-                    .then((response) => {
-                        if(response.status === 200){
+                    .then(response => {
+                        if (response.status >= 200 && response.status < 300) {
                             return response.json()
-                        } else {
+                        }else if(response.status >=400 && response.status <500) {
                             setDisplayedError('The team you are trying to create already exists')
-                            throw new Error('non-200 response')
-                        }
-                    })
+                            throw new Error('Error on POST /team')
+                        }else{
+                            console.error('Error code:', response.status)
+                            return response.json().then((errorData) => {
+                                console.error('Error details:', errorData);
+                                throw new Error('Error on: POST /team');
+                            })
+                      }})
                     .then((data)=> {
                         console.log(data)
                         const userTeamId = data.team_id
                         sessionStorage.setItem('userTeamId',userTeamId)
                         navigate('/team')
                     })
+                    .catch(error => console.log(error.message))
                 )  
             }else{
                 console.log('tried to join')
@@ -118,19 +124,28 @@ export default function AddTeam( ){
                     }
                 return(
                     fetch(url, postInfo)
-                    .then((response) => response.json())
+                    .then(response => {
+                        if (response.status >= 200 && response.status < 300) {
+                            return response.json()
+                        }else if(response.status >=400 && response.status <500) {
+                            console.log('Error code:', response.status)
+                            setDisplayedError('Invalid Credentials')
+                            throw new Error('Error on PATCH /jointeam')
+                        }else{
+                            console.error('Error code:', response.status)
+                            return response.json().then((errorData) => {
+                                console.error('Error details:', errorData);
+                                throw new Error('Error on: PATCH /jointeam');
+                            })
+                      }})                    
                     .then((data)=> {
                         console.log(data)
-                        // same idea as: if(response.status_code === 200)
-                        if(data.error_message){
-                            setDisplayedError(data.error_message)
-                        } else {
-                            const userTeamId = data.team_id
-                            console.log('userTeamId', userTeamId)
-                            sessionStorage.setItem('userTeamId',userTeamId)
-                            navigate('/team')
+                        const userTeamId = data.team_id
+                        console.log('userTeamId', userTeamId)
+                        sessionStorage.setItem('userTeamId',userTeamId)
+                        navigate('/team')
                         }
-                    })
+                    )
                 )  
             }
         }catch (error){

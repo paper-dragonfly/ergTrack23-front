@@ -88,19 +88,19 @@ export default function TeamAdmin(){
             //BREAK FOR ROWING: continue working on this function when i  get back. PATCHor PUT? need to write API endpoint for  this AND for loadeer. Also need to add this component to the React  Routere system with loader
             return(
                 fetch(url, postInfo)
-                .then((response) => {
-                    if(response.status === 200){
+                .then(response => {
+                    if (response.status >= 200 && response.status < 300) {
                         setEditTeamInfo(false)
-                    }
-                    return response.json()
-                })
-                .then((data)=> {
-                    console.log(data)
-                    if(data.error_message){
-                        console.log(data.error_message)
-                        setDisplayedError(data.error_message) 
-                    }
-                })
+                        return response.json()
+                    }else{
+                        console.error('Error code:', response.status)
+                        setDisplayedError('Sorry there was an error')
+                        return response.json().then((errorData) => {
+                            console.error('Error details:', errorData);
+                            throw new Error('Error on: PUT /team');
+                        })
+                  }})
+                .catch(error => console.log(error.message))
             )
     }
 

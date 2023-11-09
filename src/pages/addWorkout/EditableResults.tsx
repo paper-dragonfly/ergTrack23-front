@@ -98,42 +98,45 @@ export default function EditableResults(props: ERProps) {
 
   const submitForm = () => {
     setViewSaveError(false)
-    try{
-      console.log('RUNNING SUBMIT')
-      console.log('Workout Table Metrics Data:', workoutTableMetrics);
-      console.log('MetaData', woMetaData)
-      
-      const dateFormatted = reformat_date(woMetaData.workoutDate)
 
-      //post data to API
-      const url =  API_URL+'/workout'
-      const postInfo = {
-        method: "POST",
-        headers: {
-          'Authorization': `Bearer ${userToken}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment, postToTeam: woMetaData.postToTeam}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
-        }
-      return(
-        fetch(url, postInfo)
-          .then((response) => {
-            if(response.status === 200){
-                return response.json()
-            } else {
-                setViewSaveError(true)
-                throw new Error('non-200 response')
-            }
-          })
-          .then((data)=> {
-            console.log(data)
-            setSubmitSuccessful(true)
-          })
-      )
-    } catch (error){
-      console.log(error)
-      setViewSaveError(true)
-    }
+    console.log('RUNNING SUBMIT')
+    console.log('Workout Table Metrics Data:', workoutTableMetrics);
+    console.log('MetaData', woMetaData)
+    
+    const dateFormatted = reformat_date(woMetaData.workoutDate)
+
+    //post data to API
+    const url =  API_URL+'/workout'
+    const postInfo = {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment, postToTeam: woMetaData.postToTeam}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
+      }
+    return(
+      fetch(url, postInfo)
+        .then(response => {
+          if (response.status >= 200 && response.status < 300) {
+              return response.json()
+          }else{
+              console.error('Error code:', response.status)
+              setViewSaveError(true)
+              return response.json().then((errorData) => {
+                  console.error('Error details:', errorData);
+                  throw new Error('Error on: POST /workout');
+              })
+        }})
+        .then((data)=> {
+          console.log(data)
+          setSubmitSuccessful(true)
+        })
+        .catch((error) => {
+          console.log(error.message)
+          return null  
+        })
+    )
     };
 
   return (
