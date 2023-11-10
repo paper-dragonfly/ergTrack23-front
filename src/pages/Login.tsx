@@ -46,9 +46,7 @@ export default function Login() {
       .then((userCredential) => {
         // Signed in 
         console.log('userCred', userCredential);
-        const idToken = userCredential.user.getIdToken()
-        console.log('idToken', idToken)
-        return idToken
+        return userCredential.user.getIdToken()
       })
       // authenticate user with ergTrack server, get user_token 
       .then((idToken) => {
@@ -95,10 +93,9 @@ export default function Login() {
       .then((result) => {
         setLoading(true)
         console.log(result)
-        const idToken = result.user.getIdToken()
-        console.log('idToken', idToken)
-        const userEmail = result.user.email 
-        return {idToken, userEmail}
+        return result.user.getIdToken().then((idToken) => {
+          return { idToken, userEmail: result.user.email };
+        });
       })
       // authenticate user with ergTrack server, get user_token 
       .then(({idToken, userEmail}) => {
