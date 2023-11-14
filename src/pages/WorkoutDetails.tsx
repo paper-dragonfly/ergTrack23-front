@@ -25,6 +25,7 @@ export default function WorkoutDetails(){
 
     const [editing, setEditing] = useState(false)
     const [deleted, setDeleted] = useState<boolean>(false)
+    const [showWarning, setShowWarning] = useState<boolean>(false) 
     
     const summaryRow: TypeDetailsCols = {
         time: workoutDetails.time,
@@ -124,10 +125,21 @@ export default function WorkoutDetails(){
         }
         return(
             fetch(url, delInfo)
-            .then((response) => response.json())
+            .then(response => {
+                if (response.status >= 200 && response.status < 300) {
+                    return response.json()
+                }else if(response.status >=400 && response.status <500) {
+                    setShowWarning(true)
+                }else{
+                    console.error('Error code:', response.status)
+                    return response.json().then((errorData) => {
+                        console.error('Error details:', errorData);
+                        throw new Error('Error on: POST ergImage');
+                    })
+            }})
             .then((data)=> {
                 console.log(data)
-                if(data.body.message === 'delete successful'){
+                if(data.message === 'delete successful'){
                     setDeleted(true)
                 }
             })
@@ -160,7 +172,8 @@ export default function WorkoutDetails(){
             <p className='text-lg py-4'>Comment: {workoutDetails.comment}</p>
             <div className='space-x-4'>
                 {/* <button onClick={onEditSaveClick} className='btn small'>  {editing ? 'Save': 'Edit'}</button> */}
-                <button onClick={onDeleteClick} className='btn small coral'>Delete  Workout</button>
+                {showWarning ? <p>Unauthorized action: this is not your workout, you cannot delete other athletes workouts</p>: 
+                <button onClick={onDeleteClick} className='btn small coral'>Delete  Workout</button>}
                 {deleted ? <Navigate to='/log/deleted' /> : null }
             </div>
         </div>

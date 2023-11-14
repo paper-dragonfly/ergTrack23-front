@@ -16,7 +16,7 @@ import EditableResults from './EditableResults'
 
 import { BsImage } from "react-icons/bs"
 import { SlNote } from "react-icons/sl"
-import Loading from '../../components/Loading'
+import ExtractingPhotoData from '../../components/ExtractingPhotoData'
 
 export function loader(){
     const userToken = sessionStorage.getItem('userToken')
@@ -120,12 +120,14 @@ export default function AddWorkout(){
         //if entryMethod === 'fmImg' & img selected -> create form, add image file, POST to API -> process resp 
         if(workoutInfo.entryMethod === 'fmImg' && workoutInfo.ergImg.length > 0){
             console.log('running submit for fmImg')
+            setShowError(false) 
+            setShowEditableResults(false) 
             const formData = new FormData()
             workoutInfo.ergImg.forEach((photo, index) => {
                 formData.append(`photo${index + 1}`, photo);
             });
             console.log(workoutInfo.ergImg)
-        
+            
             // post data to API
             const endpoint = numSubs === 0 ? '/ergImage' : `/ergImage?numSubs=${numSubs}`
             const url = API_URL+endpoint
@@ -136,29 +138,38 @@ export default function AddWorkout(){
                 }
             return(
                 fetch(url, postInfo)
-                    .then((response) => response.json()) 
+                    .then(response => {
+                        if (response.status >= 200 && response.status < 300) {
+                            return response.json()
+                        }else{
+                            console.error('Error code:', response.status)
+                            return response.json().then((errorData) => {
+                                console.error('Error details:', errorData);
+                                throw new Error('Error on: POST ergImage');
+                            })
+                    }})
                     .then((data) => {
                         console.log(data)
-                        if(data.status_code === 200){ 
-                            setPhotoHash(data.body.photo_hash)
-                            console.log(photoHash)
-                            setWorkoutMetrics({
-                                workoutName: data.body.workout_meta.wo_name,
-                                workoutDate: data.body.workout_meta.wo_date,
-                                time: data.body.workout_data.time,
-                                meter: data.body.workout_data.meter,
-                                split:  data.body.workout_data.split,
-                                sr: data.body.workout_data.sr,
-                                hr: data.body.workout_data.hr[0] ? data.body.workout_data.hr: []
-                            })
-                            setShowEditableResults(true)
-                        }else{
-                            setShowError(true) 
-                        }
+                        setPhotoHash(data.photo_hash)
+                        console.log(photoHash)
+                        setWorkoutMetrics({
+                            workoutName: data.workout_meta.wo_name,
+                            workoutDate: data.workout_meta.wo_date,
+                            time: data.workout_data.time,
+                            meter: data.workout_data.meter,
+                            split:  data.workout_data.split,
+                            sr: data.workout_data.sr,
+                            hr: data.workout_data.hr[0] ? data.workout_data.hr: []
+                        })
+                        setShowEditableResults(true)
                         console.log('before scoll')
                         scrollToTable() 
                         console.log('after scoll') 
-                })
+                    })
+                    .catch((error) => {
+                        setShowError(true)
+                        console.log(error.message)
+                    })
             )
         // if entryMethod = 'manual'
         }else if(workoutInfo.entryMethod === 'manual'){
@@ -226,6 +237,7 @@ export default function AddWorkout(){
                         Manual
                     </label>
                 </fieldset>
+                {/* MANUAL */}
                 {
                     workoutInfo.entryMethod === "manual"?
                     <div className='visible-on-manual text-lg md:flex md:flex-col'>
@@ -329,8 +341,8 @@ export default function AddWorkout(){
                         }
                         <br /> 
                     </div>
-                    : // From Image
-                    <UploadAndDisplayImage workoutInfo={workoutInfo} setWorkoutInfo={setWorkoutInfo} numSubs={numSubs} setNumSubs={setNumSubs}/>
+                    : // IMAGE
+                    <UploadAndDisplayImage workoutInfo={workoutInfo} setWorkoutInfo={setWorkoutInfo} numSubs={numSubs} setNumSubs={setNumSubs} setShowError={setShowError}/>
             }
             {showError && 
             <div> 
@@ -339,7 +351,7 @@ export default function AddWorkout(){
                 </div>
                 }
             <br />
-            {isSubmitting? <Loading />: null}
+            {isSubmitting? <ExtractingPhotoData />: null}
             <button disabled={isSubmitting}  className='addwo-form-submit-bt mb-6 text-xl' type="submit"
             style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>

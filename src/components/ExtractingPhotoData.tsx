@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Space, Spin } from 'antd';
 
-export default function Loading () {
+export default function ExtractingPhotoData () {
   return(
     <div className='flex flex-col items-center'>
   <Space direction="vertical" className='flex flex-col items-center'>
@@ -11,7 +11,7 @@ export default function Loading () {
       </Spin>
     </Space>
 
-    {/* <Spin tip="Loading..."> */}
+    {/* <Spin tip="ExtractingPhotoData..."> */}
       <Alert
         message="Extracting your data"
         description="This can take a minute"

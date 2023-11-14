@@ -46,9 +46,7 @@ export default function Login() {
       .then((userCredential) => {
         // Signed in 
         console.log('userCred', userCredential);
-        const idToken = userCredential.user.getIdToken()
-        console.log('idToken', idToken)
-        return idToken
+        return userCredential.user.getIdToken()
       })
       // authenticate user with ergTrack server, get user_token 
       .then((idToken) => {
@@ -64,18 +62,26 @@ export default function Login() {
           })
         }
         fetch(url, postInfo)
-          .then(response => response.json())
+          .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on func: emailPasswordSignIn');
+                })
+          }})
           .then(data => {
             console.log(data)
-            const userToken = data['body']["user_token"]
-            const userTeamId = data['body']["team_id"] ? data['body']["team_id"] : JSON.stringify(null)
+            const userToken = data["user_token"]
+            const userTeamId = data["team_id"] ? data["team_id"] : JSON.stringify(null)
             sessionStorage.setItem('userToken', userToken)
             sessionStorage.setItem('userTeamId', userTeamId)
             return userToken
           })
           .then(userToken => setUserToken(userToken))
-          .catch(error => console.error(error))
-
+          .catch(error => console.error(error.message))
       })
   }
 
@@ -87,32 +93,44 @@ export default function Login() {
       .then((result) => {
         setLoading(true)
         console.log(result)
-        const idToken = result.user.getIdToken()
-        console.log('idToken', idToken)
-        return idToken
+        return result.user.getIdToken().then((idToken) => {
+          return { idToken, userEmail: result.user.email };
+        });
       })
       // authenticate user with ergTrack server, get user_token 
-      .then((idToken) => {
+      .then(({idToken, userEmail}) => {
         const url = API_URL + '/login/'
-        fetch(
-          url,
-          {
-            headers: {
-              'Authorization': `Bearer ${idToken}`,
-              'Content-Type': 'application/json'
-            }
+        const postInfo = {
+          method: "POST",
+          headers: {
+            'Authorization': `Bearer ${idToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: userEmail,
           })
-          .then(response => response.json())
+        }
+        fetch(url, postInfo)
+          .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on func: signInWithGoogle');
+                })
+          }})
           .then(data => {
             console.log(data)
-            const userToken = data['body']["user_token"]
-            const userTeamId = data['body']["team_id"] ? data['body']["team_id"] : JSON.stringify(null)
+            const userToken = data["user_token"]
+            const userTeamId = data["team_id"] ? data["team_id"] : JSON.stringify(null)
             sessionStorage.setItem('userToken', userToken)
             sessionStorage.setItem('userTeamId', userTeamId)
             return userToken
           })
           .then(userToken => setUserToken(userToken))
-          .catch(error => console.error(error))
+          .catch(error => console.error(error.message))
 
       })
   }

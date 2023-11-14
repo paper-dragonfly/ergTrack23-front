@@ -97,8 +97,9 @@ export default function EditableResults(props: ERProps) {
   };
 
   const submitForm = () => {
-    setViewSaveError(false)
     try{
+      setViewSaveError(false)
+
       console.log('RUNNING SUBMIT')
       console.log('Workout Table Metrics Data:', workoutTableMetrics);
       console.log('MetaData', woMetaData)
@@ -117,21 +118,31 @@ export default function EditableResults(props: ERProps) {
         }
       return(
         fetch(url, postInfo)
-          .then((response) => response.json())
-          .then((data)=> {
-            if(data.status_code === 200){
-              console.log(data)
-              setSubmitSuccessful(true)
+          .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
             }else{
-              setViewSaveError(true)
-            }
+                console.error('Error code:', response.status)
+                setViewSaveError(true)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on: POST /workout');
+                })
+          }})
+          .then((data)=> {
+            console.log(data)
+            setSubmitSuccessful(true)
+          })
+          .catch((error) => {
+            console.log(error.message)
+            return null  
           })
       )
-    } catch (error){
-      console.log(error)
-      setViewSaveError(true)
-    }
-    };
+      }catch(error) {
+        setViewSaveError(true)
+        console.error(error)
+      }
+  }
 
   return (
     <div className='editable-table text-xl max-w-lg'> 
@@ -242,7 +253,7 @@ export default function EditableResults(props: ERProps) {
                 />
               </label> : null}
           </fieldset>
-          {viewSaveError? <><h4 className='font-bold text-xl'>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all fields and try again</p></>: null}
+          {viewSaveError? <><br /> <h4 className='font-bold text-xl'>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all fields and try again</p></>: null}
           {/* Use top button in prod 8/}
           {/* <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button> */}
           <button className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>

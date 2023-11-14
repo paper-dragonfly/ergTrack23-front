@@ -20,12 +20,21 @@ export async function loader(){
             'Content-Type': 'application/json'
         },
     })
-        .then(resp => resp.json())
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on: GET /workout');
+                })
+          }})
         .then(data => {
             console.log(data)
-            console.log(data['body']['workouts'])
-            return data['body']['workouts']}) 
-        .catch(error => console.error(error))
+            console.log(data['workouts'])
+            return data['workouts']}) 
+        .catch(error => console.error(error.message))
 }
 
 

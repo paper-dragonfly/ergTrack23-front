@@ -20,10 +20,19 @@ export async function loader(){
             'Content-Type': 'application/json'
         },
     })
-        .then(resp => resp.json())
+        .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('error on: GET /team');
+                })
+          }})
         .then(data => {
-            console.log(data['body'])
-            if(data['body']['team_member']){
+            console.log(data)
+            if(data['team_member']){
                 return redirect('/team')
             }
             return {userToken: userToken}
@@ -81,18 +90,26 @@ export default function AddTeam( ){
                     }
                 return(
                     fetch(url, postInfo)
-                    .then((response) => response.json())
+                    .then(response => {
+                        if (response.status >= 200 && response.status < 300) {
+                            return response.json()
+                        }else if(response.status >=400 && response.status <500) {
+                            setDisplayedError('The team you are trying to create already exists')
+                            throw new Error('Error on POST /team')
+                        }else{
+                            console.error('Error code:', response.status)
+                            return response.json().then((errorData) => {
+                                console.error('Error details:', errorData);
+                                throw new Error('Error on: POST /team');
+                            })
+                      }})
                     .then((data)=> {
                         console.log(data)
-                        if(data.status_code === 200){
-                            const userTeamId = data.body.team_id
-                            sessionStorage.setItem('userTeamId',userTeamId)
-                            navigate('/team')
-                        }else if(data.status_code === 403){
-                            console.log(data.error_message)
-                            setDisplayedError('The team you are trying to create already exists') 
-                        }
+                        const userTeamId = data.team_id
+                        sessionStorage.setItem('userTeamId',userTeamId)
+                        navigate('/team')
                     })
+                    .catch(error => console.log(error.message))
                 )  
             }else{
                 console.log('tried to join')
@@ -107,18 +124,28 @@ export default function AddTeam( ){
                     }
                 return(
                     fetch(url, postInfo)
-                    .then((response) => response.json())
+                    .then(response => {
+                        if (response.status >= 200 && response.status < 300) {
+                            return response.json()
+                        }else if(response.status >=400 && response.status <500) {
+                            console.log('Error code:', response.status)
+                            setDisplayedError('Invalid Credentials')
+                            throw new Error('Error on PATCH /jointeam')
+                        }else{
+                            console.error('Error code:', response.status)
+                            return response.json().then((errorData) => {
+                                console.error('Error details:', errorData);
+                                throw new Error('Error on: PATCH /jointeam');
+                            })
+                      }})                    
                     .then((data)=> {
                         console.log(data)
-                        if(data.status_code === 200){
-                            const userTeamId = data.body.team_id
-                            console.log('userTeamId', userTeamId)
-                            sessionStorage.setItem('userTeamId',userTeamId)
-                            navigate('/team')
-                        }else if(data.status_code === 404){
-                            setDisplayedError(data.error_message)
+                        const userTeamId = data.team_id
+                        console.log('userTeamId', userTeamId)
+                        sessionStorage.setItem('userTeamId',userTeamId)
+                        navigate('/team')
                         }
-                    })
+                    )
                 )  
             }
         }catch (error){
