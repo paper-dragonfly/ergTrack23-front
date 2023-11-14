@@ -97,47 +97,52 @@ export default function EditableResults(props: ERProps) {
   };
 
   const submitForm = () => {
-    setViewSaveError(false)
+    try{
+      setViewSaveError(false)
 
-    console.log('RUNNING SUBMIT')
-    console.log('Workout Table Metrics Data:', workoutTableMetrics);
-    console.log('MetaData', woMetaData)
-    
-    const dateFormatted = reformat_date(woMetaData.workoutDate)
+      console.log('RUNNING SUBMIT')
+      console.log('Workout Table Metrics Data:', workoutTableMetrics);
+      console.log('MetaData', woMetaData)
+      
+      const dateFormatted = reformat_date(woMetaData.workoutDate)
 
-    //post data to API
-    const url =  API_URL+'/workout'
-    const postInfo = {
-      method: "POST",
-      headers: {
-        'Authorization': `Bearer ${userToken}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment, postToTeam: woMetaData.postToTeam}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
+      //post data to API
+      const url =  API_URL+'/workout'
+      const postInfo = {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({woMetaData: {workoutName: woMetaData.workoutName, workoutDate:dateFormatted, comment: woMetaData.comment, postToTeam: woMetaData.postToTeam}, tableMetrics: workoutTableMetrics, photoHash:photoHash})
+        }
+      return(
+        fetch(url, postInfo)
+          .then(response => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json()
+            }else{
+                console.error('Error code:', response.status)
+                setViewSaveError(true)
+                return response.json().then((errorData) => {
+                    console.error('Error details:', errorData);
+                    throw new Error('Error on: POST /workout');
+                })
+          }})
+          .then((data)=> {
+            console.log(data)
+            setSubmitSuccessful(true)
+          })
+          .catch((error) => {
+            console.log(error.message)
+            return null  
+          })
+      )
+      }catch(error) {
+        setViewSaveError(true)
+        console.error(error)
       }
-    return(
-      fetch(url, postInfo)
-        .then(response => {
-          if (response.status >= 200 && response.status < 300) {
-              return response.json()
-          }else{
-              console.error('Error code:', response.status)
-              setViewSaveError(true)
-              return response.json().then((errorData) => {
-                  console.error('Error details:', errorData);
-                  throw new Error('Error on: POST /workout');
-              })
-        }})
-        .then((data)=> {
-          console.log(data)
-          setSubmitSuccessful(true)
-        })
-        .catch((error) => {
-          console.log(error.message)
-          return null  
-        })
-    )
-    };
+  }
 
   return (
     <div className='editable-table text-xl max-w-lg'> 
@@ -248,7 +253,7 @@ export default function EditableResults(props: ERProps) {
                 />
               </label> : null}
           </fieldset>
-          {viewSaveError? <><h4 className='font-bold text-xl'>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all fields and try again</p></>: null}
+          {viewSaveError? <><br /> <h4 className='font-bold text-xl'>Submission Failed</h4><p>Something went wrong, check the formatting is correct for all fields and try again</p></>: null}
           {/* Use top button in prod 8/}
           {/* <button disabled={isSubmitting} className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button> */}
           <button className='editableTable-form-submit-btn my-6' type="submit">{isSubmitting? "Saving..." :"Save Workout"}</button>

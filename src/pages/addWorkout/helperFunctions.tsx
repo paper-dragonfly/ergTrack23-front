@@ -26,8 +26,15 @@ export function reformat_date(date:string) : string{
     // convert date from MMM DD YYYY format (jan 03 2022)-> YYYY-MM-DD
     const dateTrimmed = new Date(date.trim())
     const dateFormatted = dateTrimmed.toISOString().substring(0,10)
-    return dateFormatted 
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
+    const isValidDate = dateRegex.test(dateFormatted);
+    
+    if(!isValidDate){
+        console.log('INVALID DATE')
+        throw new Error(`Invalid date: ${dateFormatted}`)
+    }
+    return dateFormatted 
 }
 
 export function getTodaysDate() {
