@@ -24,6 +24,10 @@ export default function UploadAndDisplayImage(props: UADIProps){
       };
 
     
+    function handleVarIntChange(){
+        props.setVarInts(!props.varInts)
+    }
+    
     function handleMultiChange(){
         if(multiPhoto){
             setNumPhotos(1)
@@ -53,6 +57,16 @@ export default function UploadAndDisplayImage(props: UADIProps){
 
     return(
         <div className= 'visible-on-from-img'>
+            <label>
+                Variable Intervals {'\u00A0'}
+                <input
+                  type='checkbox'
+                  name ='multi-photo'
+                  checked = {props.varInts}
+                  onChange = {handleVarIntChange}
+                />
+            </label>
+            <br /> 
             <label>
                 Multi photo workout {'\u00A0'}
                 <input

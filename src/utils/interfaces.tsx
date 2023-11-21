@@ -44,9 +44,11 @@ export interface UADIProps {
     numSubs: number;
     setNumSubs: React.Dispatch<React.SetStateAction<any>>;
     setShowError: React.Dispatch<React.SetStateAction<any>>;
+    varInts: boolean
+    setVarInts: React.Dispatch<React.SetStateAction<any>>
 }
 
-// WorkoutTable
+// EditableResults WorkoutTable
 export interface TypesWoMetaData{
     workoutName: string;
     workoutDate: string;
@@ -63,10 +65,23 @@ export interface TypesWorkoutTableMetrics{
     heartRate: number |  null;
 }
 
+export interface TypesRestInfoTable{
+    id: string;
+    intervalCount: number;
+    time: string;
+    meter: number
+}
+
+export interface TypeRestInfo{
+    restTime: string[];
+    restDist: number[] ;
+}
 export interface ERProps {
     workoutMetrics: TypesWorkoutMetrics;
     userToken: unknown;
     photoHash: string[];
+    restInfo: TypeRestInfo;
+    varInts: boolean;
 }
 
 // Workout Log
