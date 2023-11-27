@@ -38,7 +38,7 @@ export async function loader(){
 }
 
 
-export default function TableSandbox() {
+export default function WorkoutLog() {
     const allWorkouts = useLoaderData() as TypeFetchedWorkouts[]
     const navigate = useNavigate()
     const summaryData = []
