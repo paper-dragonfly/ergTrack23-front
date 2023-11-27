@@ -4,6 +4,8 @@ import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef} from 'ag-grid-community'
+import { BiCloudDownload } from 'react-icons/bi'
+
 
 import { API_URL } from '../config' 
 import { TypeFetchedWorkouts, TypeLogCols } from '../utils/interfaces'
@@ -46,6 +48,55 @@ export default function WorkoutLog() {
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
 
     console.log('allworkouts', allWorkouts)
+
+    //DOWNLOAD CSV 
+
+    //get todays date
+    const getTodaysDate = () => {
+        const date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let currentDate = `${day}_${month}_${year}`
+        return currentDate
+    }
+
+    //download csv
+    const handleDownloadCSV = () => { 
+        const csvString = convertToCSV(allWorkouts)
+        const todaysDate = getTodaysDate()
+        triggerDownload(csvString, `workoutlog_${todaysDate}.csv`)
+    }
+
+    // convert log data to csv format
+    const convertToCSV = (data: any[]): string => {
+        if (data.length === 0) return '';
+        const keysToExclude = ['subworkouts', 'var_ints_rest', 'image_hash']
+        const headers = Object.keys(data[0]).filter(key => !keysToExclude.includes(key)).join(',')
+        const rows = data.map(obj => {
+            return Object.entries(obj)
+                         .filter(([key, _]) => !keysToExclude.includes(key))
+                         .map(([_, value]) => value)
+                         .join(',');
+        }).join('\n');
+
+        return headers + '\n' + rows;
+    };
+
+    // download file
+    const triggerDownload = (csvString: string, filename: string) => {
+        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    //CREATE WORKOUT LOG TABLE + FEATURES
+
     // make a new list of obj containing only the columns you want to display (move to helper file?)
     for(let i=0; i<allWorkouts.length; i++){
         const rowArray = {
@@ -100,7 +151,8 @@ export default function WorkoutLog() {
 
     return(
         <div className='log-div md:px-20 '>
-            <h1 className='text-2xl font-bold pt-8'>Workout Log</h1>
+            <h1 className='text-2xl font-bold pt-8'>Workout Log</h1> 
+            <button onClick={handleDownloadCSV}><BiCloudDownload size={25} /></button>
             { selectedRowId ?
             <div className='text-xl py-4 space-x-4'> 
                 <button onClick = {navigateToDetails} className='btn small'>View Details</button> 
