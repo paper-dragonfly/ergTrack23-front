@@ -5,6 +5,8 @@ import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef} from 'ag-grid-community'
+import { BiCloudDownload } from 'react-icons/bi'
+
 
 
 import { TypeFetchedTeamWorkouts, TypeLogCols } from '../../utils/interfaces';
@@ -48,6 +50,60 @@ export default function TeamLog(){
     const summaryData = new Array()
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);
+
+    //DOWNLOAD CSV 
+
+    //get todays date
+    const getTodaysDate = () => {
+        const date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let currentDate = `${day}_${month}_${year}`
+        return currentDate
+    }
+
+    //download csv
+    const handleDownloadCSV = () => { 
+        const csvString = convertToCSV(teamWorkouts)
+        const todaysDate = getTodaysDate()
+        triggerDownload(csvString, `workoutlog_${todaysDate}.csv`)
+    }
+
+    // convert log data to csv format
+    const convertToCSV = (data: any[]): string => {
+        if (data.length === 0) return '';
+        const keysToExclude = [
+            'subworkouts', 
+            'var_ints_rest', 
+            'image_hash', 
+            'post_to_team', 
+            'user_id', 
+            'workout_id',]
+        const headers = Object.keys(data[0]).filter(key => !keysToExclude.includes(key)).join(',')
+        const rows = data.map(obj => {
+            return Object.entries(obj)
+                         .filter(([key, _]) => !keysToExclude.includes(key))
+                         .map(([_, value]) => value)
+                         .join(',');
+        }).join('\n');
+
+        return headers + '\n' + rows;
+    };
+
+    // download file
+    const triggerDownload = (csvString: string, filename: string) => {
+        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    //CREATE TEAM WORKOUT LOG TABLE + FEATURES
 
     for(let i=0; i<teamWorkouts.length; i++){
         const rowArray = {
@@ -120,6 +176,7 @@ export default function TeamLog(){
         <div className='log-div px-6 md:px-20'>  
             <BackBtn navTo='/team' btnText='back' />
             <h3 className='text-2xl font-bold pt-8 pb-3'>Team Log</h3>
+            <button onClick={handleDownloadCSV}><BiCloudDownload size={25} /></button>
             { selectedRowId ?
             <div className='text-xl py-4'> 
                 <button onClick= {navigateToTeamDetails} className='btn small mr-4'>View Team Results</button> 

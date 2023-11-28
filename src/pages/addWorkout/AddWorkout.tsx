@@ -58,7 +58,8 @@ export default function AddWorkout(){
     const [showError, setShowError] = useState<boolean>(false)
     const [fmImgSelected, setFmImgSelected] = useState(true)
     const [numSubs, setNumSubs] = useState<number>(8)
-
+    const [variableIntervals, setVariableIntervals] = useState<boolean>(false)
+    const [restInfo, setRestInfo] = useState({restTime:[], restDist:[]})
     const [selectedWorkoutType, setSelectedWorkoutType] = useState('singleDist')
     
     const { handleSubmit, formState }  = useForm() 
@@ -129,7 +130,7 @@ export default function AddWorkout(){
             console.log(workoutInfo.ergImg)
             
             // post data to API
-            const endpoint = numSubs === 0 ? '/ergImage' : `/ergImage?numSubs=${numSubs}`
+            const endpoint = numSubs === 0 ? `/ergImage?varInts=${variableIntervals}` : `/ergImage?varInts=${variableIntervals}&numSubs=${numSubs}`
             const url = API_URL+endpoint
             const postInfo = {
                 method: "POST",
@@ -160,6 +161,10 @@ export default function AddWorkout(){
                             split:  data.workout_data.split,
                             sr: data.workout_data.sr,
                             hr: data.workout_data.hr[0] ? data.workout_data.hr: []
+                        })
+                        setRestInfo({
+                            restTime: data.rest_info.time,
+                            restDist: data.rest_info.meter
                         })
                         setShowEditableResults(true)
                         console.log('before scoll')
@@ -217,8 +222,7 @@ export default function AddWorkout(){
                             value ='fmImg'
                             checked={workoutInfo.entryMethod === 'fmImg'}
                             onChange={handleChange}
-                        />
-                        
+                        />   
                         Image
                     </label> 
                     <label 
@@ -342,7 +346,12 @@ export default function AddWorkout(){
                         <br /> 
                     </div>
                     : // IMAGE
-                    <UploadAndDisplayImage workoutInfo={workoutInfo} setWorkoutInfo={setWorkoutInfo} numSubs={numSubs} setNumSubs={setNumSubs} setShowError={setShowError}/>
+                    <UploadAndDisplayImage 
+                        workoutInfo={workoutInfo} setWorkoutInfo={setWorkoutInfo} 
+                        numSubs={numSubs} setNumSubs={setNumSubs} 
+                        varInts = {variableIntervals} setVarInts={setVariableIntervals} 
+                        setShowError={setShowError}
+                    />
             }
             {showError && 
             <div> 
@@ -356,7 +365,16 @@ export default function AddWorkout(){
             style={{display: isSubmitting ? 'none': 'block'}}>Submit</button>
             </form>
             <div ref={resultsTableRef} className='flex justify-center'>
-                {showEditableResults? <EditableResults workoutMetrics = {workoutMetrics} userToken = {userToken} photoHash = {photoHash} /> : null}
+                {showEditableResults? 
+                    <EditableResults 
+                        workoutMetrics = {workoutMetrics} 
+                        userToken = {userToken} 
+                        photoHash = {photoHash} 
+                        restInfo={restInfo} 
+                        varInts={variableIntervals}
+                        /> 
+                    : null
+                }
             </div>
         </div>
     )

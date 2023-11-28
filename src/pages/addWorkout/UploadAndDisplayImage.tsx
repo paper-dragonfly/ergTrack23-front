@@ -8,12 +8,13 @@ export default function UploadAndDisplayImage(props: UADIProps){
     const [multiPhoto,  setMultiPhoto] = useState<boolean>(false)
 
     const handlePhotoSelection = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        /// When selected photo is changed, update ergImg files in WorkoutInfo state var
         const files = e.target.files;
         props.setShowError(false)
         if (files && files.length > 0) {
             const selected = Array.from(files);
             props.setWorkoutInfo((oldWorkoutInfo: TypesWorkoutInfo) => {
-                const updatedPhotos = oldWorkoutInfo.ergImg
+                const updatedPhotos = oldWorkoutInfo.ergImg 
                 updatedPhotos[index] = selected[0]
                 return{
                     ...oldWorkoutInfo,
@@ -24,14 +25,27 @@ export default function UploadAndDisplayImage(props: UADIProps){
       };
 
     
+    function handleVarIntChange(){
+        props.setVarInts(!props.varInts)
+    }
+    
     function handleMultiChange(){
-        if(multiPhoto){
+        //If going from checked -> unchecked 
+        if(multiPhoto){ 
             setNumPhotos(1)
             props.setNumSubs(0)
-        }else{
+            // remove Photo2 & Photo3
+            props.setWorkoutInfo((oldWorkoutInfo: TypesWorkoutInfo) => {
+                return{
+                    ...oldWorkoutInfo,
+                    ergImg: [oldWorkoutInfo.ergImg[0]]
+                }
+            }) 
+        }else{ //unchecked -> checked 
             setNumPhotos(2)
-            props.setNumSubs(12)
+            props.setNumSubs(12) // 12 because it's a likely number: 6K with 500m splits
         }
+        // Toggle between checked and unchecked by flipping multiPhoto state var
         setMultiPhoto(!multiPhoto)
     }
 
@@ -53,6 +67,16 @@ export default function UploadAndDisplayImage(props: UADIProps){
 
     return(
         <div className= 'visible-on-from-img'>
+            <label>
+                Variable Intervals {'\u00A0'}
+                <input
+                  type='checkbox'
+                  name ='multi-photo'
+                  checked = {props.varInts}
+                  onChange = {handleVarIntChange}
+                />
+            </label>
+            <br /> 
             <label>
                 Multi photo workout {'\u00A0'}
                 <input
