@@ -71,7 +71,7 @@ export default function WorkoutLog() {
     // convert log data to csv format
     const convertToCSV = (data: any[]): string => {
         if (data.length === 0) return '';
-        const keysToExclude = ['subworkouts', 'var_ints_rest', 'image_hash']
+        const keysToExclude = ['subworkouts', 'var_ints_rest', 'image_hash', 'post_to_team', 'user_id', 'workout_id']
         const headers = Object.keys(data[0]).filter(key => !keysToExclude.includes(key)).join(',')
         const rows = data.map(obj => {
             return Object.entries(obj)
