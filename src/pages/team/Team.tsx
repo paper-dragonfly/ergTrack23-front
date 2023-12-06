@@ -83,20 +83,19 @@ export default function Team(){
 
     return (
       <div className='flex flex-col ml-4 mr-4 mt-2 gap-4 '>
-          <div className="flex justify-end items-center">
-            {admin ? 
-              <Link to='admin'>Admin Portal</Link>
-              :
-              <button onClick={handlePatchRequest} className="flex items-center pt-2 text-base"> 
-                Leave Team
-              </button>
-            }
-            </div>
-           <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{teamInfo.team_name.toUpperCase()} </h1>
-           <Link to='log' className='btn  self-center'>Team Log</Link>
-           <br />
-           
+        <div className="flex justify-end items-center">
+          {admin ? 
+            <Link to='admin'>Admin Portal</Link>
+            :
+            <button onClick={handlePatchRequest} className="flex items-center pt-2 text-base"> 
+              Leave Team
+            </button>
+          }
         </div>
+        <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{teamInfo.team_name.toUpperCase()} </h1>
+        <Link to='log' className='btn  self-center'>Team Log</Link>
+        <br /> 
+      </div>
     )
 }
 
