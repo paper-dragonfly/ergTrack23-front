@@ -10,7 +10,7 @@ import { BiCloudDownload } from 'react-icons/bi'
 
 
 import { TypeFetchedTeamWorkouts, TypeLogCols } from '../../utils/interfaces';
-import { filterResults, get_age_category } from '../../utils/helper';
+import { filterResults, getAgeCategory } from '../../utils/helper';
 import BackBtn from '../../components/BackBtn';
 import TableTemplate from '../../components/TableTemplate';
 
@@ -37,7 +37,7 @@ export async function loader(){
                 })
           }})
         .then(data => {
-            console.log(data)
+            console.log('THIS IS THE DATA', data)
             console.log(data['team_workouts'])
             return data['team_workouts']}) 
         .catch(error => console.error(error.message))
@@ -46,7 +46,7 @@ export async function loader(){
 export default function TeamLog(){
     const teamWorkouts = useLoaderData() as TypeFetchedTeamWorkouts[]
     const navigate = useNavigate()
-    const ageCategory = get_age_category(teamWorkouts)
+    const ageCategory = getAgeCategory(teamWorkouts)
     const summaryData = new Array()
     const [selectedRowId, setSelectedRowId] = useState<number| null>(null)
     const gridRef = useRef<AgGridReact<TypeLogCols>>(null);

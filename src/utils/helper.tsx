@@ -1,6 +1,6 @@
 import React from 'react'
 import { redirect } from 'react-router-dom'
-import { TypeFetchedTeamWorkouts } from './interfaces'
+import { TypeFetchedTeamWorkouts, TypeWorkoutDTM } from './interfaces'
 
 export async function checkAuth(request: Request){
     console.log('running checkAuth')
@@ -27,7 +27,7 @@ export function filterResults(teamWorkouts: TypeFetchedTeamWorkouts[], selected:
     return teamWoData
 }
 
-export function get_age_category(workouts: TypeFetchedTeamWorkouts[]){
+export function getAgeCategory(workouts: TypeFetchedTeamWorkouts[]){
     const currentDate = new Date()
     const currentYear = currentDate.getFullYear()
     const ageCategories: String[] = new Array()
@@ -75,7 +75,7 @@ export function get_age_category(workouts: TypeFetchedTeamWorkouts[]){
 }
 
 
-export function get_filtered_results(fullTeamResults: TypeFetchedTeamWorkouts[], ageCategories: String[], filters: {sex:String, ageCat:String }){
+export function getFilteredResults(fullTeamResults: TypeFetchedTeamWorkouts[], ageCategories: String[], filters: {sex:String, ageCat:String }){
     const result = new Array()
     for(let i=0; i<fullTeamResults.length; i++){
         if(
@@ -104,6 +104,46 @@ export function get_filtered_results(fullTeamResults: TypeFetchedTeamWorkouts[],
     }
     return result 
 }
+
+
+export function sumOfMeters(dtmData: TypeWorkoutDTM[]) {
+    return dtmData.reduce((sum, currentWorkout) => {
+        // Check if the 'meter' key exists and is a number
+        if ('meter' in currentWorkout && typeof currentWorkout.meter === 'number') {
+            return sum + currentWorkout.meter;
+        }
+        return sum;
+    }, 0);
+}
+
+export function sumOfTime(dtmData: TypeWorkoutDTM[]) {
+    const totalSeconds =  dtmData.reduce((sum, currentWorkout) => {
+        // Check if the 'time' key exists and is a number -- needed for typescript
+        if ('time' in currentWorkout && typeof currentWorkout.time === 'number') {
+            return sum + currentWorkout.time;
+        }
+        return sum;
+    }, 0);
+    
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const remainingSeconds = Math.floor(totalSeconds % 60);
+
+    let result = "";
+
+    if (hours > 0) {
+        result += `${hours} hour${hours > 1 ? 's' : ''}, `;
+    }
+
+    if (minutes > 0) {
+        result += `${minutes} minute${minutes > 1 ? 's' : ''}, `;
+    }
+
+    result += `${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+
+    return result;
+}
+
 
 
   

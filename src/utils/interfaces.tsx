@@ -175,12 +175,19 @@ export interface TypeTeamLoaded{
         team_info?: TypeTeamInfo;
         team_admin?: boolean
     }
+    teamWorkoutsDTM: TypeWorkoutDTM[]
 }
 
 export interface TypeTeamInfo{
     team_id: number;
     team_name: string;
     team_code: string;
+}
+
+export interface TypeWorkoutDTM{
+    date: Date;
+    time: number;
+    meter: number;
 }
 
 export interface TypeTeamAdminLoaded{
