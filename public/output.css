@@ -1166,6 +1166,19 @@ add-workout-div{
   border-radius: 10px;
 }
 
+.mt-totals{
+  display: flex;
+  justify-content: space-around;
+}
+
+.total-card{
+  border: solid gray 2px;
+  padding: 10px;
+  width: 40%;
+  text-align: center; 
+}
+
+
 @media (min-width: 768px){
   .md\:ml-40{
     margin-left: 10rem;

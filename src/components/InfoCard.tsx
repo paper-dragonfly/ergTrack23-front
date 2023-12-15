@@ -8,12 +8,16 @@ export default function InfoCard(props: {metric: string, team: boolean, data:Typ
     const totalTime = sumOfTime(props.data)
 
     return (
-        <div>
-            <h2>Total Meters</h2>
-            <h3>{totalMeters}</h3>
+        <div className='mt-totals'>
+            <div className='total-card'>
+                <h2>Total Meters</h2>
+                <h3>{totalMeters}</h3>
+            </div>
             <br /> 
-            <h2>Total Time</h2>
-            <h3>{totalTime}</h3>
+            <div className='total-card'>
+                <h2>Total Time</h2>
+                <h3>{totalTime}</h3>
+            </div>
         </div>
     )
 }

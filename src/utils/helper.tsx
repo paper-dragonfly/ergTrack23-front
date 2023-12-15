@@ -124,7 +124,7 @@ export function sumOfTime(dtmData: TypeWorkoutDTM[]) {
         }
         return sum;
     }, 0);
-    
+
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const remainingSeconds = Math.floor(totalSeconds % 60);
@@ -132,14 +132,14 @@ export function sumOfTime(dtmData: TypeWorkoutDTM[]) {
     let result = "";
 
     if (hours > 0) {
-        result += `${hours} hour${hours > 1 ? 's' : ''}, `;
+        result += `${hours} h${hours > 1 ? 's' : ''}, `;
     }
 
     if (minutes > 0) {
-        result += `${minutes} minute${minutes > 1 ? 's' : ''}, `;
+        result += `${minutes} min${minutes > 1 ? 's' : ''}, `;
     }
 
-    result += `${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+    result += `${remainingSeconds} sec${remainingSeconds !== 1 ? 's' : ''}`;
 
     return result;
 }

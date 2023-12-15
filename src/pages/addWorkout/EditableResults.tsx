@@ -32,6 +32,14 @@ export default function EditableResults(props: ERProps) {
   const [workoutTableMetrics, setWorkoutTableMetrics] = useState<TypesWorkoutTableMetrics[]>(() => {
     const ergTable = []
     console.log('number of cols', metrics.time.length)
+
+    // HACK calculate average HR if it's missing - common for interval workouts with HR data because AvHR isn't calculated by C2erg
+    if(metrics.hr.length === metrics.time.length - 1){
+      const sum =  metrics.hr.reduce((accumulator, currentValue) =>  accumulator + parseInt(currentValue), 0)
+      const av = sum/metrics.hr.length
+      metrics.hr.unshift(av.toString())
+    }
+
     for(let i = 0 ; i < metrics.time.length; i++ ){
       const rowData = { id: nanoid(), time: metrics.time[i], distance: parseInt(metrics.meter[i]), split: metrics.split[i], strokeRate: parseInt(metrics.sr[i]), heartRate: parseInt(metrics.hr[i]) }
       ergTable.push(rowData) 
