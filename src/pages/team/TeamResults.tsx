@@ -6,7 +6,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css'
 import {ColDef} from 'ag-grid-community'
 
 import { TypeLogCols, TypeFetchedTeamWorkouts } from '../../utils/interfaces';
-import { get_filtered_results } from '../../utils/helper';
+import { getFilteredResults } from '../../utils/helper';
 import BackBtn from '../../components/BackBtn';
 import TableTemplate from '../../components/TableTemplate';
 
@@ -40,7 +40,7 @@ export default function TeamResults(){
     ])
     
     useEffect(() => {
-        const visibleResults = get_filtered_results(fullTeamResults, ageCategories, filters)
+        const visibleResults = getFilteredResults(fullTeamResults, ageCategories, filters)
         console.log('VISIBLE', visibleResults)
         setRowData(visibleResults)
     }, [filters])

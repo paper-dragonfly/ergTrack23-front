@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import { useLoaderData, Link, redirect, useNavigate } from 'react-router-dom'
+
+import InfoCard from '../../components/InfoCard'
 import { API_URL } from '../../config'
-import { TypeTeamInfo, TypeTeamLoaded } from '../../utils/interfaces'
+import { TypeTeamInfo, TypeTeamLoaded, TypeWorkoutDTM } from '../../utils/interfaces'
 
 
 //load - get if user info includees team name 
@@ -33,10 +35,10 @@ export function loader(){
         .then(data => {
             console.log(data)
             //line below redundant 
-            if(!data['team_member']){
+            if(!data['user_team_info']['team_member']){
                 return redirect('/team/add')
             }
-            return {userToken: userToken, userTeamInfo:data}
+            return {userToken: userToken, userTeamInfo:data['user_team_info'], teamWorkoutsDTM: data['team_workouts_dtm']}
         }) 
         .catch(error => console.log(error.message))
 }
@@ -45,7 +47,8 @@ export default function Team(){
     const loaderData = useLoaderData() as TypeTeamLoaded
     const teamInfo = loaderData.userTeamInfo.team_info as TypeTeamInfo
     const userToken = loaderData.userToken
-    const admin = loaderData.userTeamInfo.team_admin 
+    const admin = loaderData.userTeamInfo.team_admin
+    const workoutsDTM = loaderData.teamWorkoutsDTM as TypeWorkoutDTM[] 
     const navigate  = useNavigate()
 
     //TODO
@@ -83,20 +86,20 @@ export default function Team(){
 
     return (
       <div className='flex flex-col ml-4 mr-4 mt-2 gap-4 '>
-          <div className="flex justify-end items-center">
-            {admin ? 
-              <Link to='admin'>Admin Portal</Link>
-              :
-              <button onClick={handlePatchRequest} className="flex items-center pt-2 text-base"> 
-                Leave Team
-              </button>
-            }
-            </div>
-           <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{teamInfo.team_name.toUpperCase()} </h1>
-           <Link to='log' className='btn  self-center'>Team Log</Link>
-           <br />
-           
+        <div className="flex justify-end items-center">
+          {admin ? 
+            <Link to='admin'>Admin Portal</Link>
+            :
+            <button onClick={handlePatchRequest} className="flex items-center pt-2 text-base"> 
+              Leave Team
+            </button>
+          }
         </div>
+        <h1 className='text-2xl my-6 text-black text-center md:text-5xl md:mt-10'>{teamInfo.team_name.toUpperCase()} </h1>
+        <Link to='log' className='btn  self-center'>Team Log</Link>
+        <br /> 
+        <InfoCard metric='meter' team={true} data={workoutsDTM}  />
+      </div>
     )
 }
 
