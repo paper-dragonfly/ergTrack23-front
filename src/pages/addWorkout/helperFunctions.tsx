@@ -22,10 +22,46 @@ export function generateWorkoutName(workoutInfo: TypesWorkoutInfo): string{
     return workoutName
 }
 
+function translate_month(date:string): string{
+    // frentch, spanish, italian, german
+    const months = {
+        "Jan": ["Jan", "Ene", "Gen", "Jan"],
+        "Feb": ["Fev", "Feb", "Feb", "Feb"],
+        "Mar": ["Mar", "Mar", "Mar", "Mär"],
+        "Apr": ["Avr", "Abr", "Apr", "Apr"],
+        "May": ["Mai", "May", "Mag", "Mai"],
+        "Jun": ["Jui", "Jun", "Giu", "Jun"],
+        "Jul": ["Jui", "Jul", "Lug", "Jul"],
+        "Aug": ["Aou", "Ago", "Ago", "Aug"],
+        "Sep": ["Sep", "Sep", "Set", "Sep"],
+        "Oct": ["Oct", "Oct", "Ott", "Okt"],
+        "Nov": ["Nov", "Nov", "Nov", "Nov"],
+        "Dec": ["Dec", "Dic", "Dic", "Dez"],
+    };
+
+    let cleanDate = date.trim() 
+    let ergMonth = cleanDate.substring(0,3)
+    if(!Object.keys(months).includes(ergMonth)){
+        for (const [key,val] of Object.entries(months)){
+            if(val.includes(ergMonth)){
+                ergMonth = key
+            }
+        }
+    }
+    cleanDate = ergMonth + cleanDate.substring(3)  
+    
+    //if day and month merged, add space
+    if(cleanDate.length === 10 && /^\d+$/.test(cleanDate.substring(4,10))){
+        cleanDate = cleanDate.substring(0,6) + ' ' + cleanDate.substring(6)
+    }
+    return cleanDate
+}
+
 export function reformat_date(date:string) : string{
-    // convert date from MMM DD YYYY format (jan 03 2022)-> YYYY-MM-DD
-    const dateTrimmed = new Date(date.trim())
-    const dateFormatted = dateTrimmed.toISOString().substring(0,10)
+    // convert date from MMM DD YYYY format (Jan 03 2022)-> YYYY-MM-DD
+    debugger
+    const cleanDate = new Date(translate_month(date))
+    const dateFormatted = cleanDate.toISOString().substring(0,10)
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
     const isValidDate = dateRegex.test(dateFormatted);
