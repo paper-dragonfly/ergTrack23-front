@@ -130,7 +130,7 @@ export default function AddWorkout(){
             console.log(workoutInfo.ergImg)
             
             // post data to API
-            const endpoint = numSubs === 0 ? `/ergImage?varInts=${variableIntervals}` : `/ergImage?varInts=${variableIntervals}&numSubs=${numSubs}`
+            const endpoint = numSubs === 0 ? `/erg_image?varInts=${variableIntervals}` : `/erg_image?varInts=${variableIntervals}&numSubs=${numSubs}`
             const url = API_URL+endpoint
             const postInfo = {
                 method: "POST",
@@ -151,7 +151,7 @@ export default function AddWorkout(){
                     }})
                     .then((data) => {
                         console.log(data)
-                        setPhotoHash(data.photo_hash)
+                        setPhotoHash(data.image_hash)
                         console.log(photoHash)
                         setWorkoutMetrics({
                             workoutName: data.workout_meta.wo_name,

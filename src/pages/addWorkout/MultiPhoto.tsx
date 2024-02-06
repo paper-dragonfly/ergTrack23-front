@@ -51,7 +51,7 @@ const PhotoUploader: React.FC = () => {
 
     try {
       // post data to API
-      const url = API_URL+`/ergImage?numSubs=${numSubs}`
+      const url = API_URL+`/erg_image?numSubs=${numSubs}`
       const postInfo = {
           method: "POST",
           headers: {'Authorization': `Bearer ${userToken}`},

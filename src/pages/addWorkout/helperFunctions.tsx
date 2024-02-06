@@ -59,7 +59,7 @@ function translate_month(date:string): string{
 
 export function reformat_date(date:string) : string{
     // convert date from MMM DD YYYY format (Jan 03 2022)-> YYYY-MM-DD
-    debugger
+    
     const cleanDate = new Date(translate_month(date))
     const dateFormatted = cleanDate.toISOString().substring(0,10)
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
