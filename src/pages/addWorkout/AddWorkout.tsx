@@ -125,7 +125,7 @@ export default function AddWorkout(){
             setShowEditableResults(false) 
             const formData = new FormData()
             workoutInfo.ergImg.forEach((photo, index) => {
-                formData.append(`photo${index + 1}`, photo);
+                formData.append(`image${index + 1}`, photo);
             });
             console.log(workoutInfo.ergImg)
             
